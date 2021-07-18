@@ -10,6 +10,13 @@ from match import template_matching
 # loading templates
 accept_button_img = cv2.imread('accept.png', cv2.IMREAD_GRAYSCALE)
 
+bannable_champions = {}
+
+
+def ban_champion(target):
+    raise NotImplementedError
+
+
 while True:
     ans = pyautogui.confirm('MENU', buttons=['START', 'USTAWIENIA', 'WYJŚCIE'])
 
@@ -27,7 +34,10 @@ while True:
                 time.sleep(1)
 
     elif ans == "USTAWIENIA":
-        break
+        ban_target = pyautogui.prompt(text='Jaką postać zbanować w champion select?', title='Ustawienie banowania',
+                                      default='Teemo')
+        if ban_target is not None and ban_target in bannable_champions:
+            ban_champion(target=ban_target)
 
     elif ans == "WYJŚCIE":
         break
