@@ -9,7 +9,7 @@ from mail import send_mail
 from match import template_matching
 
 # loading templates
-accept_button_img = cv2.imread('accept.png', cv2.IMREAD_GRAYSCALE)
+accept_button_img = cv2.imread('data/accept.png', cv2.IMREAD_GRAYSCALE)
 
 with open("data/champions.json", "r") as champions_file:
     bannable_champions = json.load(champions_file)
