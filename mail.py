@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import smtplib
 import json
+from typing import Union
 
 
 class Bot:
@@ -35,7 +36,7 @@ class Bot:
         self.smtp_object.quit()
         print(f"{self._name} logged out successfully")
 
-    def send_message(self, recipient_email: str, msg: str or bytes):
+    def send_message(self, recipient_email: str, msg: Union[str, bytes]):
         self.smtp_object.sendmail(self._email, recipient_email, msg)
         print(f"{self._name} sent mail to {recipient_email} successfully")
 

@@ -3,6 +3,7 @@
 import cv2
 import pyautogui
 import time
+import json
 import numpy as np
 from mail import send_mail
 from match import template_matching
@@ -10,7 +11,8 @@ from match import template_matching
 # loading templates
 accept_button_img = cv2.imread('accept.png', cv2.IMREAD_GRAYSCALE)
 
-bannable_champions = {}
+with open("data/champions.json", "r") as champions_file:
+    bannable_champions = json.load(champions_file)
 
 
 def ban_champion(target):
@@ -36,8 +38,12 @@ while True:
     elif ans == "USTAWIENIA":
         ban_target = pyautogui.prompt(text='Jaką postać zbanować w champion select?', title='Ustawienie banowania',
                                       default='Teemo')
-        if ban_target is not None and ban_target in bannable_champions:
-            ban_champion(target=ban_target)
+        # work in progress
+        if ban_target is not None and ban_target.lower() in bannable_champions:
+            #ban_champion(target=ban_target)
+            print('zbanowano', ban_target)
+        else:
+            print('nie ma takiego czempiona')
 
     elif ans == "WYJŚCIE":
         break
