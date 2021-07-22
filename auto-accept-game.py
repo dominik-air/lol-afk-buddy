@@ -6,13 +6,78 @@ import time
 import json
 import numpy as np
 from mail import send_mail
-from match import template_matching
+from image_manipulation import template_matching
 
 # loading templates
 accept_button_img = cv2.imread('data/accept.png', cv2.IMREAD_GRAYSCALE)
+ban_phase_indicator = cv2.imread('data/ban a champion.png', cv2.IMREAD_GRAYSCALE)
+ban_button_img = cv2.imread('data/after ban select.png', cv2.IMREAD_GRAYSCALE)
+search_bar = cv2.imread('data/search bar banning.png', cv2.IMREAD_GRAYSCALE)
 
 with open("data/champions.json", "r") as champions_file:
-    bannable_champions = json.load(champions_file)
+    champions = json.load(champions_file)
+
+
+def queue_stage(screen):
+    accept_button_loc = template_matching(template=accept_button_img, search_img=screen)
+    if accept_button_loc is None:
+        return True
+    else:
+        top_left, bottom_right = accept_button_loc
+        center_x = int((top_left[0] + bottom_right[0]) / 2)
+        center_y = int((top_left[1] + bottom_right[1]) / 2)
+        pyautogui.click(center_x, center_y)
+        send_mail()
+        return True
+
+
+def banning_phase(screen):
+    banning_phase_loc = template_matching(template=ban_phase_indicator, search_img=screen)
+    if banning_phase_loc is None:
+        return False
+    else:
+        search_bar_loc = template_matching(template=search_bar, search_img=screen)
+        if search_bar_loc is None:
+            return False
+        else:
+            top_left, bottom_right = search_bar_loc
+            center_x = int((top_left[0] + bottom_right[0]) / 2)
+            center_y = int((top_left[1] + bottom_right[1]) / 2)
+            pyautogui.click(center_x, center_y)
+
+            ban_target = "Teemo"
+            pyautogui.write(ban_target)
+            time.sleep(0.5)
+            screen = cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_RGB2GRAY)
+            ban_target_img = cv2.imread("champion_images/"+ban_target+".png", cv2.IMREAD_GRAYSCALE)
+
+            ban_target_loc = template_matching(template=ban_target_img, search_img=screen, threshold=0.70)
+
+            if ban_target_loc is None:
+                return False
+            else:
+                top_left, bottom_right = ban_target_loc
+                center_x = int((top_left[0] + bottom_right[0]) / 2)
+                center_y = int((top_left[1] + bottom_right[1]) / 2)
+                pyautogui.click(center_x, center_y)
+
+                screen = cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_RGB2GRAY)
+
+                ban_button_loc = template_matching(template=ban_button_img, search_img=screen)
+
+                if ban_button_loc is None:
+                    return False
+                else:
+                    top_left, bottom_right = ban_button_loc
+                    center_x = int((top_left[0] + bottom_right[0]) / 2)
+                    center_y = int((top_left[1] + bottom_right[1]) / 2)
+                    pyautogui.click(center_x, center_y)
+                    return True
+
+
+def picking_phase(screen):
+    print("not implemented")
+    return True
 
 
 def ban_champion(target):
@@ -23,23 +88,21 @@ while True:
     ans = pyautogui.confirm('MENU', buttons=['START', 'USTAWIENIA', 'WYJŚCIE'])
 
     if ans == 'START':
+        stages = (stage for stage in [queue_stage, banning_phase, picking_phase])
+        stage = next(stages)
         while True:
-            screen = cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_RGB2GRAY)
             try:
-                top_left, bottom_right = template_matching(template=accept_button_img, search_img=screen)
-                center_x = int((top_left[0] + bottom_right[0]) / 2)
-                center_y = int((top_left[1] + bottom_right[1]) / 2)
-                pyautogui.click(center_x, center_y)
-                send_mail()
+                screen = cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_RGB2GRAY)
+                ret = stage(screen)
+                if ret:
+                    stage = next(stages)
+            except StopIteration:
                 break
-            except ValueError:
-                time.sleep(1)
-
     elif ans == "USTAWIENIA":
         ban_target = pyautogui.prompt(text='Jaką postać zbanować w champion select?', title='Ustawienie banowania',
                                       default='Teemo')
         # work in progress
-        if ban_target is not None and ban_target.lower() in bannable_champions:
+        if ban_target is not None and ban_target.lower() in champions:
             #ban_champion(target=ban_target)
             print('zbanowano', ban_target)
         else:

@@ -32,7 +32,7 @@ for i, img_link in enumerate(img_links):
     name = f'unknown_champion_{i}'
     for part in parsed_link:
         if part.endswith(ending):
-            name = part[:-len(ending)]
+            name = part[:-len(ending)].replace("%27", "'").replace("_", " ")  # RFC3986 to UTF-8
             champion_names.append(name.lower())
             break
     with open(folder_path+f"{name}.png", "wb") as image_file:
