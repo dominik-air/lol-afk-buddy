@@ -21,7 +21,7 @@ with open("data/champions.json", "r") as champions_file:
 def queue_stage(screen):
     accept_button_loc = template_matching(template=accept_button_img, search_img=screen)
     if accept_button_loc is None:
-        return True
+        return False  # change to True for testing in customs
     else:
         top_left, bottom_right = accept_button_loc
         center_x = int((top_left[0] + bottom_right[0]) / 2)
