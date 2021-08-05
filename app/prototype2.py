@@ -224,6 +224,8 @@ class Prototype2App(App, Theme):
     def sub(self):
         self._font_size -= 2
 
+    def changing_something(self):
+        pass
 
     def build(self):
         app = AppLayout()
