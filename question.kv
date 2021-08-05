@@ -1,0 +1,58 @@
+#:kivy 2.0.0
+
+<CustomButton>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    # text: self.own_text
+
+<Button>:
+    canvas.before:
+        Color:
+            # rgba: app.btn_color
+            rgba: app.color_normal if self.state == 'normal' else app.color_down
+        
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    # on_press: app.do_sth(self)
+    text: "default text"
+    
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+    background_color: 0, 0, 0, 0
+
+
+<MyView>:
+    RelativeLayout:
+        size_hint: None, None
+        size: root.width, root.height
+
+        BoxLayout:
+            size_hint: .5, .5
+            pos_hint: {'top': 1, 'center_x': .5}
+            orientation: "vertical"
+            spacing: 20
+
+            # size: root.width/2 , 100
+            # pos: root.width/2 - self.width/2 , root.height - self.height
+            Button:
+                on_press: app.activate_dark_theme()
+                text: "dark theme"
+            Button:
+                on_press: app.activate_light_theme()
+                text: "light theme"
+            Button:
+                text: "arbitrary button"
+            CustomButton:
+            CustomButton:
+            CustomButton:
+                # canvas.before:
+                #     Rectangle:
+                #         pos: self.pos
+                #         size: self.size
+                # # text: self.own_text

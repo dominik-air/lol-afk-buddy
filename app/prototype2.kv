@@ -1,0 +1,444 @@
+#:kivy 2.0.0
+<ChampionButton>:
+    canvas.before:
+        Color:
+            rgba: self.border_color
+        Line:
+            width: 4
+            rectangle: self.x, self.y, self.width, self.height
+
+<ChampionArray>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            # width: 2
+            rectangle: self.x, self.y, self.width, self.height
+<SearchBar>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+<ApplyBorder@Widget>:
+    canvas.before:
+        Color:
+            rgba: 0, 1, 0, 1
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height
+
+
+<InformationUnit@BoxLayout>:
+    canvas:
+        Color:
+            rgba: app.info_col
+            # rgba: app.theme.informationColor
+
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [4]
+    
+
+<InfoGridLayout>:
+    cols: 1
+    height: self.minimum_height
+    # row_default_height: '50sp' <-- jak zrobic, aby dzialalo
+    row_default_height: 50
+    size_hint_y: None
+    # size_hint_x: .7
+    pos_hint: {'center_x': .5}
+    padding:
+        (root.width - self._width_ratio*root.width)/2, 0,\
+        (root.width - self._width_ratio*root.width)/2, 0
+    
+    spacing: self._spacing
+
+
+<SubInfoGridLayout@GridLayout>:
+    padd: 4
+    canvas.before:
+        Color:
+            rgba: app.info_col
+        
+        RoundedRectangle:
+            # pos: self.pos
+            pos: (p + self.padd/2 for p in self.pos)
+            size: (s - self.padd for s in self.size)
+            radius: [4]
+
+
+<MyAccordion@Accordion>:
+    canvas:
+        Color:
+            # Deep background color
+            rgba: app.bckg_col
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [1]
+
+<MyButton>:
+    # This button is partially defined in .py file
+    btn_color: 0, 0, 0, 1
+    color: app.info_font_col
+    canvas.before:
+        Color:
+            # rgba: self.btn_color
+            rgba: app._btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [2]
+    
+    # on_press: app.on_pr(self.__self__)
+    # on_release: app.on_rl(self)
+
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+
+    background_color: 1, 1, 0, 0
+
+<SwitchButton@MyButton>:
+    -size_hint_y: .7
+    -pos_hint: {'center_x': .5, 'center_y': .5}
+
+
+<SettingsLabel@Label>:
+    font_size: app._font_size
+    color: app.info_font_col # WARNING: info_font_col in settingsLabel
+    text_size: self.size
+    halign: 'left'
+    valign: 'middle'
+    padding: 70, 0
+
+<InfoLabel@Label>:
+    font_size: app._font_size
+    color: app.info_font_col
+
+<MyScroll@ScrollView>:
+    do_scroll_x: False
+    bar_width: 10
+    var_margin: 10
+
+# ------------------------------- MAIN APP CODE ------------------------------ #
+<AppLayout>:
+    # Tabs settings
+    do_default_tab: False
+    tab_pos: 'top_mid'
+    tab_width: 120
+    tab_height: 35
+    spacing: 5
+    padding: 4
+    # background_color: app.bckg_col
+
+
+    # Deep background canvas settings
+    canvas:
+        Color:
+            # Deep background color
+            rgba: app.deep_bckg_col
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    # -------------------------- MAIN LAYOUT SECTION ------------------------- #
+
+    # ------------------------ TABBLED PANEL ITEM ONE ------------------------ #
+    TabbedPanelItem:
+        text: "status"
+
+        MyAccordion:
+            id: acc
+            orientation: "vertical"
+
+            # ----------------------- PRE-GAME ACCORDION --------------------- #
+            AccordionItem:
+                # InfoGridLayouts are inherited from GridLayout
+                title: "pre-game info"
+
+                MyScroll:
+
+                    InfoGridLayout:
+                        # InformationUnits are inherited from BoxLayout
+
+                        InformationUnit:
+                            InfoLabel:
+                                # text: app.init_text
+                                text: "League of legends client:"
+                            InfoLabel:
+                                text: "LAUNCHED" if app.is_lol_client_running else "DISABLED"
+                                -color: (0, 1, 0, 1) if app.is_lol_client_running else (1, 0, 0, 1)
+
+                        InformationUnit:
+                            # its BoxLayout
+                            InfoLabel:
+                                text: "User account connection status:"
+                            InfoLabel:
+                                text: "connected - llwafelll"
+
+                        InformationUnit:
+                            # its BoxLayout
+                            InfoLabel:
+                                text: "Screen capture"
+                            InfoLabel:
+                                text: "ON"
+
+                        InformationUnit:
+                            # its BoxLayout
+                            InfoLabel:
+                                text: "Screen capture"
+                            InfoLabel:
+                                text: "ON"
+
+
+            # ------------------------ IN-GAME ACCORDION --------------------- #
+            AccordionItem:
+                title: "in-game info"
+
+                MyScroll:
+
+                    InfoGridLayout:
+                        # InformationUnits are inherited from BoxLayout
+                        
+                        InformationUnit:
+                            InfoLabel:
+                                text: "game status"
+                            InfoLabel:
+                                text: "waiting for game .../accepted"
+
+                        InformationUnit:
+                            InfoLabel:
+                                text: "declare phase:"
+                            InfoLabel:
+                                text: "declared champions: 1|2|3|4|5"
+
+                        InformationUnit:
+                            InfoLabel:
+                                text: "banning phase:"
+                            InfoLabel:
+                                text: "banned champions"
+
+                        InformationUnit:
+                            InfoLabel:
+                                text: "picking phase:"
+                            InfoLabel:
+                                text: "picked champs"
+
+
+    # ------------------------ TABBLED PANEL ITEM TWO ------------------------ #
+    # LOGS
+    TabbedPanelItem:
+        text: "logs" # set text for the button
+        # background_color: (0, .2, 0, 1) # set color for tab button
+        # RelativeLayout:
+        TextInput:
+            padding: 10, 10
+            size_hint: 1, .98
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            id: log_field
+            background_color: (90/255, 90/255, 90/255, 0)
+            foreground_color: app.info_font_col
+            background_color: app.bckg_col
+            multiline: True
+            readonly: True
+            text: "Welcome"
+        
+    # ------------------------ TABBLED PANEL ITEM THREE ---------------------- #
+    TabbedPanelItem:
+        text: "start" # set text for the button
+        orientation: 'horizontal'
+
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: app.bckg_col
+                
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [2]
+
+            orientation: 'horizontal'
+            BoxLayout:
+                padding: "0dp", "10dp", "0dp", "10dp"
+                orientation: "vertical"
+
+                SearchBar:
+                    text: "Search Bar"
+                    on_text: champion_select.update_list(self.text.lower())
+                    on_touch_down: self.clear()
+                    size_hint: 0.9, None
+                    size: "40dp", "40dp"
+                    pos_hint: {'center_x': 0.5}
+                    halign: 'center'
+
+                MyScroll:
+                    ChampionSelect:
+                        id: champion_select
+                        size_hint: 1, None
+                        padding: "20dp", "20dp", "20dp", "20dp"
+                        spacing: "10dp", "10dp"
+                        height: self.minimum_height
+
+            ChampionSelectUI:
+                id: ui
+                orientation: 'vertical'
+
+                GridLayout:
+                    cols: 2
+                    spacing: 5
+
+                    MyButton:
+                        id: ban_button
+                        text: "ban"
+                        font_size: 20
+                        on_press: ui.ban_champion(champion_select.champion)
+
+                    MyButton:
+                        id: clear_bans_button
+                        text: "clear bans"
+                        font_size: 20
+                        on_press: ui.clear_bans()
+
+                    MyButton:
+                        id: pick_button
+                        text: "pick"
+                        font_size: 20
+                        on_press: ui.pick_champion(champion_select.champion)
+
+                    MyButton:
+                        id: clear_picks_button
+                        text: "clear picks"
+                        font_size: 20
+                        on_press: ui.clear_picks()
+
+
+
+    # ------------------------ TABBLED PANEL ITEM FOUR ---------------------- #
+    TabbedPanelItem:
+        text: "settings" # set text for the button
+        # background_color: (0, .2, 0, 1) # set color for tab button
+
+        MyScroll:
+            canvas.before:
+                Color:
+                    # Deep background color
+                    rgba: app.bckg_col
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [1]
+            InfoGridLayout:
+                -padding: 0, 0, 0, 0
+                # -row_default_height: 100
+
+                # ---------------------- THEME SETTINGS ---------------------- #
+                SubInfoGridLayout:
+
+                    cols: 2
+                    SettingsLabel:
+                        text: 'Select theme:'
+
+                        # valign: 'middle'
+                        # width: self.minimum_width
+                        # x: 0
+                        # pos_hint: {'x': 0}
+
+                    BoxLayout:
+                        size_hint_x: .5
+                        padding: 20, 0, 20, 0
+                        spacing: 2
+
+                        SwitchButton:
+                            text: "Dark"
+                            on_press: app.switch_dark(self)
+
+
+                        SwitchButton:
+                            text: "Light"
+                            on_press: app.switch_light(self)
+
+
+                # -------------------- THEME FONT SETTINGS ------------------- #
+                SubInfoGridLayout:
+                    cols: 2
+                    SettingsLabel:
+                        text: 'Font size:'
+
+                    BoxLayout:
+                        size_hint_x: .5
+                        padding: 20, 0, 20, 0
+                        
+
+                        # Align to right
+                        Widget:
+
+                        MyButton:
+                            -size_hint: None, .7
+                            -width: self.height
+                            -pos_hint: {'center_x': .5, 'center_y': .5}
+                            text: '-'
+
+                            on_press: app.sub()
+
+                        TextInput:
+                            size_hint_x: None
+                            width: 50
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+
+                            text: str(app._font_size)
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+                            # valign: 'middle'
+                            padding_y: (self.height)/4
+
+                        MyButton:
+                            -size_hint: None, .7
+                            -width: self.height
+                            -pos_hint: {'center_x': .5, 'center_y': .5}
+                            text: '+'
+                            
+                            on_press: app.add()
+
+                # -------------------- some SETTINGS ------------------- #
+                SubInfoGridLayout:
+                    cols: 2
+                    SettingsLabel:
+                        text: 'Load theme configuration file:'
+
+                    BoxLayout:
+                        size_hint_x: .5
+                        padding: 20, 0, 20, 0
+                        
+                        # Align to right
+                        # Widget:
+
+                        SwitchButton:
+                            -size_hint_x: 1
+                            # -width: root.width/2
+
+                            text: "Load"
+                            on_press: app.load_new_theme_config()
+
+
+                
+                # BoxLayout:
+                # orientation: "horizontal"
+                MyButton:
+                    size_hint: .7, .2
+                    # pos_hint: {'y': .5, 'x': 0}
+                    text: "add"
+                    on_press: app.add()
+
+                MyButton:
+                    size_hint: .7, .2
+                    # pos_hint: {'y': .5, 'x': 0}
+                    text: "substract"
+                    on_press: app.sub()

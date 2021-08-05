@@ -1,0 +1,41 @@
+#:kivy 2.0.0
+
+<Button>:
+    size_hint: (.05, .1)
+    pos_hint: {'top': 1}
+
+<MyGridLayout>:
+    appLogger: log_field
+
+    FloatLayout:
+        orientation: 'vertical'
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size: root.width, root.height
+            spacing: 40
+            padding: (180, 50)
+
+            Button:
+                on_press: root.button_one_action()
+                text: "button1"
+            
+            Button:
+                on_press: root.button_two_action()
+                text: "button2"
+
+            Button:
+                on_press: root.button_three_action()
+                text: "button3"
+
+        TextInput:
+            id: log_field
+            size_hint: (.9, .7)
+            pos_hint: {'x': .05, 'y': .05}
+            background_color: (90/255, 90/255, 90/255, .2)
+            foreground_color: (1, 1, 1, 1)
+            multiline: True
+            readonly: True
+            text: ""
+                
