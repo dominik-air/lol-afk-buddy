@@ -50,7 +50,7 @@ def create_message():
 
 
 def send_mail():
-    with open("data/setup.json", "r+") as credentials:
+    with open("../data/setup.json", "r+") as credentials:
         setup_data = json.load(credentials)
     bot_email = setup_data["login"]
     bot_password = setup_data["password"]
