@@ -88,11 +88,11 @@ def template_matching(template: Image, search_img: Image, threshold: float = 0.8
 
 if __name__ == "__main__":
     # loads templates
-    accept_button_img = cv2.imread('data/accept.png', cv2.IMREAD_GRAYSCALE)
-    decline_button_img = cv2.imread('data/decline.png', cv2.IMREAD_GRAYSCALE)
+    accept_button_img = cv2.imread('../data/accept.png', cv2.IMREAD_GRAYSCALE)
+    decline_button_img = cv2.imread('../data/decline.png', cv2.IMREAD_GRAYSCALE)
 
     # loads the image of search and makes a grayscale copy for template matching
-    test_screen = cv2.cvtColor(cv2.imread('data/test_screen.png'), cv2.COLOR_BGR2RGB)
+    test_screen = cv2.cvtColor(cv2.imread('../data/test_screen.png'), cv2.COLOR_BGR2RGB)
     gray_test_screen = cv2.cvtColor(test_screen, cv2.COLOR_RGB2GRAY)
 
     top_left_accept, bottom_right_accept = template_matching(template=accept_button_img, search_img=gray_test_screen)

@@ -1,7 +1,7 @@
 import unittest
 import cv2
 import numpy as np
-from image_manipulation import Cropper
+from logic.image_manipulation import Cropper
 
 
 class CropperTest(unittest.TestCase):

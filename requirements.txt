@@ -1,0 +1,7 @@
+Kivy>=2.0.0
+WMI>=1.5.1
+numpy>=1.21.0
+PyAutoGUI>=0.9.53
+matplotlib>=3.4.2
+requests>=2.26.0
+beautifulsoup4>=4.9.3

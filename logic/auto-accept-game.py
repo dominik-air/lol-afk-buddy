@@ -6,15 +6,15 @@ import time
 import json
 import numpy as np
 from mail import send_mail
-from image_manipulation import template_matching
+from logic.image_manipulation import template_matching
 
 # loading templates
-accept_button_img = cv2.imread('data/accept.png', cv2.IMREAD_GRAYSCALE)
-ban_phase_indicator = cv2.imread('data/ban a champion.png', cv2.IMREAD_GRAYSCALE)
-ban_button_img = cv2.imread('data/after ban select.png', cv2.IMREAD_GRAYSCALE)
-search_bar = cv2.imread('data/search bar banning.png', cv2.IMREAD_GRAYSCALE)
+accept_button_img = cv2.imread('../data/accept.png', cv2.IMREAD_GRAYSCALE)
+ban_phase_indicator = cv2.imread('../data/ban a champion.png', cv2.IMREAD_GRAYSCALE)
+ban_button_img = cv2.imread('../data/after ban select.png', cv2.IMREAD_GRAYSCALE)
+search_bar = cv2.imread('../data/search bar banning.png', cv2.IMREAD_GRAYSCALE)
 
-with open("data/champions.json", "r") as champions_file:
+with open("../data/champions.json", "r") as champions_file:
     champions = json.load(champions_file)
 
 
