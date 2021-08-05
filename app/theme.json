@@ -1,0 +1,32 @@
+{
+    "information_color": {
+        "light": [1, 1, 1, 1],
+        "dark": [0.07, 0.07, 0.07, 0.5]
+    },
+
+    "information_font_color": {
+        "light": [0, 0, 0, 1],
+        "dark": [1, 1, 1, 1]
+    },
+
+    "deep_background_color": {
+        "light": [0.1, 0.1, 0.1, 1],
+        "dark": [0.1, 0.1, 0.1, 1]
+    },
+
+    "background_color": {
+        "light": [0.9, 0.9, 0.9, 1],
+        "dark": [0.17, 0.17, 0.17, 1]
+    },
+
+    "button_normal_color": {
+        "light": [0.7, 0.7, 0.7, 1],
+        "dark": [0.3, 0.3, 0.3, 1]
+    },
+
+    "button_down_color": {
+        "light": [0.6, 0.6, 0.6, 1],
+        "dark": [0.2, 0.2, 0.2, 1]
+    }
+
+}

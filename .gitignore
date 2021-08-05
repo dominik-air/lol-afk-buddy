@@ -115,6 +115,5 @@ dmypy.json
 
 .idea
 /champion_images
-*.json
 *.bat
 *.zip
