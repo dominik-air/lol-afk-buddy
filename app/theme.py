@@ -26,7 +26,7 @@ class Theme:
         #                         'dark': [.2, .2, .2, 1]}
 
     def _load_theme_from_file(self):
-        with open("app/theme.json", "r") as f:
+        with open("theme.json", "r") as f:
             read_themes = json.load(f)
 
         self.info_color = read_themes["information_color"]

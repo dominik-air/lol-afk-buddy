@@ -158,7 +158,7 @@ class ChampionSelect(StackLayout):
 
     def update_list(self, text: str):
         self.clear_widgets()
-        if not text:
+        if not text or text.lower() == "Search Bar".lower():
             for champion in self.available_champions:
                 self.add_widget(champion)
         else:
