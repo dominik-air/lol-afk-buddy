@@ -22,7 +22,7 @@ PICK_COLOR = [0.2, 0.6, 1, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
 # loads the images' names into a list
-images_path = "img/champion_images/"
+images_path = "../img/champion_images/"
 images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
 
 

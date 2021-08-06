@@ -18,7 +18,7 @@ PATH_LABELS = os.path.join(os.getcwd(), 'app', 'img', 'champion_select_images')
 try:
     accept_button_img = cv2.imread(os.path.join(PATH_IP, 'accept.png'),
                                 cv2.IMREAD_GRAYSCALE)
-    ban_phase_indicator = cv2.imread(os.path.join(PATH_LABELS), 'ban a champion.png',
+    ban_phase_indicator = cv2.imread(os.path.join(PATH_LABELS, 'ban a champion.png'),
                                     cv2.IMREAD_GRAYSCALE)
     ban_button_img = cv2.imread(os.path.join(PATH_IP, 'after ban select'),
                                 cv2.IMREAD_GRAYSCALE)
@@ -26,10 +26,12 @@ try:
                             cv2.IMREAD_GRAYSCALE)
 
     # GDZIE JEST PLIK champions.json?????????
+    # no zgubił się, ale webscraper go ma ogarniać i ogólnie już to powinno działać
     with open("../data/champions.json", "r") as champions_file:
         champions = json.load(champions_file)
 except Exception as e:
     print(e)
+
 
 def queue_stage(screen):
     accept_button_loc = template_matching(template=accept_button_img, search_img=screen)

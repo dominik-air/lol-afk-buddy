@@ -18,7 +18,7 @@ img_divs = soup.find_all("div", class_="floatleft")
 img_links = [div.find("img")["data-src"] for div in img_divs]
 
 # gets the current directory and creates a new folder for the images
-folder_path = r"..\app\img\champion_images2"
+folder_path = r"..\img\champion_images"
 if not os.path.exists(folder_path):
     os.mkdir(folder_path)
 
@@ -33,10 +33,9 @@ for i, img_link in enumerate(img_links):
             name = part[:-len(ending)].replace("%27", "'").replace("_", " ")  # RFC3986 to UTF-8
             champion_names.append(name.lower())
             break
-    with open(folder_path+f"\{name}.png", "wb") as image_file:
+    with open(folder_path + f"\{name}.png", "wb") as image_file:
         image_file.write(img.content)
 
 # saves the champion names (in lowercase) in a JSON file for future usage
-with open("data/champions.json", "w+") as save_file:
+with open("../data/champions.json", "w+") as save_file:
     json.dump(champion_names, save_file, indent=4)
-
