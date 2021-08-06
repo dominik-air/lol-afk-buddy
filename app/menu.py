@@ -3,8 +3,12 @@ from typing import overload
 import kivy
 from kivy.app import App
 from kivy.logger import ColoredFormatter
-from kivy.properties import ObjectProperty, NumericProperty,\
-                            ListProperty, StringProperty
+from kivy.properties import (
+    ObjectProperty,
+    NumericProperty,
+    ListProperty,
+    StringProperty,
+)
 from kivy.clock import Clock
 from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.uix.button import Button
@@ -23,8 +27,8 @@ from packages.utils import LOLClientStatusInformer
 import weakref
 from collections import defaultdict
 
-from champion_select import ChampionSelectUI, ChampionSelect,\
-                            ChampionSelectInterface
+from champion_select import ChampionSelectUI, ChampionSelect, ChampionSelectInterface
+
 # class InformationUnit(BoxLayout):
 #     pro = ObjectProperty(None)
 
@@ -37,6 +41,7 @@ from champion_select import ChampionSelectUI, ChampionSelect,\
 #             print(self.ids.pro_o.text)
 #             # self.pro.text = "hello"
 
+
 class AppLayout(TabbedPanel):
     # appLogger = ObjectProperty(None)
     prop = ObjectProperty(None)
@@ -44,7 +49,8 @@ class AppLayout(TabbedPanel):
 
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
-    
+
+
 # sproboj to zrobic tak jak tu:
 # https://stackoverflow.com/questions/53015154/kivy-custom-button-on-press-change-canvas-colour
 # class CustomButton(ButtonBehavior, Label):
@@ -54,10 +60,10 @@ class AppLayout(TabbedPanel):
 #         self.text = "text"
 #         with self.canvas.before:
 #             self.shape_colour = Color(rgba=(.5, .5, .5, .5))
-        
+
 #         def on_press(self, *args):
 #             self.background_color = 1, 0, 0, 1
-        
+
 #         def on_release(self, *args):
 #             self.background_color = .5, .5, .5, .5
 
@@ -74,9 +80,9 @@ class AppLayout(TabbedPanel):
 #         # print(f'counter: {InformationUnitWrapper._counter}')
 #         # self._height = InformationUnitWrapper._counter * (InformationUnit._height + self._spacing)
 #         # InformationUnitWrapper._spacing = self._spacing
-        
+
 #         # Clock.schedule_once(lambda dt: print(f'{InformationUnit._height}, {dt}'), 1)
-    
+
 #     # def init_height(self, dt):
 #     #     self._height = 3 * (InformationUnit._height + self._spacing)
 
@@ -96,17 +102,18 @@ class AppLayout(TabbedPanel):
 #         # self._weakref = weakref.ref(self)
 #         # InformationUnit._height = self._height
 
-#         # nalezy wypisac z opoznieniem bo 
+#         # nalezy wypisac z opoznieniem bo
 #         Clock.schedule_once(lambda a: print(f'{self.height}, {a}'))
+
 
 class InfoGridLayout(GridLayout):
     _spacing = NumericProperty(4)
-    _width_ratio = NumericProperty(.7)
+    _width_ratio = NumericProperty(0.7)
 
     def __init__(self, **kwargs):
         super(InfoGridLayout, self).__init__(**kwargs)
 
-        
+
 class MyButton(ButtonBehavior, Label):
     # Old code:
     # __refs__ = defaultdict(list)
@@ -117,12 +124,11 @@ class MyButton(ButtonBehavior, Label):
 
         self.bind(state=self.click_effect)
 
-
         # Old code:
         # self.__refs__[self.__class__].append(weakref.ref(self))
         self._app = kivy.app.App.get_running_app()
         MyButton._inst_name = self.__class__
-    
+
     # @classmethod
     # def get_intances_weakrefs(cls):
     #     '''return list of weakref to all instances which type is
@@ -134,16 +140,16 @@ class MyButton(ButtonBehavior, Label):
     #     '''return weakref to first instance which type is
     #     the same as given object'''
     #     return cls.__refs__[cls][0]
-    
+
     def click_effect(self, obj, value):
-        if value == 'normal':
+        if value == "normal":
             self.canvas.before.children[0].rgba = self._app.btn_normal_color
 
-        if value == 'down':
+        if value == "down":
             self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 
-class Prototype2App(App, Theme):
+class MenuApp(App, Theme):
     theme = Theme()
     lol_client = LOLClientStatusInformer()
     is_lol_client_running = NumericProperty(0)
@@ -154,29 +160,27 @@ class Prototype2App(App, Theme):
     bckg_col = ListProperty(theme.get_bckg_color())
     info_font_col = ListProperty(theme.get_info_font_color())
 
-
     # Buttons
-    _btn_color = ListProperty(theme.get_btn_color('normal'))
-    btn_normal_color = ListProperty(theme.get_btn_color('normal'))
-    btn_down_color = ListProperty(theme.get_btn_color('down'))
+    _btn_color = ListProperty(theme.get_btn_color("normal"))
+    btn_normal_color = ListProperty(theme.get_btn_color("normal"))
+    btn_down_color = ListProperty(theme.get_btn_color("down"))
 
     # Fonts
     _font_size = NumericProperty(16)
 
     # Other
-    info_wp_offset = NumericProperty(300) # information wrapper left padding
+    info_wp_offset = NumericProperty(300)  # information wrapper left padding
 
     # DEFINITIONS OF METHODS
     def __init__(self, **kwargs):
-        super(Prototype2App, self).__init__(**kwargs)
-
+        super(MenuApp, self).__init__(**kwargs)
 
     def update_theme(self, app):
-        '''This is overrided method of custom Theme class. Describes how
+        """This is overrided method of custom Theme class. Describes how
         how the theme should be updated, based on application's specific
         variables and methods. Try to stick to single responsibility
-        principle while editing this method, it should edit only the 
-        app instance's fields.'''
+        principle while editing this method, it should edit only the
+        app instance's fields."""
 
         # Change properties for info and deep background color
         self._replace_values(app.info_col, self.theme.get_info_color())
@@ -184,14 +188,13 @@ class Prototype2App(App, Theme):
         self._replace_values(app.bckg_col, self.theme.get_bckg_color())
 
         # Change properties for button (pressed and released) color
-        self._replace_values(app.btn_normal_color, self.theme.get_btn_color('normal'))
-        self._replace_values(app.btn_down_color, self.theme.get_btn_color('down'))
+        self._replace_values(app.btn_normal_color, self.theme.get_btn_color("normal"))
+        self._replace_values(app.btn_down_color, self.theme.get_btn_color("down"))
 
         # Change font color
         self._replace_values(app.info_font_col, self.theme.get_info_font_color())
 
         app._btn_color = app.btn_normal_color
-
 
         # future edits:
         pass
@@ -202,18 +205,18 @@ class Prototype2App(App, Theme):
 
     # Button's on_press methods definitions:
     def switch_dark(self, b):
-        self.theme.change_theme('dark')
+        self.theme.change_theme("dark")
         self.update_theme(self)
 
     def switch_light(self, b):
-        self.theme.change_theme('light')
+        self.theme.change_theme("light")
         self.update_theme(self)
-    
+
     def show_values(self, **kwargs):
         # accessing MyButton instances
         for i in MyButton.get_intances_weakrefs():
             print(i().text)
-    
+
     def load_new_theme_config(self):
         self.theme._load_theme_from_file()
         self.update_theme(self)
@@ -234,4 +237,4 @@ class Prototype2App(App, Theme):
 
 
 if __name__ == "__main__":
-    Prototype2App().run()
+    MenuApp().run()

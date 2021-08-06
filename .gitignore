@@ -114,6 +114,6 @@ dmypy.json
 .pyre/
 
 .idea
-/champion_images
 *.bat
 *.zip
+.vscode
