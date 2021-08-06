@@ -158,10 +158,10 @@ class ChampionArrayHandler:
     """
 
     def __init__(
-        self,
-        champion_action: ChampionAction,
-        champion_array: ChampionArray,
-        active_border_color: RGBA,
+            self,
+            champion_action: ChampionAction,
+            champion_array: ChampionArray,
+            active_border_color: RGBA,
     ):
         self.champion_action = champion_action
         self.champion_array = champion_array
@@ -247,6 +247,7 @@ class ChampionSelect(StackLayout):
 
 class ChampionSelectUI(BoxLayout):
     """ChampionSelect user interface that connects the banUI ChampionArrayHandler with pickUI ChampionArrayHandler."""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
