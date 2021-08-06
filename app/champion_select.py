@@ -1,3 +1,4 @@
+from enum import Enum, auto
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
@@ -13,12 +14,13 @@ from kivy.graphics import Line, Color
 from os import listdir
 from os.path import isfile, join
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List, Union
 
 # defines type hints and constants
 RGBA = List[float]
 BAN_COLOR = [1, 0, 0, 1]
 PICK_COLOR = [0.2, 0.6, 1, 1]
+SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
 # loads the images' names into a list
@@ -57,6 +59,12 @@ class PickChampion(ChampionAction):
             print(f"{champion_name} unpicked!")
 
 
+class ChampionStates(Enum):
+    INERT = auto()
+    BAN = auto()
+    PICK = auto()
+
+
 class ChampionButton(Button):
     """Creates champions as buttons with an additional outline border."""
 
@@ -66,9 +74,15 @@ class ChampionButton(Button):
         super().__init__(**kwargs)
 
         self.border_color: RGBA = DEFAULT_COLOR
+        self.champion_state = ChampionStates.INERT
 
-    def set_default_border_color(self):
-        self.border_color = DEFAULT_COLOR
+    def recolor(self):
+        color_mapping = {
+            ChampionStates.INERT: DEFAULT_COLOR,
+            ChampionStates.BAN: BAN_COLOR,
+            ChampionStates.PICK: PICK_COLOR,
+        }
+        self.border_color = color_mapping[self.champion_state]
 
 
 class SearchBar(TextInput):
@@ -87,7 +101,6 @@ class ChampionArray(BoxLayout):
         super().__init__(**kwargs)
 
         self.champions: List[ChampionButton] = []
-
         self._create_blank_array()
 
     def _create_blank_array(self, cols: int = 5):
@@ -100,17 +113,20 @@ class ChampionArray(BoxLayout):
         for dummy_label in ["Dummy"] * cols:
             self.add_widget(Label(text=dummy_label))
 
-    def add_champion(self, champion: ChampionButton):
+    def _create_array_buttons(self):
+        for champion in self.champions:
+            self.add_widget(Image(source=images_path + champion.text + ".png"))
+
+    def add_champion(self, new_champion: ChampionButton):
         """Adds a champion into the array by replacing the first from left champion placeholder.
 
         Args:
-            champion: input champion that is going to be added to the array.
+            new_champion: input champion that is going to be added to the array.
 
         """
         self.clear_widgets()
-        self.champions.append(champion)
-        for champion in self.champions:
-            self.add_widget(Image(source=images_path + champion.text + ".png"))
+        self.champions.append(new_champion)
+        self._create_array_buttons()
         self._create_blank_array(cols=5 - len(self.champions))
 
     def remove_champion(self, champion: ChampionButton):
@@ -122,15 +138,15 @@ class ChampionArray(BoxLayout):
         """
         self.clear_widgets()
         self.champions.remove(champion)
-        for champion in self.champions:
-            self.add_widget(Image(source=images_path + champion.text + ".png"))
+        self._create_array_buttons()
         self._create_blank_array(cols=5 - len(self.champions))
 
     def clear(self):
         """Clears the array from all champions."""
         self.clear_widgets()
         for champion in self.champions:
-            champion.set_default_border_color()
+            champion.champion_state = ChampionStates.INERT
+            champion.recolor()
         self.champions = []
         self._create_blank_array()
 
@@ -153,19 +169,15 @@ class ChampionArrayHandler:
     Attributes:
         champion_action: action that is performed on champions contained in the ChampionArray.
         champion_array: visual row array with a container for champions.
-        active_border_color: distinct color for a given champion_action.
+        state_type: the state ChampionButtons' states will be changed to if an action is performed.
 
     """
 
-    def __init__(
-            self,
-            champion_action: ChampionAction,
-            champion_array: ChampionArray,
-            active_border_color: RGBA,
-    ):
+    def __init__(self, champion_action: ChampionAction, champion_array: ChampionArray):
         self.champion_action = champion_action
         self.champion_array = champion_array
-        self.active_border_color = active_border_color
+        # FIXME: there's probably a more elegant way to determine the state_type
+        self.state_type = ChampionStates.BAN if isinstance(champion_action, BanChampion) else ChampionStates.PICK
 
     def action(self, champion: ChampionButton) -> None:
         """Services the logic behind ChampionActions and ChampionArrays. If the provided champion has been
@@ -176,12 +188,14 @@ class ChampionArrayHandler:
             champion: provided ChampionButton which will be serviced.
 
         """
-        if champion.border_color == self.active_border_color:
-            champion.border_color = DEFAULT_COLOR
+        if champion.champion_state == self.state_type:
+            champion.champion_state = ChampionStates.INERT
+            champion.recolor()
             self.champion_array.remove_champion(champion)
             self.champion_action.action(champion.text, is_active=False)
         else:
-            champion.border_color = self.active_border_color
+            champion.champion_state = self.state_type
+            champion.recolor()
             self.champion_array.add_champion(champion)
             self.champion_action.action(champion.text, is_active=True)
 
@@ -222,7 +236,8 @@ class ChampionSelect(StackLayout):
             new_champion: ChampionButton that will replace old values.
 
         """
-
+        self.champion.recolor()
+        new_champion.border_color = SELECT_COLOR
         self.champion = new_champion
         self.champion_name = new_champion.text
 
@@ -239,6 +254,11 @@ class ChampionSelect(StackLayout):
             # shows all champions if the searchbar is unused
             for champion in self.available_champions:
                 self.add_widget(champion)
+        # FIXME: might change it later
+        # evil python level hacking
+        elif found_champion := list(filter(lambda champ: champ.text.lower() == text.lower(), self.available_champions)):
+            self._set_champion(*found_champion)
+            self.add_widget(*found_champion)
         else:
             for champion in self.available_champions:
                 if text in champion.text.lower():
@@ -272,14 +292,10 @@ class ChampionSelectUI(BoxLayout):
         self.add_widget(pick_array)
 
         self.banUI = ChampionArrayHandler(
-            champion_action=BanChampion(),
-            champion_array=ban_array,
-            active_border_color=BAN_COLOR,
+            champion_action=BanChampion(), champion_array=ban_array
         )
         self.pickUI = ChampionArrayHandler(
-            champion_action=PickChampion(),
-            champion_array=pick_array,
-            active_border_color=PICK_COLOR,
+            champion_action=PickChampion(), champion_array=pick_array
         )
 
     def ban_champion(self, champion):
@@ -305,6 +321,7 @@ class ChampionSelectUI(BoxLayout):
 
 class ChampionSelectInterface(BoxLayout):
     """The main interface used by the .kv file."""
+
     pass
 
 
