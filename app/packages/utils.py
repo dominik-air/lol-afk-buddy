@@ -11,6 +11,9 @@ class SingletonMeta(type):
         return cls._instances[cls]
 
 
+# TODO: Optimize the code: _update_processes don't need to go through all
+# processes every thime this method is called, this is required only
+# in case when the cliend got killed (read closed using 'x' btn)
 class LOLClientStatusInformer(metaclass=SingletonMeta):
     PROCESS_NAME = "LeagueClient.exe"
 
@@ -31,7 +34,7 @@ class LOLClientStatusInformer(metaclass=SingletonMeta):
     def is_running(self):
         self._update_processes()
         self._update_is_running()
-        print(f"updating [{self._is_running}]")
+        # print(f"updating [{self._is_running}]")
         return self._is_running
 
     def get_pid(self):
