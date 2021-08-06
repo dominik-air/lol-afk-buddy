@@ -216,8 +216,8 @@ class ChampionSelect(StackLayout):
                 font_size=0,
                 size_hint=(None, None),
                 size=(dp(42), dp(42)),  # can't make it bigger without stretching
-                background_normal=images_path + image_name,
-                background_down=images_path + image_name,
+                background_normal=os.path.join(images_path, image_name),
+                background_down=os.path.join(images_path, image_name),
             )
 
             champ.bind(on_press=self._set_champion)
