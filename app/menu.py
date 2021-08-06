@@ -14,7 +14,9 @@ from kivy.clock import Clock
 from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
+from kivy.uix.spinner import SpinnerOption
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -40,6 +42,10 @@ class AppLayout(TabbedPanel):
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
 
+    def spinner_clicked(self, value):
+        opt = self.ids.spinner_id.text
+        print(f'The option "{opt}" have been selected.')
+
 
 class InfoGridLayout(GridLayout):
     '''This grid layout contains information bar objects in the
@@ -50,6 +56,32 @@ class InfoGridLayout(GridLayout):
 
     def __init__(self, **kwargs):
         super(InfoGridLayout, self).__init__(**kwargs)
+
+class SubInfoGridLayout(GridLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+
+# TODO: Try different approach here and in the MyButton class:
+# move click_effect to the MenuApp class (receive obj and value args)
+# move self.bind to click_effect methdos after that as obj.bind
+# if it won't work you can always try to keep 72 line (self._app = ki...)
+# and access the method in this way
+class SettingsSpinnerOption(SpinnerOption):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._app = kivy.app.App.get_running_app()
+        self.bind(state=self.click_effect)
+
+    def click_effect(self, obj, value):
+        '''Involves change in color on darker while the mouse button is clicked
+        and restores the previous color when the mouse button is released.'''
+
+        if value == "normal":
+            self.canvas.before.children[0].rgba = self._app.btn_normal_color
+
+        if value == "down":
+            self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 
 class MyButton(ButtonBehavior, Label):
@@ -75,6 +107,11 @@ class MyButton(ButtonBehavior, Label):
         if value == "down":
             self.canvas.before.children[0].rgba = self._app.btn_down_color
 
+class DropDown(ScrollView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(on_select=lambda inst, x: self.setatter(inst, 'text', x))
+        self.bind(on_release=self.open)
 
 class MenuApp(App, KivyTheme):
     '''App class.'''

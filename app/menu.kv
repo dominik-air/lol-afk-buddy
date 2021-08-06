@@ -1,4 +1,6 @@
 #:kivy 2.0.0
+#:import Factory kivy.factory.Factory
+
 <ChampionButton>:
     canvas.before:
         Color:
@@ -58,7 +60,7 @@
     spacing: self._spacing
 
 
-<SubInfoGridLayout@GridLayout>:
+<SubInfoGridLayout>:
     padd: 4
     canvas.before:
         Color:
@@ -120,6 +122,52 @@
 <InfoLabel@Label>:
     font_size: app._font_size
     color: app.info_font_col
+
+<SettingsSpinnerOption>:
+    btn_color: 0, 0, 0, 1
+    color: app.info_font_col
+    canvas.before:
+        Color:
+            # rgba: self.btn_color
+            rgba: app._btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [2]
+
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+
+    background_color: 1, 1, 0, 0
+
+<SettingsSpinner@Spinner>:
+    size_hint: 1, .7
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    text: 'default text'
+    values: ['opt1', 'opt2', 'opt3']
+    option_cls: Factory.get("SettingsSpinnerOption")
+
+    btn_color: 0, 0, 0, 1
+    color: app.info_font_col
+    canvas.before:
+        Color:
+            # rgba: self.btn_color
+            rgba: app._btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [2]
+
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+
+    background_color: 1, 1, 0, 0
+
+
 
 <MyScroll@ScrollView>:
     do_scroll_x: False
@@ -342,6 +390,7 @@
                     size: self.size
                     pos: self.pos
                     radius: [1]
+
             InfoGridLayout:
                 -padding: 0, 0, 0, 0
                 # -row_default_height: 100
@@ -450,5 +499,33 @@
                     # pos_hint: {'y': .5, 'x': 0}
                     text: "substract"
                     on_press: app.sub()
+
     TabbedPanelItem:
         text: "configure"
+
+        InfoGridLayout:
+            -padding: 0, 0, 0,0
+
+            SubInfoGridLayout:
+                cols: 2
+                # id: grasp
+
+                SettingsLabel:
+                    text: 'dupa'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    # Label:
+                    #     id: click_label
+                        # text: 'hello there'
+                    
+                    SettingsSpinner:
+                        id: spinner_id
+                        # text: 'pick an option this is addional text'
+                        # values: ['opt1', 'opt2']
+
+                        on_text: root.spinner_clicked(spinner_id.text)
+
