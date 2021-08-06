@@ -4,19 +4,32 @@ import cv2
 import pyautogui
 import time
 import json
+import os
 import numpy as np
 from mail import send_mail
 from logic.image_manipulation import template_matching
 
 # loading templates
-accept_button_img = cv2.imread("../data/accept.png", cv2.IMREAD_GRAYSCALE)
-ban_phase_indicator = cv2.imread("../data/ban a champion.png", cv2.IMREAD_GRAYSCALE)
-ban_button_img = cv2.imread("../data/after ban select.png", cv2.IMREAD_GRAYSCALE)
-search_bar = cv2.imread("../data/search bar banning.png", cv2.IMREAD_GRAYSCALE)
 
-with open("../data/champions.json", "r") as champions_file:
-    champions = json.load(champions_file)
+# IP - image processing
+PATH_IP = os.path.join(os.getcwd(), 'app', 'img', 'buttons_images')
+PATH_LABELS = os.path.join(os.getcwd(), 'app', 'img', 'champion_select_images')
 
+try:
+    accept_button_img = cv2.imread(os.path.join(PATH_IP, 'accept.png'),
+                                cv2.IMREAD_GRAYSCALE)
+    ban_phase_indicator = cv2.imread(os.path.join(PATH_LABELS), 'ban a champion.png',
+                                    cv2.IMREAD_GRAYSCALE)
+    ban_button_img = cv2.imread(os.path.join(PATH_IP, 'after ban select'),
+                                cv2.IMREAD_GRAYSCALE)
+    search_bar = cv2.imread(os.path.join(PATH_IP, 'search bar banning.png'),
+                            cv2.IMREAD_GRAYSCALE)
+
+    # GDZIE JEST PLIK champions.json?????????
+    with open("../data/champions.json", "r") as champions_file:
+        champions = json.load(champions_file)
+except Exception as e:
+    print(e)
 
 def queue_stage(screen):
     accept_button_loc = template_matching(template=accept_button_img, search_img=screen)

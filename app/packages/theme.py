@@ -1,4 +1,5 @@
 import json
+from ntpath import join
 import os
 
 
@@ -26,8 +27,13 @@ class Theme:
         #                         'dark': [.2, .2, .2, 1]}
 
     def _load_theme_from_file(self):
-        with open("theme.json", "r") as f:
-            read_themes = json.load(f)
+        theme_dir = os.path.join(os.getcwd(), 'config')
+
+        try:
+            with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
+                read_themes = json.load(f)
+        except Exception as e:
+            print(f'Problems while opening the file.\nException:\n{e}')
 
         self.info_color = read_themes["information_color"]
         self.deep_bckg_color = read_themes["deep_background_color"]

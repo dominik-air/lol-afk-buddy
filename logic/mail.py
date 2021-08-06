@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import smtplib
 import json
+import os
 from typing import Union
 
 
@@ -50,8 +51,13 @@ def create_message():
 
 
 def send_mail():
-    with open("../data/setup.json", "r+") as credentials:
-        setup_data = json.load(credentials)
+    PATH = os.path.join(os.getcwd(), 'app', 'config')
+    try:
+        with open(os.path.join(PATH, 'setup.json'), "r+") as credentials:
+            setup_data = json.load(credentials)
+    except Exception as e:
+        print(f'Exception: {e}')
+
     bot_email = setup_data["login"]
     bot_password = setup_data["password"]
     recipient = "business.zurek@gmail.com"
