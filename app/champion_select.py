@@ -77,12 +77,18 @@ class ChampionButton(Button):
         self.champion_state = ChampionStates.INERT
 
     def recolor(self):
+        """Changes the border color of the button according to the mapping provided below."""
         color_mapping = {
             ChampionStates.INERT: DEFAULT_COLOR,
             ChampionStates.BAN: BAN_COLOR,
             ChampionStates.PICK: PICK_COLOR,
         }
         self.border_color = color_mapping[self.champion_state]
+
+    def reset(self):
+        """Resets the button to the default state."""
+        self.champion_state = ChampionStates.INERT
+        self.recolor()
 
 
 class SearchBar(TextInput):
@@ -97,19 +103,22 @@ class ChampionArray(BoxLayout):
 
     champions = ListProperty()
 
-    def __init__(self, **kwargs):
+    def __init__(self, champion_number_limit: int = 5, **kwargs):
         super().__init__(**kwargs)
 
+        self.champion_number_limit = champion_number_limit
         self.champions: List[ChampionButton] = []
         self._create_blank_array()
 
-    def _create_blank_array(self, cols: int = 5):
+    def _create_blank_array(self, cols: int = None):
         """Creates a row of champion placeholders.
 
         Args:
             cols: number of columns in the row array.
 
         """
+        if cols is None:
+            cols = self.champion_number_limit
         for dummy_label in ["Dummy"] * cols:
             self.add_widget(Label(text=dummy_label))
 
@@ -118,16 +127,24 @@ class ChampionArray(BoxLayout):
             self.add_widget(Image(source=images_path + champion.text + ".png"))
 
     def add_champion(self, new_champion: ChampionButton):
-        """Adds a champion into the array by replacing the first from left champion placeholder.
+        """Adds a champion into the array by replacing the first from left placeholder. If the number of champions
+        exceeds the champion number limit then the least priority champion is substituted with the new champion.
 
         Args:
             new_champion: input champion that is going to be added to the array.
 
         """
+
+        if self.champion_number_limit > len(self.champions):
+            self.champions.append(new_champion)
+        else:
+            self.champions[-1].reset()
+            self.champions[-1] = new_champion
+
         self.clear_widgets()
-        self.champions.append(new_champion)
         self._create_array_buttons()
-        self._create_blank_array(cols=5 - len(self.champions))
+        # fills the unused spaces with placeholders
+        self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
     def remove_champion(self, champion: ChampionButton):
         """Removes the input champion from the array by replacing it with a champion placeholder and shifts the
@@ -139,7 +156,8 @@ class ChampionArray(BoxLayout):
         self.clear_widgets()
         self.champions.remove(champion)
         self._create_array_buttons()
-        self._create_blank_array(cols=5 - len(self.champions))
+        # fills the unused spaces with placeholders
+        self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
     def clear(self):
         """Clears the array from all champions."""
@@ -189,8 +207,7 @@ class ChampionArrayHandler:
 
         """
         if champion.champion_state == self.state_type:
-            champion.champion_state = ChampionStates.INERT
-            champion.recolor()
+            champion.reset()
             self.champion_array.remove_champion(champion)
             self.champion_action.action(champion.text, is_active=False)
         else:
