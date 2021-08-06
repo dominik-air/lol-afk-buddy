@@ -12,7 +12,7 @@ class Bot:
         self._password = password
 
         # setups the mail API
-        self.smtp_object = smtplib.SMTP('smtp.gmail.com', 587)
+        self.smtp_object = smtplib.SMTP("smtp.gmail.com", 587)
         self.smtp_object.ehlo()
         self.smtp_object.starttls()
 
@@ -43,10 +43,10 @@ class Bot:
 
 def create_message():
     subject = "Zaakceptowałem Ci grę w Ligusi!"
-    message = "Subject: " + subject + '\n'
+    message = "Subject: " + subject + "\n"
     message += "Szybko się wysraj, bo zaraz pickujesz ;)\n\n"
     message += "Pozdrawiam\nBot Blitzcrank"
-    return message.encode('utf-8')
+    return message.encode("utf-8")
 
 
 def send_mail():

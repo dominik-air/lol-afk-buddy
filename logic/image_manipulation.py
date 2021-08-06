@@ -18,6 +18,7 @@ class Cropper:
     Args:
         image: grayscale image the Cropper will work on.
     """
+
     def __init__(self, image: Image):
         self.__original_image = image
         self.__cropped_image = None
@@ -43,9 +44,13 @@ class Cropper:
         self.__top_left_corner = top_left_corner
         x_top_left, y_top_left = top_left_corner
         x_bottom_right, y_bottom_right = bottom_right_corner
-        self.__cropped_image = self.original_image[y_top_left:y_bottom_right, x_top_left:x_bottom_right]
+        self.__cropped_image = self.original_image[
+            y_top_left:y_bottom_right, x_top_left:x_bottom_right
+        ]
 
-    def cropped_image_coords_to_original_image_coords(self, x_cropped: int, y_cropped: int) -> Point:
+    def cropped_image_coords_to_original_image_coords(
+        self, x_cropped: int, y_cropped: int
+    ) -> Point:
         """
         Transforms cropped image coordinates back to the original image coordinates by adding the cropping offsets,
         that is the top left corner coordinates, to the cropped image coordinates.
@@ -57,10 +62,15 @@ class Cropper:
         Returns:
             The coordinates in the original image coordinates set.
         """
-        return x_cropped + self.__top_left_corner[0], y_cropped + self.__top_left_corner[1]
+        return (
+            x_cropped + self.__top_left_corner[0],
+            y_cropped + self.__top_left_corner[1],
+        )
 
 
-def template_matching(template: Image, search_img: Image, threshold: float = 0.80) -> Optional[DiagonalCorners]:
+def template_matching(
+    template: Image, search_img: Image, threshold: float = 0.80
+) -> Optional[DiagonalCorners]:
     """
     Function searches and finds the location of a template image in a larger search image and returns the diagonal
     corners of the best fit rectangle that exceeds a given threshold.
@@ -88,24 +98,40 @@ def template_matching(template: Image, search_img: Image, threshold: float = 0.8
 
 if __name__ == "__main__":
     # loads templates
-    accept_button_img = cv2.imread('../data/accept.png', cv2.IMREAD_GRAYSCALE)
-    decline_button_img = cv2.imread('../data/decline.png', cv2.IMREAD_GRAYSCALE)
+    accept_button_img = cv2.imread("../data/accept.png", cv2.IMREAD_GRAYSCALE)
+    decline_button_img = cv2.imread("../data/decline.png", cv2.IMREAD_GRAYSCALE)
 
     # loads the image of search and makes a grayscale copy for template matching
-    test_screen = cv2.cvtColor(cv2.imread('../data/test_screen.png'), cv2.COLOR_BGR2RGB)
+    test_screen = cv2.cvtColor(cv2.imread("../data/test_screen.png"), cv2.COLOR_BGR2RGB)
     gray_test_screen = cv2.cvtColor(test_screen, cv2.COLOR_RGB2GRAY)
 
-    top_left_accept, bottom_right_accept = template_matching(template=accept_button_img, search_img=gray_test_screen)
-    top_left_decline, bottom_right_decline = template_matching(template=decline_button_img, search_img=gray_test_screen)
+    top_left_accept, bottom_right_accept = template_matching(
+        template=accept_button_img, search_img=gray_test_screen
+    )
+    top_left_decline, bottom_right_decline = template_matching(
+        template=decline_button_img, search_img=gray_test_screen
+    )
 
     # draws rectangles around detected templates
-    cv2.rectangle(test_screen, top_left_accept, bottom_right_accept, color=(0, 255, 0), thickness=2)
-    cv2.rectangle(test_screen, top_left_decline, bottom_right_decline, color=(255, 0, 0), thickness=2)
+    cv2.rectangle(
+        test_screen,
+        top_left_accept,
+        bottom_right_accept,
+        color=(0, 255, 0),
+        thickness=2,
+    )
+    cv2.rectangle(
+        test_screen,
+        top_left_decline,
+        bottom_right_decline,
+        color=(255, 0, 0),
+        thickness=2,
+    )
 
     # plots the results
     plt.figure(figsize=(16, 9))
     plt.imshow(test_screen)
     plt.xticks([], [])
     plt.yticks([], [])
-    plt.title('Template matching test', fontsize=20)
+    plt.title("Template matching test", fontsize=20)
     plt.show()

@@ -6,4 +6,3 @@ class State:
 class StateMachine:
     def __init__(self):
         raise NotImplementedError
-
