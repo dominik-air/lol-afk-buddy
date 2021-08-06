@@ -2,6 +2,7 @@ from enum import Enum, auto
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
@@ -98,6 +99,12 @@ class SearchBar(TextInput):
         self.text = ""
 
 
+class ChampionArrayButton(ButtonBehavior, Image):
+    def __init__(self, champion_name: str, **kwargs):
+        super(ChampionArrayButton, self).__init__(**kwargs)
+        self.champion_name = champion_name
+
+
 class ChampionArray(BoxLayout):
     """A BoxLayout child class used as a container for champions selected by the user."""
 
@@ -124,7 +131,10 @@ class ChampionArray(BoxLayout):
 
     def _create_array_buttons(self):
         for champion in self.champions:
-            self.add_widget(Image(source=images_path + champion.text + ".png"))
+            array_button = ChampionArrayButton(champion_name=champion.text,
+                                               source=images_path + champion.text + ".png")
+            array_button.bind(on_press=self.remove_champion)
+            self.add_widget(array_button)
 
     def add_champion(self, new_champion: ChampionButton):
         """Adds a champion into the array by replacing the first from left placeholder. If the number of champions
@@ -146,13 +156,18 @@ class ChampionArray(BoxLayout):
         # fills the unused spaces with placeholders
         self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
-    def remove_champion(self, champion: ChampionButton):
+    def remove_champion(self, champion: Union[ChampionButton, ChampionArrayButton]):
         """Removes the input champion from the array by replacing it with a champion placeholder and shifts the
         remaining champions in the array to the left if necessary.
 
          Args:
                 champion: input champion that is going to be removed from the array.
         """
+        if isinstance(champion, ChampionArrayButton):
+            counterpart: ChampionButton = self._find_champion_button_counterpart(champion)
+            counterpart.reset()
+            champion = counterpart
+
         self.clear_widgets()
         self.champions.remove(champion)
         self._create_array_buttons()
@@ -179,6 +194,9 @@ class ChampionArray(BoxLayout):
 
         """
         return champion in self.champions
+
+    def _find_champion_button_counterpart(self, array_button: ChampionArrayButton) -> ChampionButton:
+        return list(filter(lambda champ: champ.text.lower() == array_button.champion_name.lower(), self.champions))[0]
 
 
 class ChampionArrayHandler:
