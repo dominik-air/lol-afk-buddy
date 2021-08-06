@@ -12,6 +12,8 @@ from kivy.uix.label import Label
 from kivy.graphics import Line, Color
 from os import listdir
 from os.path import isfile, join
+import os
+# import os
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -22,7 +24,14 @@ PICK_COLOR = [0.2, 0.6, 1, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
 # loads the images' names into a list
-images_path = "../img/champion_images/"
+# images_path = os.path.abspath("../../SummerProject/testGit/img/champion_images/")
+# images_path = os.path.abspath("../img/champion_images/")
+
+print( images_path := os.path.join(os.path.abspath('.'), 'img', 'champion_images'))
+
+# print(os.getcwd)
+# os.chdir(images_path)
+# print(listdir())
 images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
 
 

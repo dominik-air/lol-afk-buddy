@@ -35,16 +35,13 @@ class Theme:
         #                         'dark': [.2, .2, .2, 1]}
 
     def _load_theme_from_file(self):
-        # theme_dir = os.path.join(os.getcwd(), 'config')
-        theme_dir = "../config"  # works for me
+        theme_dir = os.path.join(os.getcwd(), 'config')
+        # theme_dir = "../config"  # works for me
 
         # FIXME: poniższa konstrukcja jest co najmniej 'wątpliwa'
         # https://www.geeksforgeeks.org/with-statement-in-python/
-        try:
-            with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
-                read_themes = json.load(f)
-        except Exception as e:
-            print(f'Problems while opening the file.\nException:\n{e}')
+        with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
+            read_themes = json.load(f)
 
         self.info_color = read_themes["information_color"]
         self.deep_bckg_color = read_themes["deep_background_color"]
