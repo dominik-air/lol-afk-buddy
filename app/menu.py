@@ -149,7 +149,7 @@ class MyButton(ButtonBehavior, Label):
             self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 
-class MenuApp(App, KivyTheme, Theme):
+class MenuApp(App, KivyTheme):
     # theme = Theme()
     lol_client = LOLClientStatusInformer()
     is_lol_client_running = NumericProperty(0)
