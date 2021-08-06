@@ -1,5 +1,4 @@
-from functools import wraps
-from typing import overload
+# kivy packages:
 import kivy
 from kivy.app import App
 from kivy.logger import ColoredFormatter
@@ -9,104 +8,43 @@ from kivy.properties import (
     ListProperty,
     StringProperty,
 )
+from kivy.core.window import Window
+from kivy.factory import Factory
 from kivy.clock import Clock
 from kivy.uix.behaviors.button import ButtonBehavior
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
-from kivy.core.window import Window
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.factory import Factory
 from kivy.graphics import Color
 from kivy.graphics import Canvas
 from kivy.utils import rgba
+
+# non-kivy packages:
+from collections import defaultdict
+from functools import wraps
+from typing import overload
+
+# my packages:
 from packages.theme import Theme, KivyTheme
 from packages.utils import LOLClientStatusInformer
-import weakref
-from collections import defaultdict
-
-from champion_select import ChampionSelectUI, ChampionSelect, ChampionSelectInterface
-
-# class InformationUnit(BoxLayout):
-#     pro = ObjectProperty(None)
-
-# class InformationUnit(BoxLayout):
-#     # pro = ObjectProperty(None)
-
-#     def __init__(self, **kwargs):
-#             super(InformationUnit, self).__init__(**kwargs)
-#             print("constructing InformationUnit")
-#             print(self.ids.pro_o.text)
-#             # self.pro.text = "hello"
+from champion_select import (
+    ChampionSelectUI, ChampionSelect, ChampionSelectInterface)
 
 
 class AppLayout(TabbedPanel):
-    # appLogger = ObjectProperty(None)
-    prop = ObjectProperty(None)
-    # alist = ListProperty([])
+    '''Main container in the kivy file.'''
 
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
 
 
-# sproboj to zrobic tak jak tu:
-# https://stackoverflow.com/questions/53015154/kivy-custom-button-on-press-change-canvas-colour
-# class CustomButton(ButtonBehavior, Label):
-#     def __init__(self, **kwargs):
-#         super(CustomButton, self).__init__(**kwargs)
-
-#         self.text = "text"
-#         with self.canvas.before:
-#             self.shape_colour = Color(rgba=(.5, .5, .5, .5))
-
-#         def on_press(self, *args):
-#             self.background_color = 1, 0, 0, 1
-
-#         def on_release(self, *args):
-#             self.background_color = .5, .5, .5, .5
-
-# class InformationUnitWrapper(BoxLayout):
-#     _s = 10
-#     _spacing = NumericProperty(None)
-#     _height = NumericProperty(None)
-#     _counter = 0
-#     def __init__(self, **kwargs):
-#         super(InformationUnitWrapper, self).__init__(**kwargs)
-#         self._spacing = self._s
-#         # Clock.schedule_once(self.init_height)
-#         self._height = (InformationUnit._h + self._s)
-#         # print(f'counter: {InformationUnitWrapper._counter}')
-#         # self._height = InformationUnitWrapper._counter * (InformationUnit._height + self._spacing)
-#         # InformationUnitWrapper._spacing = self._spacing
-
-#         # Clock.schedule_once(lambda dt: print(f'{InformationUnit._height}, {dt}'), 1)
-
-#     # def init_height(self, dt):
-#     #     self._height = 3 * (InformationUnit._height + self._spacing)
-
-#     @classmethod
-#     def increase_counter(cls):
-#         cls._counter += 1
-
-
-# class InformationUnit(BoxLayout):
-#     _h = 50
-#     _height = NumericProperty(None)
-#     # _weakref = None
-#     def __init__(self, **kwargs):
-#         super(InformationUnit, self).__init__(**kwargs)
-#         self._height = self._h
-#         InformationUnitWrapper.increase_counter()
-#         # self._weakref = weakref.ref(self)
-#         # InformationUnit._height = self._height
-
-#         # nalezy wypisac z opoznieniem bo
-#         Clock.schedule_once(lambda a: print(f'{self.height}, {a}'))
-
-
 class InfoGridLayout(GridLayout):
+    '''This grid layout contains information bar objects in the
+    'pre-game' and 'in-game' sections.'''
+
     _spacing = NumericProperty(4)
     _width_ratio = NumericProperty(0.7)
 
@@ -115,9 +53,7 @@ class InfoGridLayout(GridLayout):
 
 
 class MyButton(ButtonBehavior, Label):
-    # Old code:
-    # __refs__ = defaultdict(list)
-    # _inst_name = None
+    '''Class created to represent my own button appearance and behaviour.'''
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -129,19 +65,10 @@ class MyButton(ButtonBehavior, Label):
         self._app = kivy.app.App.get_running_app()
         MyButton._inst_name = self.__class__
 
-    # @classmethod
-    # def get_intances_weakrefs(cls):
-    #     '''return list of weakref to all instances which type is
-    #     the same as given object'''
-    #     return cls.__refs__[cls]
-
-    # @classmethod
-    # def get_intance_weakref(cls):
-    #     '''return weakref to first instance which type is
-    #     the same as given object'''
-    #     return cls.__refs__[cls][0]
-
     def click_effect(self, obj, value):
+        '''Involves change in color on darker while the mouse button is clicked
+        and restores the previous color when the mouse button is released.'''
+
         if value == "normal":
             self.canvas.before.children[0].rgba = self._app.btn_normal_color
 
@@ -150,20 +77,22 @@ class MyButton(ButtonBehavior, Label):
 
 
 class MenuApp(App, KivyTheme):
-    # theme = Theme()
+    '''App class.'''
+
+    # LOL client properties
     lol_client = LOLClientStatusInformer()
     is_lol_client_running = NumericProperty(0)
 
-    # Fonts
+    # Font settings
     _font_size = NumericProperty(16)
 
-    # Other
+    # Appearance settings
     info_wp_offset = NumericProperty(300)  # information wrapper left padding
+
 
     # DEFINITIONS OF METHODS
     def __init__(self, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
-
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
@@ -178,15 +107,14 @@ class MenuApp(App, KivyTheme):
         self.change_theme("light")
         self.update_theme(self)
 
-    def show_values(self, **kwargs):
-        # accessing MyButton instances
-        for i in MyButton.get_intances_weakrefs():
-            print(i().text)
-
     def load_new_theme_config(self):
+        '''After modyfing the 'theme.json' this method is required to run
+        in order to apply changes in the program at run-time.'''
         self._load_theme_from_file()
         self.update_theme(self)
 
+    # add and sub methods increase/decrease the font size.
+    # TODO: Change their name in the future
     def add(self):
         self._font_size += 2
 
@@ -194,11 +122,13 @@ class MenuApp(App, KivyTheme):
         self._font_size -= 2
 
     def changing_something(self):
+        '''This methods does nothing. Use it carefully.'''
         pass
+
 
     def build(self):
         app = AppLayout()
-        Clock.schedule_interval(self.update_lol_client_status_property, 1)
+        Clock.schedule_interval(self.update_lol_client_status_property, 2)
         return app
 
 
