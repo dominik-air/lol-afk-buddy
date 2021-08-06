@@ -154,17 +154,6 @@ class MenuApp(App, KivyTheme):
     lol_client = LOLClientStatusInformer()
     is_lol_client_running = NumericProperty(0)
 
-    # Static elements
-    # info_col = ListProperty(theme.get_info_color())
-    # deep_bckg_col = ListProperty(theme.get_deep_bckg_color())
-    # bckg_col = ListProperty(theme.get_bckg_color())
-    # info_font_col = ListProperty(theme.get_info_font_color())
-
-    # Buttons
-    # _btn_color = ListProperty(theme.get_btn_color("normal"))
-    # btn_normal_color = ListProperty(theme.get_btn_color("normal"))
-    # btn_down_color = ListProperty(theme.get_btn_color("down"))
-
     # Fonts
     _font_size = NumericProperty(16)
 
