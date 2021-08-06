@@ -35,8 +35,11 @@ class Theme:
         #                         'dark': [.2, .2, .2, 1]}
 
     def _load_theme_from_file(self):
-        theme_dir = os.path.join(os.getcwd(), 'config')
+        # theme_dir = os.path.join(os.getcwd(), 'config')
+        theme_dir = "../config"  # works for me
 
+        # FIXME: poniższa konstrukcja jest co najmniej 'wątpliwa'
+        # https://www.geeksforgeeks.org/with-statement-in-python/
         try:
             with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
                 read_themes = json.load(f)

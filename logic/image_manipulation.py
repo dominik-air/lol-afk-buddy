@@ -98,6 +98,7 @@ def template_matching(
 
 if __name__ == "__main__":
     # loads templates
+    # FIXME: the image paths are incorrect, but there is no need to correct them right now
     accept_button_img = cv2.imread("../data/accept.png", cv2.IMREAD_GRAYSCALE)
     decline_button_img = cv2.imread("../data/decline.png", cv2.IMREAD_GRAYSCALE)
 
