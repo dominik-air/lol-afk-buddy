@@ -22,7 +22,7 @@ from kivy.factory import Factory
 from kivy.graphics import Color
 from kivy.graphics import Canvas
 from kivy.utils import rgba
-from packages.theme import Theme
+from packages.theme import Theme, KivyTheme
 from packages.utils import LOLClientStatusInformer
 import weakref
 from collections import defaultdict
@@ -149,21 +149,21 @@ class MyButton(ButtonBehavior, Label):
             self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 
-class MenuApp(App, Theme):
-    theme = Theme()
+class MenuApp(App, KivyTheme, Theme):
+    # theme = Theme()
     lol_client = LOLClientStatusInformer()
     is_lol_client_running = NumericProperty(0)
 
     # Static elements
-    info_col = ListProperty(theme.get_info_color())
-    deep_bckg_col = ListProperty(theme.get_deep_bckg_color())
-    bckg_col = ListProperty(theme.get_bckg_color())
-    info_font_col = ListProperty(theme.get_info_font_color())
+    # info_col = ListProperty(theme.get_info_color())
+    # deep_bckg_col = ListProperty(theme.get_deep_bckg_color())
+    # bckg_col = ListProperty(theme.get_bckg_color())
+    # info_font_col = ListProperty(theme.get_info_font_color())
 
     # Buttons
-    _btn_color = ListProperty(theme.get_btn_color("normal"))
-    btn_normal_color = ListProperty(theme.get_btn_color("normal"))
-    btn_down_color = ListProperty(theme.get_btn_color("down"))
+    # _btn_color = ListProperty(theme.get_btn_color("normal"))
+    # btn_normal_color = ListProperty(theme.get_btn_color("normal"))
+    # btn_down_color = ListProperty(theme.get_btn_color("down"))
 
     # Fonts
     _font_size = NumericProperty(16)
@@ -175,29 +175,6 @@ class MenuApp(App, Theme):
     def __init__(self, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
 
-    def update_theme(self, app):
-        """This is overrided method of custom Theme class. Describes how
-        how the theme should be updated, based on application's specific
-        variables and methods. Try to stick to single responsibility
-        principle while editing this method, it should edit only the
-        app instance's fields."""
-
-        # Change properties for info and deep background color
-        self._replace_values(app.info_col, self.theme.get_info_color())
-        self._replace_values(app.deep_bckg_col, self.theme.get_deep_bckg_color())
-        self._replace_values(app.bckg_col, self.theme.get_bckg_color())
-
-        # Change properties for button (pressed and released) color
-        self._replace_values(app.btn_normal_color, self.theme.get_btn_color("normal"))
-        self._replace_values(app.btn_down_color, self.theme.get_btn_color("down"))
-
-        # Change font color
-        self._replace_values(app.info_font_col, self.theme.get_info_font_color())
-
-        app._btn_color = app.btn_normal_color
-
-        # future edits:
-        pass
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
@@ -205,11 +182,11 @@ class MenuApp(App, Theme):
 
     # Button's on_press methods definitions:
     def switch_dark(self, b):
-        self.theme.change_theme("dark")
+        self.change_theme("dark")
         self.update_theme(self)
 
     def switch_light(self, b):
-        self.theme.change_theme("light")
+        self.change_theme("light")
         self.update_theme(self)
 
     def show_values(self, **kwargs):
@@ -218,7 +195,7 @@ class MenuApp(App, Theme):
             print(i().text)
 
     def load_new_theme_config(self):
-        self.theme._load_theme_from_file()
+        self._load_theme_from_file()
         self.update_theme(self)
 
     def add(self):

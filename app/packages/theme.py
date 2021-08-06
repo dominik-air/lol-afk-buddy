@@ -1,6 +1,14 @@
 import json
 from ntpath import join
+from typing import List
+from kivy.uix.widget import Widget
 import os
+from kivy.properties import (
+    ObjectProperty,
+    NumericProperty,
+    ListProperty,
+    StringProperty,
+)
 
 
 class Theme:
@@ -53,6 +61,11 @@ class Theme:
         """Switches between light/dark theme"""
         self.theme_type = _type if _type in self.THEMES else self.theme_type
 
+    def update_theme(self, app):
+        '''Abstract method, should be overrided after inheriting this class'''
+        pass
+
+    # Getters
     def get_info_color(self):
         """Get information unit color"""
         return self.info_color[self.theme_type]
@@ -75,8 +88,6 @@ class Theme:
         elif state == "down":
             return self._btn_down_color[self.theme_type]
 
-    def update_theme(self, app):
-        pass
 
     #     '''Replaces values of the main app instance properties wihich are
     #     used in kv file witch those defined in Theme class'''
@@ -85,3 +96,50 @@ class Theme:
     #     # self._replace_values(app.deep_bckg_col, self.get_deep_bckg_color())
     #     self._replace_values(app.color_normal, self.get_btn_color('normal'))
     #     self._replace_values(app.color_down, self.get_btn_color('down'))
+
+class KivyTheme(Widget, Theme):
+    info_col = ListProperty(None)
+    deep_bckg_col = ListProperty(None)
+    bckg_col = ListProperty(None)
+    info_font_col = ListProperty(None)
+
+    _btn_color = ListProperty(None)
+    btn_normal_color = ListProperty(None)
+    btn_down_color = ListProperty(None)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        # Static elements
+        self.info_col = self.get_info_color()
+        self.deep_bckg_col = self.get_deep_bckg_color()
+        self.bckg_col = self.get_bckg_color()
+        self.info_font_col = self.get_info_font_color()
+
+        self._btn_color = self.get_btn_color("normal")
+        self.btn_normal_color = self.get_btn_color("normal")
+        self.btn_down_color = self.get_btn_color("down")
+
+    def update_theme(self, app):
+        """This is overrided method of custom Theme class. Describes how
+        how the theme should be updated, based on application's specific
+        variables and methods. Try to stick to single responsibility
+        principle while editing this method, it should edit only the
+        app instance's fields."""
+
+        # Change properties for info and deep background color
+        self._replace_values(app.info_col, self.get_info_color())
+        self._replace_values(app.deep_bckg_col, self.get_deep_bckg_color())
+        self._replace_values(app.bckg_col, self.get_bckg_color())
+
+        # Change properties for button (pressed and released) color
+        self._replace_values(app.btn_normal_color, self.get_btn_color("normal"))
+        self._replace_values(app.btn_down_color, self.get_btn_color("down"))
+
+        # Change font color
+        self._replace_values(app.info_font_col, self.get_info_font_color())
+
+        app._btn_color = app.btn_normal_color
+
+        # future edits:
+        pass
