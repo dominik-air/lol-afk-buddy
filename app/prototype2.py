@@ -18,8 +18,8 @@ from kivy.factory import Factory
 from kivy.graphics import Color
 from kivy.graphics import Canvas
 from kivy.utils import rgba
-from theme import Theme
-from utils import LOLClientStatusInformer
+from packages.theme import Theme
+from packages.utils import LOLClientStatusInformer
 import weakref
 from collections import defaultdict
 
