@@ -110,6 +110,43 @@
     -size_hint_y: .7
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
+<PlusMinusButton@BoxLayout>:
+    methodAdd: root.go
+    methodSub: root.go
+    size_hint_x: .5
+    padding: 20, 0, 20, 0
+
+    # Align to right
+    Widget:
+
+    MyButton:
+        id: minusButtonId
+        -size_hint: None, .7
+        -width: self.height
+        -pos_hint: {'center_x': .5, 'center_y': .5}
+        text: '-'
+
+        on_press: root.minusButton(root)
+
+    TextInput:
+        size_hint_x: None
+        width: 50
+        size_hint_y: .7
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        text: str(app._font_size)
+        cursor_color: 0, 0, 0, .8
+        halign: 'center'
+        # valign: 'middle'
+        padding_y: (self.height)/4
+
+    MyButton:
+        -size_hint: None, .7
+        -width: self.height
+        -pos_hint: {'center_x': .5, 'center_y': .5}
+        text: '+'
+        
+        on_press: root.plusButton(root)
 
 <SettingsLabel@Label>:
     font_size: app._font_size
@@ -166,8 +203,6 @@
     backgroudn_disabled_normal: ''
 
     background_color: 1, 1, 0, 0
-
-
 
 <MyScroll@ScrollView>:
     do_scroll_x: False
@@ -428,41 +463,10 @@
                     SettingsLabel:
                         text: 'Font size:'
 
-                    BoxLayout:
-                        size_hint_x: .5
-                        padding: 20, 0, 20, 0
-                        
-
-                        # Align to right
-                        Widget:
-
-                        MyButton:
-                            -size_hint: None, .7
-                            -width: self.height
-                            -pos_hint: {'center_x': .5, 'center_y': .5}
-                            text: '-'
-
-                            on_press: app.sub()
-
-                        TextInput:
-                            size_hint_x: None
-                            width: 50
-                            size_hint_y: .7
-                            pos_hint: {'center_x': .5, 'center_y': .5}
-
-                            text: str(app._font_size)
-                            cursor_color: 0, 0, 0, .8
-                            halign: 'center'
-                            # valign: 'middle'
-                            padding_y: (self.height)/4
-
-                        MyButton:
-                            -size_hint: None, .7
-                            -width: self.height
-                            -pos_hint: {'center_x': .5, 'center_y': .5}
-                            text: '+'
-                            
-                            on_press: app.add()
+                    # plusminusbutton
+                    PlusMinusButton:
+                        methodAdd: app.add
+                        methodSub: app.sub
 
                 # -------------------- some SETTINGS ------------------- #
                 SubInfoGridLayout:
@@ -529,3 +533,27 @@
 
                         on_text: root.spinner_clicked(spinner_id.text)
 
+
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'Size of chamipon array'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    PlusMinusButton:
+                        methodAdd: app.fooA
+                        methodSub: app.fooB
+
+                        # MyButton:
+                            # -size_hint: None, .7
+                            # -width: self.height
+                            # -pos_hint: {'center_x': .5, 'center_y': .5}
+                            # -text: '-'
+
+                            # on_press: hh.go()
+                    

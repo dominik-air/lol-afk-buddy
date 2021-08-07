@@ -16,7 +16,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.widget import Widget
-from kivy.uix.spinner import SpinnerOption
+from kivy.uix.spinner import SpinnerOption, Spinner
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -62,11 +62,12 @@ class SubInfoGridLayout(GridLayout):
         super().__init__(**kwargs)
     
 
-# TODO: Try different approach here and in the MyButton class:
-# move click_effect to the MenuApp class (receive obj and value args)
-# move self.bind to click_effect methdos after that as obj.bind
-# if it won't work you can always try to keep 72 line (self._app = ki...)
-# and access the method in this way
+class SettingsSpinner(Spinner):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._app = kivy.app.App.get_running_app()
+        self.bind(state=self._app.click_effect)
+
 class SettingsSpinnerOption(SpinnerOption):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -92,6 +93,24 @@ class MyButton(ButtonBehavior, Label):
 
         self._app = kivy.app.App.get_running_app()
         self.bind(state=self._app.click_effect)
+
+class PlusMinusButton(BoxLayout):
+    # methodAdd = ObjectProperty(None)
+    # methodSub = ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def minusButton(self, obj):
+        print(f'Minus button has been clicked, sent: {obj.methodAdd}.')
+        obj.methodAdd()
+    
+    def plusButton(self, obj):
+        print(f'Plus button has been clicked. sent: {obj.methodSub}')
+        obj.methodSub()
+    
+    def go(self):
+        print('go is running')
+    
 
 
 class DropDown(ScrollView):
@@ -144,6 +163,12 @@ class MenuApp(App, KivyTheme):
 
     def sub(self):
         self._font_size -= 2
+    
+    def fooA(self):
+        print(f'fooA has been called.')
+
+    def fooB(self):
+        print(f'fooB has been called.')
 
     def changing_something(self):
         '''This methods does nothing. Use it carefully.'''
