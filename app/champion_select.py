@@ -61,6 +61,7 @@ class PickChampion(ChampionAction):
 
 
 class ChampionStates(Enum):
+    """Class determines the states a ChampionButton can be in."""
     INERT = auto()
     BAN = auto()
     PICK = auto()
@@ -100,9 +101,19 @@ class SearchBar(TextInput):
 
 
 class ChampionArrayButton(ButtonBehavior, Image):
+    """Class for the buttons in a ChampionArray."""
+
     def __init__(self, champion_name: str, **kwargs):
         super(ChampionArrayButton, self).__init__(**kwargs)
         self.champion_name = champion_name
+
+
+class ChampionPlaceholder(Image):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.source = "../img/buttons_images/placeholder.png"
+        self.name = "Dummy"
 
 
 class ChampionArray(BoxLayout):
@@ -126,8 +137,8 @@ class ChampionArray(BoxLayout):
         """
         if cols is None:
             cols = self.champion_number_limit
-        for dummy_label in ["Dummy"] * cols:
-            self.add_widget(Label(text=dummy_label))
+        for i in range(cols):
+            self.add_widget(ChampionPlaceholder())
 
     def _create_array_buttons(self):
         for champion in self.champions:
@@ -196,6 +207,15 @@ class ChampionArray(BoxLayout):
         return champion in self.champions
 
     def _find_champion_button_counterpart(self, array_button: ChampionArrayButton) -> ChampionButton:
+        """Searches for the ChampionButton counterpart of a ChampionArrayButton.
+
+        Args:
+            array_button: the ChampionArrayButton we want to find a ChampionButton counterpart for.
+
+        Returns:
+            ChampionButton. The method assumes that there is no need to check for the existence of such counterpart.
+        """
+
         return list(filter(lambda champ: champ.text.lower() == array_button.champion_name.lower(), self.champions))[0]
 
 
@@ -244,8 +264,8 @@ class ChampionSelect(StackLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.champion: ChampionButton = ChampionButton(text="Dummy")
-        self.champion_name: str = "Dummy"
+        self.champion: Union[ChampionButton, ChampionPlaceholder] = ChampionPlaceholder()
+        self.champion_name: str = self.champion.name
 
         self.available_champions: List[ChampionButton] = []
 
@@ -271,7 +291,9 @@ class ChampionSelect(StackLayout):
             new_champion: ChampionButton that will replace old values.
 
         """
-        self.champion.recolor()
+        if not isinstance(self.champion, ChampionPlaceholder):
+            self.champion.recolor()
+
         new_champion.border_color = SELECT_COLOR
         self.champion = new_champion
         self.champion_name = new_champion.text
@@ -301,7 +323,7 @@ class ChampionSelect(StackLayout):
 
 
 class ChampionSelectUI(BoxLayout):
-    """ChampionSelect user interface that connects the banUI ChampionArrayHandler with pickUI ChampionArrayHandler."""
+    """ChampionSelect user interface that connects the ban_handler with pick_handler."""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -326,31 +348,55 @@ class ChampionSelectUI(BoxLayout):
         self.add_widget(pick_array_label)
         self.add_widget(pick_array)
 
-        self.banUI = ChampionArrayHandler(
+        self.ban_handler = ChampionArrayHandler(
             champion_action=BanChampion(), champion_array=ban_array
         )
-        self.pickUI = ChampionArrayHandler(
+        self.pick_handler = ChampionArrayHandler(
             champion_action=PickChampion(), champion_array=pick_array
         )
 
-    def ban_champion(self, champion):
-        if self.pickUI.champion_array.contains(champion):
-            # if the champion is already picked but we want to ban it we need to unpick it
-            self.pickUI.action(champion)
-        self.banUI.action(champion)
+    def ban_champion(self, champion: Union[ChampionButton, ChampionPlaceholder]):
+        """
+        Redirects the BanChampion action of the ban_handler. It also checks if a champion needs to be removed from the
+        pickUI ChampionArray in case it contains this specific champion(a champion can't be a ban and a pick
+        simultaneously).
+        """
 
-    def pick_champion(self, champion):
-        if self.banUI.champion_array.contains(champion):
+        if not isinstance(champion, ChampionButton):
+            # if it's not a ChampionButton we should not touch it
+            return
+
+        if self.pick_handler.champion_array.contains(champion):
+            # if the champion is already picked but we want to ban it we need to unpick it
+            self.pick_handler.action(champion)
+        self.ban_handler.action(champion)
+
+    def pick_champion(self, champion: Union[ChampionButton, ChampionPlaceholder]):
+        """
+        Redirects the PickChampion action of the pick_handler. It also checks if a champion needs to be removed from
+        the ban_handler ChampionArray in case it contains this specific champion(a champion can't be a ban and a pick
+        simultaneously).
+        """
+
+        if not isinstance(champion, ChampionButton):
+            # if it's not a ChampionButton we should not touch it
+            return
+
+        if self.ban_handler.champion_array.contains(champion):
             # if the champion is already banned but we want to pick it we need to unban it
-            self.banUI.action(champion)
-        self.pickUI.action(champion)
+            self.ban_handler.action(champion)
+        self.pick_handler.action(champion)
 
     def clear_bans(self):
-        self.banUI.champion_array.clear()
+        """Clears the ban_handler ChampionArray."""
+
+        self.ban_handler.champion_array.clear()
         print("bans array cleared")
 
     def clear_picks(self):
-        self.pickUI.champion_array.clear()
+        """Clears the pick_handler ChampionArray."""
+
+        self.pick_handler.champion_array.clear()
         print("picks array cleared")
 
 
