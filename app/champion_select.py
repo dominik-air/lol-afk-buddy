@@ -31,7 +31,8 @@ images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
 
 # POSSIBLE REWORK: the implementation part of the bridge design pattern im using may be moved into another module
 class ChampionAction(ABC):
-    """Abstraction base class for various actions that can be performed with champions in champion select.
+    """
+    Abstraction base class for various actions that can be performed with champions in champion select.
     It's supposed to be the implementation part of the bridge design pattern.
     """
 
@@ -95,21 +96,19 @@ class ChampionButton(Button):
 
 class SearchBar(TextInput):
     """Search bar for the ChampionSelect class."""
-
     def clear(self):
         self.text = ""
 
 
 class ChampionArrayButton(ButtonBehavior, Image):
     """Class for the buttons in a ChampionArray."""
-
     def __init__(self, champion_name: str, **kwargs):
         super(ChampionArrayButton, self).__init__(**kwargs)
         self.champion_name = champion_name
 
 
 class ChampionPlaceholder(Image):
-
+    """Placeholder for ChampionButtons and ChampionArrayButtons."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.source = "../img/buttons_images/placeholder.png"
@@ -135,20 +134,25 @@ class ChampionArray(BoxLayout):
             cols: number of columns in the row array.
 
         """
+
         if cols is None:
             cols = self.champion_number_limit
         for i in range(cols):
             self.add_widget(ChampionPlaceholder())
 
     def _create_array_buttons(self):
+        """Creates ChampionArrayButtons from the ChampionButtons in the champions class field."""
+
         for champion in self.champions:
-            array_button = ChampionArrayButton(champion_name=champion.text,
-                                               source=images_path + champion.text + ".png")
+            array_button = ChampionArrayButton(
+                champion_name=champion.text, source=images_path + champion.text + ".png"
+            )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
 
     def add_champion(self, new_champion: ChampionButton):
-        """Adds a champion into the array by replacing the first from left placeholder. If the number of champions
+        """
+        Adds a champion into the array by replacing the first from left placeholder. If the number of champions
         exceeds the champion number limit then the least priority champion is substituted with the new champion.
 
         Args:
@@ -168,12 +172,14 @@ class ChampionArray(BoxLayout):
         self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
     def remove_champion(self, champion: Union[ChampionButton, ChampionArrayButton]):
-        """Removes the input champion from the array by replacing it with a champion placeholder and shifts the
+        """
+        Removes the input champion from the array by replacing it with a champion placeholder and shifts the
         remaining champions in the array to the left if necessary.
 
          Args:
                 champion: input champion that is going to be removed from the array.
         """
+
         if isinstance(champion, ChampionArrayButton):
             counterpart: ChampionButton = self._find_champion_button_counterpart(champion)
             counterpart.reset()
@@ -187,10 +193,10 @@ class ChampionArray(BoxLayout):
 
     def clear(self):
         """Clears the array from all champions."""
+
         self.clear_widgets()
         for champion in self.champions:
-            champion.champion_state = ChampionStates.INERT
-            champion.recolor()
+            champion.reset()
         self.champions = []
         self._create_blank_array()
 
@@ -204,6 +210,7 @@ class ChampionArray(BoxLayout):
             True if the champion is in the array and False otherwise.
 
         """
+
         return champion in self.champions
 
     def _find_champion_button_counterpart(self, array_button: ChampionArrayButton) -> ChampionButton:
@@ -236,7 +243,8 @@ class ChampionArrayHandler:
         self.state_type = ChampionStates.BAN if isinstance(champion_action, BanChampion) else ChampionStates.PICK
 
     def action(self, champion: ChampionButton) -> None:
-        """Services the logic behind ChampionActions and ChampionArrays. If the provided champion has been
+        """
+        Services the logic behind ChampionActions and ChampionArrays. If the provided champion has been
         serviced before then it reverts its state from active to inactive and removes it from an ChampionArray,
         otherwise it adds it into a ChampionArray and activates it.
 
@@ -244,6 +252,7 @@ class ChampionArrayHandler:
             champion: provided ChampionButton which will be serviced.
 
         """
+
         if champion.champion_state == self.state_type:
             champion.reset()
             self.champion_array.remove_champion(champion)
@@ -389,20 +398,17 @@ class ChampionSelectUI(BoxLayout):
 
     def clear_bans(self):
         """Clears the ban_handler ChampionArray."""
-
         self.ban_handler.champion_array.clear()
         print("bans array cleared")
 
     def clear_picks(self):
         """Clears the pick_handler ChampionArray."""
-
         self.pick_handler.champion_array.clear()
         print("picks array cleared")
 
 
 class ChampionSelectInterface(BoxLayout):
     """The main interface used by the .kv file."""
-
     pass
 
 
