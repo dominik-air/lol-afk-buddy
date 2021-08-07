@@ -143,3 +143,14 @@ class KivyTheme(Widget, Theme):
 
         # future edits:
         pass
+
+    # Test method
+    def click_effect(self, obj, value):
+        '''Involves change in color on darker while the mouse button is clicked
+        and restores the previous color when the mouse button is released.'''
+
+        if value == "normal":
+            obj.canvas.before.children[0].rgba = self.get_btn_color(value)
+
+        if value == "down":
+            obj.canvas.before.children[0].rgba = self.get_btn_color(value)

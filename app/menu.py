@@ -71,17 +71,17 @@ class SettingsSpinnerOption(SpinnerOption):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._app = kivy.app.App.get_running_app()
-        self.bind(state=self.click_effect)
+        self.bind(state=self._app.click_effect)
 
-    def click_effect(self, obj, value):
-        '''Involves change in color on darker while the mouse button is clicked
-        and restores the previous color when the mouse button is released.'''
+    # def click_effect(self, obj, value):
+    #     '''Involves change in color on darker while the mouse button is clicked
+    #     and restores the previous color when the mouse button is released.'''
 
-        if value == "normal":
-            self.canvas.before.children[0].rgba = self._app.btn_normal_color
+    #     if value == "normal":
+    #         self.canvas.before.children[0].rgba = self._app.btn_normal_color
 
-        if value == "down":
-            self.canvas.before.children[0].rgba = self._app.btn_down_color
+    #     if value == "down":
+    #         self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 
 class MyButton(ButtonBehavior, Label):
@@ -90,22 +90,9 @@ class MyButton(ButtonBehavior, Label):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.bind(state=self.click_effect)
-
-        # Old code:
-        # self.__refs__[self.__class__].append(weakref.ref(self))
         self._app = kivy.app.App.get_running_app()
-        MyButton._inst_name = self.__class__
+        self.bind(state=self._app.click_effect)
 
-    def click_effect(self, obj, value):
-        '''Involves change in color on darker while the mouse button is clicked
-        and restores the previous color when the mouse button is released.'''
-
-        if value == "normal":
-            self.canvas.before.children[0].rgba = self._app.btn_normal_color
-
-        if value == "down":
-            self.canvas.before.children[0].rgba = self._app.btn_down_color
 
 class DropDown(ScrollView):
     def __init__(self, **kwargs):
@@ -161,7 +148,6 @@ class MenuApp(App, KivyTheme):
     def changing_something(self):
         '''This methods does nothing. Use it carefully.'''
         pass
-
 
     def build(self):
         app = AppLayout()
