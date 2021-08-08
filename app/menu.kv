@@ -111,8 +111,19 @@
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
 <PlusMinusButton@BoxLayout>:
+    # Dynamic class representing element which consists of 
+    # minus button on the left plus on right and textInput in center
+    # [-][..][+]
+
+    # By assigning to those properties (methodAdd, methodSub)
+    # methods defined in PlusMinusButton (using root) we make them
+    # overridable in further implementations.
+    # Below, we assign root.go and this will make this function default
     methodAdd: root.go
     methodSub: root.go
+
+    input_value: "i"
+
     size_hint_x: .5
     padding: 20, 0, 20, 0
 
@@ -120,13 +131,16 @@
     Widget:
 
     MyButton:
-        id: minusButtonId
         -size_hint: None, .7
         -width: self.height
         -pos_hint: {'center_x': .5, 'center_y': .5}
         text: '-'
 
-        on_press: root.minusButton(root)
+        # minusButton calls methods that we assigned to methodsSub
+        on_press: root.minusButton()
+
+        # alternative vesrion if we don't want wrapper
+        # on_press: root.methodSub()
 
     TextInput:
         size_hint_x: None
@@ -134,7 +148,7 @@
         size_hint_y: .7
         pos_hint: {'center_x': .5, 'center_y': .5}
 
-        text: str(app._font_size)
+        text: root.input_value
         cursor_color: 0, 0, 0, .8
         halign: 'center'
         # valign: 'middle'
@@ -146,7 +160,11 @@
         -pos_hint: {'center_x': .5, 'center_y': .5}
         text: '+'
         
-        on_press: root.plusButton(root)
+        # plusButton calls methods that we assigned to methodsAdd
+        on_press: root.plusButton()
+
+        # alternative vesrion if we don't want wrapper
+        # on_press: root.methodAdd()
 
 <SettingsLabel@Label>:
     font_size: app._font_size
@@ -465,8 +483,10 @@
 
                     # plusminusbutton
                     PlusMinusButton:
+                        # Override default function which is called
                         methodAdd: app.add
                         methodSub: app.sub
+                        input_value: str(app._font_size)
 
                 # -------------------- some SETTINGS ------------------- #
                 SubInfoGridLayout:
@@ -546,14 +566,7 @@
                     # spacing: 2
 
                     PlusMinusButton:
-                        methodAdd: app.fooA
-                        methodSub: app.fooB
-
-                        # MyButton:
-                            # -size_hint: None, .7
-                            # -width: self.height
-                            # -pos_hint: {'center_x': .5, 'center_y': .5}
-                            # -text: '-'
-
-                            # on_press: hh.go()
-                    
+                        # Override default function which is called
+                        methodAdd: root.fooA
+                        methodSub: root.fooB
+                        input_value: str(root.number_of_bans)

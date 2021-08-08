@@ -37,7 +37,12 @@ from champion_select import (
 
 
 class AppLayout(TabbedPanel):
-    '''Main container in the kivy file.'''
+    '''Main container in the kivy file. Methods and properties
+    which are defined here shouldn't be shared across another
+    dynamic classes (should be in used only in the socope of this cls)'''
+
+    # QUESTION: this property should be here or in menu class?
+    number_of_bans = NumericProperty(5)
 
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
@@ -45,6 +50,15 @@ class AppLayout(TabbedPanel):
     def spinner_clicked(self, value):
         opt = self.ids.spinner_id.text
         print(f'The option "{opt}" have been selected.')
+
+    # QUESTION: those methods should be here or in menu class?
+    def fooA(self):
+        self.number_of_bans += 1
+        print(f'fooA has been called. Method awaits to be implemented.')
+
+    def fooB(self):
+        print(f'fooB has been called. Method awaits to be implemented.')
+        self.number_of_bans -= 1
 
 
 class InfoGridLayout(GridLayout):
@@ -95,23 +109,23 @@ class MyButton(ButtonBehavior, Label):
         self.bind(state=self._app.click_effect)
 
 class PlusMinusButton(BoxLayout):
-    # methodAdd = ObjectProperty(None)
-    # methodSub = ObjectProperty(None)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-    def minusButton(self, obj):
-        print(f'Minus button has been clicked, sent: {obj.methodAdd}.')
-        obj.methodAdd()
+    '''Those methods doesn't need necessarily to be defined here. but doing
+    so we are adding a wrapper for any function that will be called from
+    any instance of a button. We can add some common activities that will
+    be involved during clicking ANY button (of this cls).'''
+    def minusButton(self):
+        self.methodSub()
     
-    def plusButton(self, obj):
-        print(f'Plus button has been clicked. sent: {obj.methodSub}')
-        obj.methodSub()
+    def plusButton(self):
+        self.methodAdd()
     
     def go(self):
+        '''Temporary method for testing purposes.'''
         print('go is running')
     
-
 
 class DropDown(ScrollView):
     def __init__(self, **kwargs):
@@ -120,7 +134,10 @@ class DropDown(ScrollView):
         self.bind(on_release=self.open)
 
 class MenuApp(App, KivyTheme):
-    '''App class.'''
+    '''App class. Methods and properties which are defined here are
+    probably shared across another dynamic classes in the project, 
+    so they are here in order to provide easy communication between
+    those classes.'''
 
     # LOL client properties
     lol_client = LOLClientStatusInformer()
@@ -131,6 +148,7 @@ class MenuApp(App, KivyTheme):
 
     # Appearance settings
     info_wp_offset = NumericProperty(300)  # information wrapper left padding
+
 
 
     # DEFINITIONS OF METHODS
@@ -163,12 +181,6 @@ class MenuApp(App, KivyTheme):
 
     def sub(self):
         self._font_size -= 2
-    
-    def fooA(self):
-        print(f'fooA has been called.')
-
-    def fooB(self):
-        print(f'fooB has been called.')
 
     def changing_something(self):
         '''This methods does nothing. Use it carefully.'''
