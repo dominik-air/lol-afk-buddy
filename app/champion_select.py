@@ -1,4 +1,5 @@
 from enum import Enum, auto
+import os
 from os import listdir
 from os.path import isfile, join
 from abc import ABC, abstractmethod
@@ -18,7 +19,6 @@ from kivy.uix.label import Label
 from kivy.graphics import Line, Color
 import os
 
-
 # defines type hints and constants
 RGBA = List[float]
 BAN_COLOR = [1, 0, 0, 1]
@@ -30,7 +30,12 @@ DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 # images_path = os.path.abspath("../../SummerProject/testGit/img/champion_images/")
 # images_path = os.path.abspath("../img/champion_images/")
 
-print( images_path := os.path.join(os.path.abspath('.'), 'img', 'champion_images'))
+
+def path_problem_solver(*sub_dirs) -> str:
+    return os.path.join(os.path.abspath('..'), *sub_dirs)
+
+
+images_path = path_problem_solver('img', 'champion_images')
 
 # print(os.getcwd)
 # os.chdir(images_path)
@@ -105,12 +110,14 @@ class ChampionButton(Button):
 
 class SearchBar(TextInput):
     """Search bar for the ChampionSelect class."""
+
     def clear(self):
         self.text = ""
 
 
 class ChampionArrayButton(ButtonBehavior, Image):
     """Class for the buttons in a ChampionArray."""
+
     def __init__(self, champion_name: str, **kwargs):
         super().__init__(**kwargs)
         self.champion_name = champion_name
@@ -118,9 +125,10 @@ class ChampionArrayButton(ButtonBehavior, Image):
 
 class ChampionPlaceholder(Image):
     """Placeholder for ChampionButtons and ChampionArrayButtons."""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.source = "../img/buttons_images/placeholder.png"
+        self.source = path_problem_solver("img", "buttons_images", "placeholder.png")
         self.name = "Dummy"
 
 
