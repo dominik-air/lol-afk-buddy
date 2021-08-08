@@ -16,6 +16,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.graphics import Line, Color
+import os
 
 
 # defines type hints and constants
@@ -153,7 +154,7 @@ class ChampionArray(BoxLayout):
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
-                champion_name=champion.text, source=images_path + champion.text + ".png"
+                champion_name=champion.text, source=images_path + '\\' + champion.text + ".png"
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
