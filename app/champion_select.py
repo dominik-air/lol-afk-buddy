@@ -30,9 +30,10 @@ DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 # images_path = os.path.abspath("../../SummerProject/testGit/img/champion_images/")
 # images_path = os.path.abspath("../img/champion_images/")
 
-
+os.path.dirname(__file__)
+# print(__file__)
 def path_problem_solver(*sub_dirs) -> str:
-    return os.path.join(os.path.abspath('..'), *sub_dirs)
+    return os.path.join(os.path.dirname(__file__), '..', *sub_dirs)
 
 
 images_path = path_problem_solver('img', 'champion_images')
