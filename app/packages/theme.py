@@ -37,7 +37,7 @@ class Theme:
     def _load_theme_from_file(self):
         print(os.path.abspath('.'))
         # theme_dir = os.path.join(os.path.abspath('.'), 'config')
-        theme_dir = os.path.join(os.path.dirname(__file__), '..', 'config')
+        theme_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'config')
         # theme_dir = "../config"  # works for me
 
         with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
