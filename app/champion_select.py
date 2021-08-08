@@ -1,4 +1,8 @@
 from enum import Enum, auto
+from os import listdir
+from os.path import isfile, join
+from abc import ABC, abstractmethod
+from typing import List, Union
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
@@ -12,10 +16,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.graphics import Line, Color
-from os import listdir
-from os.path import isfile, join
-from abc import ABC, abstractmethod
-from typing import List, Union
 
 # defines type hints and constants
 RGBA = List[float]
@@ -103,7 +103,7 @@ class SearchBar(TextInput):
 class ChampionArrayButton(ButtonBehavior, Image):
     """Class for the buttons in a ChampionArray."""
     def __init__(self, champion_name: str, **kwargs):
-        super(ChampionArrayButton, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.champion_name = champion_name
 
 
