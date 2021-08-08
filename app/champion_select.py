@@ -17,6 +17,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.graphics import Line, Color
 
+
 # defines type hints and constants
 RGBA = List[float]
 BAN_COLOR = [1, 0, 0, 1]
@@ -25,7 +26,14 @@ SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
 # loads the images' names into a list
-images_path = "../img/champion_images/"
+# images_path = os.path.abspath("../../SummerProject/testGit/img/champion_images/")
+# images_path = os.path.abspath("../img/champion_images/")
+
+print( images_path := os.path.join(os.path.abspath('.'), 'img', 'champion_images'))
+
+# print(os.getcwd)
+# os.chdir(images_path)
+# print(listdir())
 images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
 
 
@@ -285,8 +293,8 @@ class ChampionSelect(StackLayout):
                 font_size=0,
                 size_hint=(None, None),
                 size=(dp(42), dp(42)),  # can't make it bigger without stretching
-                background_normal=images_path + image_name,
-                background_down=images_path + image_name,
+                background_normal=os.path.join(images_path, image_name),
+                background_down=os.path.join(images_path, image_name),
             )
 
             champ.bind(on_press=self._set_champion)
