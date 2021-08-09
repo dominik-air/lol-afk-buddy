@@ -16,6 +16,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.graphics import Line, Color
+import os
 
 # defines type hints and constants
 RGBA = List[float]
@@ -24,8 +25,13 @@ PICK_COLOR = [0.2, 0.6, 1, 1]
 SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
+
+def path_problem_solver(*sub_dirs) -> str:
+    return os.path.join(os.path.dirname(__file__), '..', *sub_dirs)
+
+
 # loads the images' names into a list
-images_path = "../img/champion_images/"
+images_path = path_problem_solver('img', 'champion_images')
 images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
 
 
@@ -77,7 +83,8 @@ class ChampionButton(Button):
         super().__init__(**kwargs)
 
         self.border_color: RGBA = DEFAULT_COLOR
-        self.champion_state = ChampionStates.INERT
+        self.champion_state: ChampionStates = ChampionStates.INERT
+        self.is_selected: bool = False
 
     def recolor(self):
         """Changes the border color of the button according to the mapping provided below."""
@@ -88,20 +95,31 @@ class ChampionButton(Button):
         }
         self.border_color = color_mapping[self.champion_state]
 
+        if self.is_selected:
+            self.border_color = SELECT_COLOR
+
     def reset(self):
         """Resets the button to the default state."""
         self.champion_state = ChampionStates.INERT
         self.recolor()
 
+    def select(self):
+        self.is_selected = True
+
+    def deselect(self):
+        self.is_selected = False
+
 
 class SearchBar(TextInput):
     """Search bar for the ChampionSelect class."""
+
     def clear(self):
         self.text = ""
 
 
 class ChampionArrayButton(ButtonBehavior, Image):
     """Class for the buttons in a ChampionArray."""
+
     def __init__(self, champion_name: str, **kwargs):
         super().__init__(**kwargs)
         self.champion_name = champion_name
@@ -109,9 +127,10 @@ class ChampionArrayButton(ButtonBehavior, Image):
 
 class ChampionPlaceholder(Image):
     """Placeholder for ChampionButtons and ChampionArrayButtons."""
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.source = "../img/buttons_images/placeholder.png"
+        self.source = path_problem_solver("img", "buttons_images", "placeholder.png")
         self.name = "Dummy"
 
 
@@ -145,7 +164,7 @@ class ChampionArray(BoxLayout):
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
-                champion_name=champion.text, source=images_path + champion.text + ".png"
+                champion_name=champion.text, source=images_path + '\\' + champion.text + ".png"
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
@@ -285,8 +304,8 @@ class ChampionSelect(StackLayout):
                 font_size=0,
                 size_hint=(None, None),
                 size=(dp(42), dp(42)),  # can't make it bigger without stretching
-                background_normal=images_path + image_name,
-                background_down=images_path + image_name,
+                background_normal=os.path.join(images_path, image_name),
+                background_down=os.path.join(images_path, image_name),
             )
 
             champ.bind(on_press=self._set_champion)
@@ -301,9 +320,11 @@ class ChampionSelect(StackLayout):
 
         """
         if not isinstance(self.champion, ChampionPlaceholder):
+            self.champion.deselect()
             self.champion.recolor()
 
-        new_champion.border_color = SELECT_COLOR
+        new_champion.select()
+        new_champion.recolor()
         self.champion = new_champion
         self.champion_name = new_champion.text
 
