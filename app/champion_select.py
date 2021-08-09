@@ -104,9 +104,11 @@ class ChampionButton(Button):
         self.recolor()
 
     def select(self):
+        """Sets the button as selected."""
         self.is_selected = True
 
     def deselect(self):
+        """Sets the button as not selected."""
         self.is_selected = False
 
 
