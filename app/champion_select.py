@@ -1,7 +1,6 @@
 import os
 from enum import Enum, auto
 from typing import List, Union
-from kivy.app import App
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
@@ -21,6 +20,7 @@ DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
 
 def path_problem_solver(*sub_dirs) -> str:
+    """An uniform way of referring to files in the project."""
     return os.path.join(os.path.dirname(__file__), '..', *sub_dirs)
 
 
@@ -389,13 +389,3 @@ class ChampionSelectUI(BoxLayout):
 class ChampionSelectInterface(BoxLayout):
     """The main interface used by the .kv file."""
     pass
-
-
-class ChampionApp(App):
-    def build(self):
-        root_widget = ChampionSelectInterface()
-        return root_widget
-
-
-if __name__ == "__main__":
-    ChampionApp().run()
