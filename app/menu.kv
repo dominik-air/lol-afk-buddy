@@ -297,6 +297,7 @@
             ChampionSelectUI:
                 id: champion_select_ui
                 orientation: 'vertical'
+                champion_select: champion_select
 
                 GridLayout:
                     cols: 2
@@ -434,6 +435,25 @@
 
                             text: "Load"
                             on_press: app.load_new_theme_config()
+
+                SubInfoGridLayout:
+                    cols: 2
+                    SettingsLabel:
+                        text: 'Load available champions:'
+
+                    BoxLayout:
+                        size_hint_x: .5
+                        padding: 20, 0, 20, 0
+
+                        # Align to right
+                        # Widget:
+
+                        SwitchButton:
+                            -size_hint_x: 1
+                            # -width: root.width/2
+
+                            text: "Load"
+                            on_press: champion_select_ui.restrict_champion_pool()
 
 
                 
