@@ -1,22 +1,16 @@
+import os
 from enum import Enum, auto
-from os import listdir
-from os.path import isfile, join
-from abc import ABC, abstractmethod
 from typing import List, Union
 from kivy.app import App
 from kivy.metrics import dp
 from kivy.properties import StringProperty, ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.textinput import TextInput
-from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.graphics import Line, Color
-import os
 
 # defines type hints and constants
 RGBA = List[float]
@@ -32,39 +26,7 @@ def path_problem_solver(*sub_dirs) -> str:
 
 # loads the images' names into a list
 images_path = path_problem_solver('img', 'champion_images')
-images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
-
-
-# POSSIBLE REWORK: the implementation part of the bridge design pattern im using may be moved into another module
-class ChampionAction(ABC):
-    """
-    Abstraction base class for various actions that can be performed with champions in champion select.
-    It's supposed to be the implementation part of the bridge design pattern.
-    """
-
-    @abstractmethod
-    def action(self, champion_name: str, is_active: bool):
-        pass
-
-
-class BanChampion(ChampionAction):
-    """This class should provide the champion banning functionality. It's a dummy class for now."""
-
-    def action(self, champion_name: str, is_active: bool):
-        if is_active:
-            print(f"{champion_name} banned!")
-        else:
-            print(f"{champion_name} unbanned!")
-
-
-class PickChampion(ChampionAction):
-    """This class should provide the champion selection functionality. It's a dummy class for now."""
-
-    def action(self, champion_name: str, is_active: bool):
-        if is_active:
-            print(f"{champion_name} picked!")
-        else:
-            print(f"{champion_name} unpicked!")
+images = [f for f in os.listdir(images_path) if os.path.isfile(os.path.join(images_path, f))]
 
 
 class ChampionStates(Enum):
@@ -253,15 +215,12 @@ class ChampionArrayHandler:
     Attributes:
         champion_action: action that is performed on champions contained in the ChampionArray.
         champion_array: visual row array with a container for champions.
-        state_type: the state ChampionButtons' states will be changed to if an action is performed.
 
     """
 
-    def __init__(self, champion_action: ChampionAction, champion_array: ChampionArray):
+    def __init__(self, champion_action: ChampionStates, champion_array: ChampionArray):
         self.champion_action = champion_action
         self.champion_array = champion_array
-        # FIXME: there's probably a more elegant way to determine the state_type
-        self.state_type = ChampionStates.BAN if isinstance(champion_action, BanChampion) else ChampionStates.PICK
 
     def action(self, champion: ChampionButton) -> None:
         """
@@ -274,15 +233,13 @@ class ChampionArrayHandler:
 
         """
 
-        if champion.champion_state == self.state_type:
+        if champion.champion_state == self.champion_action:
             champion.reset()
             self.champion_array.remove_champion(champion)
-            self.champion_action.action(champion.text, is_active=False)
         else:
-            champion.champion_state = self.state_type
+            champion.champion_state = self.champion_action
             champion.recolor()
             self.champion_array.add_champion(champion)
-            self.champion_action.action(champion.text, is_active=True)
 
 
 class ChampionSelect(StackLayout):
@@ -343,7 +300,6 @@ class ChampionSelect(StackLayout):
             # shows all champions if the searchbar is unused
             for champion in self.available_champions:
                 self.add_widget(champion)
-        # FIXME: might change it later
         # evil python level hacking
         elif found_champion := list(filter(lambda champ: champ.text.lower() == text.lower(), self.available_champions)):
             self._set_champion(*found_champion)
@@ -381,10 +337,10 @@ class ChampionSelectUI(BoxLayout):
         self.add_widget(pick_array)
 
         self.ban_handler = ChampionArrayHandler(
-            champion_action=BanChampion(), champion_array=ban_array
+            champion_action=ChampionStates.BAN, champion_array=ban_array
         )
         self.pick_handler = ChampionArrayHandler(
-            champion_action=PickChampion(), champion_array=pick_array
+            champion_action=ChampionStates.PICK, champion_array=pick_array
         )
 
     def ban_champion(self, champion: Union[ChampionButton, ChampionPlaceholder]):

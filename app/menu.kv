@@ -295,7 +295,7 @@
                         height: self.minimum_height
 
             ChampionSelectUI:
-                id: ui
+                id: champion_select_ui
                 orientation: 'vertical'
 
                 GridLayout:
@@ -306,25 +306,25 @@
                         id: ban_button
                         text: "ban"
                         font_size: 20
-                        on_press: ui.ban_champion(champion_select.champion)
+                        on_press: champion_select_ui.ban_champion(champion_select.champion)
 
                     MyButton:
                         id: clear_bans_button
                         text: "clear bans"
                         font_size: 20
-                        on_press: ui.clear_bans()
+                        on_press: champion_select_ui.clear_bans()
 
                     MyButton:
                         id: pick_button
                         text: "pick"
                         font_size: 20
-                        on_press: ui.pick_champion(champion_select.champion)
+                        on_press: champion_select_ui.pick_champion(champion_select.champion)
 
                     MyButton:
                         id: clear_picks_button
                         text: "clear picks"
                         font_size: 20
-                        on_press: ui.clear_picks()
+                        on_press: champion_select_ui.clear_picks()
 
 
 
