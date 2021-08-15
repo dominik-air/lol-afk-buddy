@@ -35,8 +35,10 @@ class Theme:
         #                         'dark': [.2, .2, .2, 1]}
 
     def _load_theme_from_file(self):
-        # theme_dir = os.path.join(os.getcwd(), 'config')
-        theme_dir = "../config"  # works for me
+        print(os.path.abspath('.'))
+        # theme_dir = os.path.join(os.path.abspath('.'), 'config')
+        theme_dir = os.path.join(os.path.dirname(__file__), '..', '..', 'config')
+        # theme_dir = "../config"  # works for me
 
         with open(os.path.join(theme_dir, 'theme.json'), "r") as f:
             read_themes = json.load(f)
@@ -141,3 +143,14 @@ class KivyTheme(Widget, Theme):
 
         # future edits:
         pass
+
+    # Test method
+    def click_effect(self, obj, value):
+        '''Involves change in color on darker while the mouse button is clicked
+        and restores the previous color when the mouse button is released.'''
+
+        if value == "normal":
+            obj.canvas.before.children[0].rgba = self.get_btn_color(value)
+
+        if value == "down":
+            obj.canvas.before.children[0].rgba = self.get_btn_color(value)

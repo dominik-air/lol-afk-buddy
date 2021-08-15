@@ -1,4 +1,6 @@
 #:kivy 2.0.0
+#:import Factory kivy.factory.Factory
+
 <ChampionButton>:
     canvas.before:
         Color:
@@ -58,7 +60,7 @@
     spacing: self._spacing
 
 
-<SubInfoGridLayout@GridLayout>:
+<SubInfoGridLayout>:
     padd: 4
     canvas.before:
         Color:
@@ -108,6 +110,61 @@
     -size_hint_y: .7
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
+<PlusMinusButton@BoxLayout>:
+    # Dynamic class representing element which consists of 
+    # minus button on the left plus on right and textInput in center
+    # [-][..][+]
+
+    # By assigning to those properties (methodAdd, methodSub)
+    # methods defined in PlusMinusButton (using root) we make them
+    # overridable in further implementations.
+    # Below, we assign root.go and this will make this function default
+    methodAdd: root.go
+    methodSub: root.go
+
+    input_value: "i"
+
+    size_hint_x: .5
+    padding: 20, 0, 20, 0
+
+    # Align to right
+    Widget:
+
+    MyButton:
+        -size_hint: None, .7
+        -width: self.height
+        -pos_hint: {'center_x': .5, 'center_y': .5}
+        text: '-'
+
+        # minusButton calls methods that we assigned to methodsSub
+        on_press: root.minusButton()
+
+        # alternative vesrion if we don't want wrapper
+        # on_press: root.methodSub()
+
+    TextInput:
+        size_hint_x: None
+        width: 50
+        size_hint_y: .7
+        pos_hint: {'center_x': .5, 'center_y': .5}
+
+        text: root.input_value
+        cursor_color: 0, 0, 0, .8
+        halign: 'center'
+        # valign: 'middle'
+        padding_y: (self.height)/4
+
+    MyButton:
+        -size_hint: None, .7
+        -width: self.height
+        -pos_hint: {'center_x': .5, 'center_y': .5}
+        text: '+'
+        
+        # plusButton calls methods that we assigned to methodsAdd
+        on_press: root.plusButton()
+
+        # alternative vesrion if we don't want wrapper
+        # on_press: root.methodAdd()
 
 <SettingsLabel@Label>:
     font_size: app._font_size
@@ -120,6 +177,50 @@
 <InfoLabel@Label>:
     font_size: app._font_size
     color: app.info_font_col
+
+<SettingsSpinnerOption>:
+    btn_color: 0, 0, 0, 1
+    color: app.info_font_col
+    canvas.before:
+        Color:
+            # rgba: self.btn_color
+            rgba: app._btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [2]
+
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+
+    background_color: 1, 1, 0, 0
+
+<SettingsSpinner@Spinner>:
+    size_hint: 1, .7
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    text: 'default text'
+    values: ['opt1', 'opt2', 'opt3']
+    option_cls: Factory.get("SettingsSpinnerOption")
+
+    btn_color: 0, 0, 0, 1
+    color: app.info_font_col
+    canvas.before:
+        Color:
+            # rgba: self.btn_color
+            rgba: app._btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [2]
+
+    background_normal: ''
+    background_down: ''
+    background_disabled_down: ''
+    backgroudn_disabled_normal: ''
+
+    background_color: 1, 1, 0, 0
 
 <MyScroll@ScrollView>:
     do_scroll_x: False
@@ -343,6 +444,7 @@
                     size: self.size
                     pos: self.pos
                     radius: [1]
+
             InfoGridLayout:
                 -padding: 0, 0, 0, 0
                 # -row_default_height: 100
@@ -380,41 +482,12 @@
                     SettingsLabel:
                         text: 'Font size:'
 
-                    BoxLayout:
-                        size_hint_x: .5
-                        padding: 20, 0, 20, 0
-                        
-
-                        # Align to right
-                        Widget:
-
-                        MyButton:
-                            -size_hint: None, .7
-                            -width: self.height
-                            -pos_hint: {'center_x': .5, 'center_y': .5}
-                            text: '-'
-
-                            on_press: app.sub()
-
-                        TextInput:
-                            size_hint_x: None
-                            width: 50
-                            size_hint_y: .7
-                            pos_hint: {'center_x': .5, 'center_y': .5}
-
-                            text: str(app._font_size)
-                            cursor_color: 0, 0, 0, .8
-                            halign: 'center'
-                            # valign: 'middle'
-                            padding_y: (self.height)/4
-
-                        MyButton:
-                            -size_hint: None, .7
-                            -width: self.height
-                            -pos_hint: {'center_x': .5, 'center_y': .5}
-                            text: '+'
-                            
-                            on_press: app.add()
+                    # plusminusbutton
+                    PlusMinusButton:
+                        # Override default function which is called
+                        methodAdd: app.add
+                        methodSub: app.sub
+                        input_value: str(app._font_size)
 
                 # -------------------- some SETTINGS ------------------- #
                 SubInfoGridLayout:
@@ -470,3 +543,50 @@
                     # pos_hint: {'y': .5, 'x': 0}
                     text: "substract"
                     on_press: app.sub()
+
+    TabbedPanelItem:
+        text: "configure"
+
+        InfoGridLayout:
+            -padding: 0, 0, 0,0
+
+            SubInfoGridLayout:
+                cols: 2
+                # id: grasp
+
+                SettingsLabel:
+                    text: 'dupa'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    # Label:
+                    #     id: click_label
+                        # text: 'hello there'
+                    
+                    SettingsSpinner:
+                        id: spinner_id
+                        # text: 'pick an option this is addional text'
+                        # values: ['opt1', 'opt2']
+
+                        on_text: root.spinner_clicked(spinner_id.text)
+
+
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'Size of chamipon array'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    PlusMinusButton:
+                        # Override default function which is called
+                        methodAdd: root.fooA
+                        methodSub: root.fooB
+                        input_value: str(root.number_of_bans)

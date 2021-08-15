@@ -219,8 +219,7 @@ class ChampionArray(BoxLayout):
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
-                champion_name=champion.text,
-                source=images_path + "\\" + champion.text + ".png",
+                champion_name=champion.text, source=images_path + '\\' + champion.text + ".png"
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
@@ -354,6 +353,7 @@ class ChampionArrayHandler:
 
     def export_array_champions(self) -> List[str]:
         return self.champion_array.export_champions()
+
 
 
 class ChampionSelectUI(BoxLayout):
