@@ -2,7 +2,7 @@ import os
 from enum import Enum, auto
 from typing import List, Union
 from kivy.metrics import dp
-from kivy.properties import StringProperty, ObjectProperty, ListProperty
+from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
@@ -353,7 +353,6 @@ class ChampionArrayHandler:
 
     def export_array_champions(self) -> List[str]:
         return self.champion_array.export_champions()
-
 
 
 class ChampionSelectUI(BoxLayout):
