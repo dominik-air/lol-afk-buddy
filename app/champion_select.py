@@ -1,23 +1,16 @@
-from enum import Enum, auto
 import os
-from os import listdir
-from os.path import isfile, join
-from abc import ABC, abstractmethod
+from enum import Enum, auto
 from typing import List, Union
-from kivy.app import App
 from kivy.metrics import dp
-from kivy.properties import StringProperty, ObjectProperty, ListProperty
+from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.textinput import TextInput
-from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.scrollview import ScrollView
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.graphics import Line, Color
-import os
+from packages.clientscaper import client_scraper
 
 # defines type hints and constants
 RGBA = List[float]
@@ -26,58 +19,27 @@ PICK_COLOR = [0.2, 0.6, 1, 1]
 SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
-# loads the images' names into a list
-# images_path = os.path.abspath("../../SummerProject/testGit/img/champion_images/")
-# images_path = os.path.abspath("../img/champion_images/")
 
-os.path.dirname(__file__)
-# print(__file__)
 def path_problem_solver(*sub_dirs) -> str:
-    return os.path.join(os.path.dirname(__file__), '..', *sub_dirs)
+    """An uniform way of referring to files in the project.
 
+    Returns:
+        The absolute path to a file or directory.
 
-images_path = path_problem_solver('img', 'champion_images')
-
-# print(os.getcwd)
-# os.chdir(images_path)
-# print(listdir())
-images = [f for f in listdir(images_path) if isfile(join(images_path, f))]
-
-
-# POSSIBLE REWORK: the implementation part of the bridge design pattern im using may be moved into another module
-class ChampionAction(ABC):
     """
-    Abstraction base class for various actions that can be performed with champions in champion select.
-    It's supposed to be the implementation part of the bridge design pattern.
-    """
-
-    @abstractmethod
-    def action(self, champion_name: str, is_active: bool):
-        pass
+    return os.path.join(os.path.dirname(__file__), "..", *sub_dirs)
 
 
-class BanChampion(ChampionAction):
-    """This class should provide the champion banning functionality. It's a dummy class for now."""
-
-    def action(self, champion_name: str, is_active: bool):
-        if is_active:
-            print(f"{champion_name} banned!")
-        else:
-            print(f"{champion_name} unbanned!")
-
-
-class PickChampion(ChampionAction):
-    """This class should provide the champion selection functionality. It's a dummy class for now."""
-
-    def action(self, champion_name: str, is_active: bool):
-        if is_active:
-            print(f"{champion_name} picked!")
-        else:
-            print(f"{champion_name} unpicked!")
+# loads the images' names into a list
+images_path = path_problem_solver("img", "champion_images")
+images = [
+    f for f in os.listdir(images_path) if os.path.isfile(os.path.join(images_path, f))
+]
 
 
 class ChampionStates(Enum):
     """Class determines the states a ChampionButton can be in."""
+
     INERT = auto()
     BAN = auto()
     PICK = auto()
@@ -92,9 +54,10 @@ class ChampionButton(Button):
         super().__init__(**kwargs)
 
         self.border_color: RGBA = DEFAULT_COLOR
-        self.champion_state = ChampionStates.INERT
+        self.champion_state: ChampionStates = ChampionStates.INERT
+        self.is_selected: bool = False
 
-    def recolor(self):
+    def recolor(self) -> None:
         """Changes the border color of the button according to the mapping provided below."""
         color_mapping = {
             ChampionStates.INERT: DEFAULT_COLOR,
@@ -103,16 +66,27 @@ class ChampionButton(Button):
         }
         self.border_color = color_mapping[self.champion_state]
 
-    def reset(self):
+        if self.is_selected:
+            self.border_color = SELECT_COLOR
+
+    def reset(self) -> None:
         """Resets the button to the default state."""
         self.champion_state = ChampionStates.INERT
         self.recolor()
+
+    def select(self) -> None:
+        """Sets the button as selected."""
+        self.is_selected = True
+
+    def deselect(self) -> None:
+        """Sets the button as not selected."""
+        self.is_selected = False
 
 
 class SearchBar(TextInput):
     """Search bar for the ChampionSelect class."""
 
-    def clear(self):
+    def clear(self) -> None:
         self.text = ""
 
 
@@ -133,6 +107,88 @@ class ChampionPlaceholder(Image):
         self.name = "Dummy"
 
 
+class ChampionSelect(StackLayout):
+    """ChampionSelect interface with two fields indicating the current selected champion."""
+
+    champion = ObjectProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.champion: Union[
+            ChampionButton, ChampionPlaceholder
+        ] = ChampionPlaceholder()
+
+        self.available_champions: List[ChampionButton] = []
+        self.champion_pool: List[str] = []
+
+        # loop initializes ChampionButtons that will be worked on in this class and other parts of the app
+        for image_name in images:
+            champ = ChampionButton(
+                text=image_name[:-4],  # removes the '.png' from the image_name
+                font_size=0,
+                size_hint=(None, None),
+                size=(dp(42), dp(42)),  # can't make it bigger without stretching
+                background_normal=os.path.join(images_path, image_name),
+                background_down=os.path.join(images_path, image_name),
+            )
+
+            champ.bind(on_press=self._set_champion)
+            self.available_champions.append(champ)
+            self.champion_pool.append(champ.text)
+            self.add_widget(champ)
+
+    def _set_champion(
+        self, new_champion: Union[ChampionButton, ChampionPlaceholder]
+    ) -> None:
+        """Sets new values into the class fields champion and champion_name. For internal use only.
+
+        Args:
+            new_champion: ChampionButton that will replace old values.
+
+        """
+        if not isinstance(self.champion, ChampionPlaceholder):
+            self.champion.deselect()
+            self.champion.recolor()
+        if not isinstance(new_champion, ChampionPlaceholder):
+            new_champion.select()
+            new_champion.recolor()
+        self.champion = new_champion
+
+    def update_list(self, text: str) -> None:
+        """Updates the champion list based on the input text of the ChampionSelect SearchBar.
+
+        Args:
+            text: text inputted by the user into the search bar.
+
+        """
+
+        self.clear_widgets()
+        filtered_champions = filter(
+            lambda champ: champ.text in self.champion_pool, self.available_champions
+        )
+        if not text or text.lower() == "Search Bar".lower():
+            # shows all champions if the searchbar is unused
+            for champion in filtered_champions:
+                self.add_widget(champion)
+        # evil python level hacking
+        elif found_champion := list(
+            filter(
+                lambda champ: champ.text.lower() == text.lower(),
+                filtered_champions,
+            )
+        ):
+            self._set_champion(*found_champion)
+            self.add_widget(*found_champion)
+        else:
+            for champion in filtered_champions:
+                if text in champion.text.lower():
+                    self.add_widget(champion)
+
+    def restrict_champion_pool(self, champion_pool: List[str]) -> None:
+        self.champion_pool = champion_pool
+
+
 class ChampionArray(BoxLayout):
     """A BoxLayout child class used as a container for champions selected by the user."""
 
@@ -145,7 +201,7 @@ class ChampionArray(BoxLayout):
         self.champions: List[ChampionButton] = []
         self._create_blank_array()
 
-    def _create_blank_array(self, cols: int = None):
+    def _create_blank_array(self, cols: int = None) -> None:
         """Creates a row of champion placeholders.
 
         Args:
@@ -158,17 +214,18 @@ class ChampionArray(BoxLayout):
         for i in range(cols):
             self.add_widget(ChampionPlaceholder())
 
-    def _create_array_buttons(self):
+    def _create_array_buttons(self) -> None:
         """Creates ChampionArrayButtons from the ChampionButtons in the champions class field."""
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
-                champion_name=champion.text, source=images_path + '\\' + champion.text + ".png"
+                champion_name=champion.text,
+                source=images_path + "\\" + champion.text + ".png",
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
 
-    def add_champion(self, new_champion: ChampionButton):
+    def add_champion(self, new_champion: ChampionButton) -> None:
         """
         Adds a champion into the array by replacing the first from left placeholder. If the number of champions
         exceeds the champion number limit then the least priority champion is substituted with the new champion.
@@ -189,7 +246,9 @@ class ChampionArray(BoxLayout):
         # fills the unused spaces with placeholders
         self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
-    def remove_champion(self, champion: Union[ChampionButton, ChampionArrayButton]):
+    def remove_champion(
+        self, champion: Union[ChampionButton, ChampionArrayButton]
+    ) -> None:
         """
         Removes the input champion from the array by replacing it with a champion placeholder and shifts the
         remaining champions in the array to the left if necessary.
@@ -199,7 +258,9 @@ class ChampionArray(BoxLayout):
         """
 
         if isinstance(champion, ChampionArrayButton):
-            counterpart: ChampionButton = self._find_champion_button_counterpart(champion)
+            counterpart: ChampionButton = self._find_champion_button_counterpart(
+                champion
+            )
             counterpart.reset()
             champion = counterpart
 
@@ -209,7 +270,7 @@ class ChampionArray(BoxLayout):
         # fills the unused spaces with placeholders
         self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
-    def clear(self):
+    def clear(self) -> None:
         """Clears the array from all champions."""
 
         self.clear_widgets()
@@ -231,7 +292,9 @@ class ChampionArray(BoxLayout):
 
         return champion in self.champions
 
-    def _find_champion_button_counterpart(self, array_button: ChampionArrayButton) -> ChampionButton:
+    def _find_champion_button_counterpart(
+        self, array_button: ChampionArrayButton
+    ) -> ChampionButton:
         """Searches for the ChampionButton counterpart of a ChampionArrayButton.
 
         Args:
@@ -240,8 +303,17 @@ class ChampionArray(BoxLayout):
         Returns:
             ChampionButton. The method assumes that there is no need to check for the existence of such counterpart.
         """
-
+        # fmt: off
         return list(filter(lambda champ: champ.text.lower() == array_button.champion_name.lower(), self.champions))[0]
+        # fmt: on
+
+    def export_champions(self) -> List[str]:
+        """Exports the current champions in the array.
+
+        Returns:
+            List of champion names as strings.
+        """
+        return [champion.text for champion in self.champions]
 
 
 class ChampionArrayHandler:
@@ -250,15 +322,12 @@ class ChampionArrayHandler:
     Attributes:
         champion_action: action that is performed on champions contained in the ChampionArray.
         champion_array: visual row array with a container for champions.
-        state_type: the state ChampionButtons' states will be changed to if an action is performed.
 
     """
 
-    def __init__(self, champion_action: ChampionAction, champion_array: ChampionArray):
+    def __init__(self, champion_action: ChampionStates, champion_array: ChampionArray):
         self.champion_action = champion_action
         self.champion_array = champion_array
-        # FIXME: there's probably a more elegant way to determine the state_type
-        self.state_type = ChampionStates.BAN if isinstance(champion_action, BanChampion) else ChampionStates.PICK
 
     def action(self, champion: ChampionButton) -> None:
         """
@@ -271,82 +340,16 @@ class ChampionArrayHandler:
 
         """
 
-        if champion.champion_state == self.state_type:
+        if champion.champion_state == self.champion_action:
             champion.reset()
             self.champion_array.remove_champion(champion)
-            self.champion_action.action(champion.text, is_active=False)
         else:
-            champion.champion_state = self.state_type
+            champion.champion_state = self.champion_action
             champion.recolor()
             self.champion_array.add_champion(champion)
-            self.champion_action.action(champion.text, is_active=True)
 
-
-class ChampionSelect(StackLayout):
-    """ChampionSelect interface with two fields indicating the current selected champion."""
-
-    champion = ObjectProperty()
-    champion_name = StringProperty()
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.champion: Union[ChampionButton, ChampionPlaceholder] = ChampionPlaceholder()
-        self.champion_name: str = self.champion.name
-
-        self.available_champions: List[ChampionButton] = []
-
-        # loop initializes ChampionButtons that will be worked on in this class and other parts of the app
-        for image_name in images:
-            champ = ChampionButton(
-                text=image_name[:-4],  # removes the '.png' from the image_name
-                font_size=0,
-                size_hint=(None, None),
-                size=(dp(42), dp(42)),  # can't make it bigger without stretching
-                background_normal=os.path.join(images_path, image_name),
-                background_down=os.path.join(images_path, image_name),
-            )
-
-            champ.bind(on_press=self._set_champion)
-            self.available_champions.append(champ)
-            self.add_widget(champ)
-
-    def _set_champion(self, new_champion: ChampionButton) -> None:
-        """Sets new values into the class fields champion and champion_name. For internal use only.
-
-        Args:
-            new_champion: ChampionButton that will replace old values.
-
-        """
-        if not isinstance(self.champion, ChampionPlaceholder):
-            self.champion.recolor()
-
-        new_champion.border_color = SELECT_COLOR
-        self.champion = new_champion
-        self.champion_name = new_champion.text
-
-    def update_list(self, text: str):
-        """Updates the champion list based on the input text of the ChampionSelect SearchBar.
-
-        Args:
-            text: text inputted by the user into the search bar.
-
-        """
-
-        self.clear_widgets()
-        if not text or text.lower() == "Search Bar".lower():
-            # shows all champions if the searchbar is unused
-            for champion in self.available_champions:
-                self.add_widget(champion)
-        # FIXME: might change it later
-        # evil python level hacking
-        elif found_champion := list(filter(lambda champ: champ.text.lower() == text.lower(), self.available_champions)):
-            self._set_champion(*found_champion)
-            self.add_widget(*found_champion)
-        else:
-            for champion in self.available_champions:
-                if text in champion.text.lower():
-                    self.add_widget(champion)
+    def export_array_champions(self) -> List[str]:
+        return self.champion_array.export_champions()
 
 
 class ChampionSelectUI(BoxLayout):
@@ -354,6 +357,8 @@ class ChampionSelectUI(BoxLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        self.champion_select = ObjectProperty()
 
         ban_array_label = Label(
             text="Ban Priority Queue",
@@ -376,13 +381,15 @@ class ChampionSelectUI(BoxLayout):
         self.add_widget(pick_array)
 
         self.ban_handler = ChampionArrayHandler(
-            champion_action=BanChampion(), champion_array=ban_array
+            champion_action=ChampionStates.BAN, champion_array=ban_array
         )
         self.pick_handler = ChampionArrayHandler(
-            champion_action=PickChampion(), champion_array=pick_array
+            champion_action=ChampionStates.PICK, champion_array=pick_array
         )
 
-    def ban_champion(self, champion: Union[ChampionButton, ChampionPlaceholder]):
+    def ban_champion(
+        self, champion: Union[ChampionButton, ChampionPlaceholder]
+    ) -> None:
         """
         Redirects the BanChampion action of the ban_handler. It also checks if a champion needs to be removed from the
         pickUI ChampionArray in case it contains this specific champion(a champion can't be a ban and a pick
@@ -398,7 +405,9 @@ class ChampionSelectUI(BoxLayout):
             self.pick_handler.action(champion)
         self.ban_handler.action(champion)
 
-    def pick_champion(self, champion: Union[ChampionButton, ChampionPlaceholder]):
+    def pick_champion(
+        self, champion: Union[ChampionButton, ChampionPlaceholder]
+    ) -> None:
         """
         Redirects the PickChampion action of the pick_handler. It also checks if a champion needs to be removed from
         the ban_handler ChampionArray in case it contains this specific champion(a champion can't be a ban and a pick
@@ -414,27 +423,85 @@ class ChampionSelectUI(BoxLayout):
             self.ban_handler.action(champion)
         self.pick_handler.action(champion)
 
-    def clear_bans(self):
+    def clear_bans(self) -> None:
         """Clears the ban_handler ChampionArray."""
         self.ban_handler.champion_array.clear()
         print("bans array cleared")
 
-    def clear_picks(self):
+    def clear_picks(self) -> None:
         """Clears the pick_handler ChampionArray."""
         self.pick_handler.champion_array.clear()
         print("picks array cleared")
 
+    def load_bans(self, bans: List[str]) -> None:
+        """Loads bans from a list of champion names.
+
+        Args:
+            bans: list of champion names.
+
+        """
+        self.clear_bans()
+        champion_bans = list(
+            filter(
+                lambda champion: champion.text in bans,
+                self.champion_select.available_champions,
+            )
+        )
+        for champion_ban in champion_bans:
+            self.ban_champion(champion_ban)
+
+    def load_picks(self, picks: List[str]) -> None:
+        """Loads picks from a list of champion names.
+
+        Args:
+            picks: list of champion names.
+
+        """
+        self.clear_picks()
+        champion_picks = list(
+            filter(
+                lambda champion: champion.text in picks,
+                self.champion_select.available_champions,
+            )
+        )
+        for champion_pick in champion_picks:
+            self.pick_champion(champion_pick)
+
+    def export_bans(self) -> List[str]:
+        """Exports bans from the champion array.
+
+        Returns:
+            List of champion names as strings.
+
+        """
+        return self.ban_handler.export_array_champions()
+
+    def export_picks(self) -> List[str]:
+        """Exports pick from the champion array.
+
+        Returns:
+            List of champion names as strings.
+
+        """
+        return self.pick_handler.export_array_champions()
+
+    def restrict_champion_pool(self) -> None:
+        """Restricts the ChampionSelect champion pool to champions owned by the user."""
+        champion_pool = client_scraper.get_available_champions()
+        unowned_champions = list(
+            filter(
+                lambda champion: champion.text not in champion_pool
+                and self.pick_handler.champion_array.contains(champion),
+                self.champion_select.available_champions,
+            )
+        )
+        for unowned_champion in unowned_champions:
+            self.pick_champion(unowned_champion)
+            unowned_champion.recolor()
+        self.champion_select.restrict_champion_pool(champion_pool)
+
 
 class ChampionSelectInterface(BoxLayout):
     """The main interface used by the .kv file."""
+
     pass
-
-
-class ChampionApp(App):
-    def build(self):
-        root_widget = ChampionSelectInterface()
-        return root_widget
-
-
-if __name__ == "__main__":
-    ChampionApp().run()

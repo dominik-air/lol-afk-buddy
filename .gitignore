@@ -117,4 +117,5 @@ dmypy.json
 *.bat
 *.zip
 .vscode
+/testground
 app/giga-trash-note.txt
