@@ -219,7 +219,8 @@ class ChampionArray(BoxLayout):
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
-                champion_name=champion.text, source=images_path + '\\' + champion.text + ".png"
+                champion_name=champion.text,
+                source=images_path + "\\" + champion.text + ".png",
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
@@ -302,13 +303,9 @@ class ChampionArray(BoxLayout):
         Returns:
             ChampionButton. The method assumes that there is no need to check for the existence of such counterpart.
         """
-
-        return list(
-            filter(
-                lambda champ: champ.text.lower() == array_button.champion_name.lower(),
-                self.champions,
-            )
-        )[0]
+        # fmt: off
+        return list(filter(lambda champ: champ.text.lower() == array_button.champion_name.lower(), self.champions))[0]
+        # fmt: on
 
     def export_champions(self) -> List[str]:
         """Exports the current champions in the array.
