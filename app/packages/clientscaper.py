@@ -12,8 +12,8 @@ class ClientScraper:
 
         @self.connector.ready
         async def connector(connection):
-            # gets the user's champions
-            summoner = await connection.request('get', '/lol-champions/v1/owned-champions-minimal')
+            # gets the user's champions_data
+            summoner = await connection.request('get', '/lol-champions_data/v1/owned-champions_data-minimal')
             champions = [champ_data["alias"] for champ_data in await summoner.json()]
             if "MonkeyKing" in champions:
                 # exceptions I've noticed

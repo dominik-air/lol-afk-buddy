@@ -46,7 +46,7 @@ class ChampionStates(Enum):
 
 
 class ChampionButton(Button):
-    """Creates champions as buttons with an additional outline border."""
+    """Creates champions_data as buttons with an additional outline border."""
 
     border_color = ListProperty()
 
@@ -128,7 +128,7 @@ class ChampionSelect(StackLayout):
                 text=image_name[:-4],  # removes the '.png' from the image_name
                 font_size=0,
                 size_hint=(None, None),
-                size=(dp(42), dp(42)),  # can't make it bigger without stretching
+                size=(dp(80), dp(80)),  # can't make it bigger without stretching
                 background_normal=os.path.join(images_path, image_name),
                 background_down=os.path.join(images_path, image_name),
             )
@@ -168,7 +168,7 @@ class ChampionSelect(StackLayout):
             lambda champ: champ.text in self.champion_pool, self.available_champions
         )
         if not text or text.lower() == "Search Bar".lower():
-            # shows all champions if the searchbar is unused
+            # shows all champions_data if the searchbar is unused
             for champion in filtered_champions:
                 self.add_widget(champion)
         # evil python level hacking
@@ -190,7 +190,7 @@ class ChampionSelect(StackLayout):
 
 
 class ChampionArray(BoxLayout):
-    """A BoxLayout child class used as a container for champions selected by the user."""
+    """A BoxLayout child class used as a container for champions_data selected by the user."""
 
     champions = ListProperty()
 
@@ -215,7 +215,7 @@ class ChampionArray(BoxLayout):
             self.add_widget(ChampionPlaceholder())
 
     def _create_array_buttons(self) -> None:
-        """Creates ChampionArrayButtons from the ChampionButtons in the champions class field."""
+        """Creates ChampionArrayButtons from the ChampionButtons in the champions_data class field."""
 
         for champion in self.champions:
             array_button = ChampionArrayButton(
@@ -227,7 +227,7 @@ class ChampionArray(BoxLayout):
 
     def add_champion(self, new_champion: ChampionButton) -> None:
         """
-        Adds a champion into the array by replacing the first from left placeholder. If the number of champions
+        Adds a champion into the array by replacing the first from left placeholder. If the number of champions_data
         exceeds the champion number limit then the least priority champion is substituted with the new champion.
 
         Args:
@@ -251,7 +251,7 @@ class ChampionArray(BoxLayout):
     ) -> None:
         """
         Removes the input champion from the array by replacing it with a champion placeholder and shifts the
-        remaining champions in the array to the left if necessary.
+        remaining champions_data in the array to the left if necessary.
 
          Args:
                 champion: input champion that is going to be removed from the array.
@@ -271,7 +271,7 @@ class ChampionArray(BoxLayout):
         self._create_blank_array(cols=self.champion_number_limit - len(self.champions))
 
     def clear(self) -> None:
-        """Clears the array from all champions."""
+        """Clears the array from all champions_data."""
 
         self.clear_widgets()
         for champion in self.champions:
@@ -308,7 +308,7 @@ class ChampionArray(BoxLayout):
         # fmt: on
 
     def export_champions(self) -> List[str]:
-        """Exports the current champions in the array.
+        """Exports the current champions_data in the array.
 
         Returns:
             List of champion names as strings.
@@ -320,8 +320,8 @@ class ChampionArrayHandler:
     """This class handles ChampionButtons' actions for a ChampionArray object.
 
     Attributes:
-        champion_action: action that is performed on champions contained in the ChampionArray.
-        champion_array: visual row array with a container for champions.
+        champion_action: action that is performed on champions_data contained in the ChampionArray.
+        champion_array: visual row array with a container for champions_data.
 
     """
 
@@ -486,7 +486,7 @@ class ChampionSelectUI(BoxLayout):
         return self.pick_handler.export_array_champions()
 
     def restrict_champion_pool(self) -> None:
-        """Restricts the ChampionSelect champion pool to champions owned by the user."""
+        """Restricts the ChampionSelect champion pool to champions_data owned by the user."""
         champion_pool = client_scraper.get_available_champions()
         unowned_champions = list(
             filter(
