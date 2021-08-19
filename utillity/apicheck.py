@@ -16,7 +16,8 @@ async def connect(connection):
     else:
 
         data = await summoner.json()
-        request = "/lol-champions/v1/owned-champions-minimal"
+        summonerId = data['summonerId']
+        request = f"/lol-collections/v1/inventories/{summonerId}/spells"
         request_type = "get"
         summoner_spells = await connection.request(request_type, request)
         print(await summoner_spells.json())
