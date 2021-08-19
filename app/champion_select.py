@@ -111,7 +111,6 @@ class ChampionSelect(StackLayout):
         ] = ChampionPlaceholder()
 
         self.available_champions: List[ChampionButton] = []
-        self.champion_pool: List[str] = []
 
         # loop initializes ChampionButtons that will be worked on in this class and other parts of the app
         for image_name in images:
@@ -126,7 +125,6 @@ class ChampionSelect(StackLayout):
 
             champ.bind(on_press=self._set_champion)
             self.available_champions.append(champ)
-            self.champion_pool.append(champ.text)
             self.add_widget(champ)
 
     def _set_champion(
@@ -155,30 +153,24 @@ class ChampionSelect(StackLayout):
         """
 
         self.clear_widgets()
-        filtered_champions = filter(
-            lambda champ: champ.text in self.champion_pool, self.available_champions
-        )
         if not text or text.lower() == "Search Bar".lower():
-            # shows all champions_data if the searchbar is unused
-            for champion in filtered_champions:
+            # shows all champions_data if the searchbar is unused or blank
+            for champion in self.available_champions:
                 self.add_widget(champion)
         # evil python level hacking
         elif found_champion := list(
             filter(
                 lambda champ: champ.text.lower() == text.lower(),
-                filtered_champions,
+                self.available_champions,
             )
         ):
             self._set_champion(*found_champion)
             self.add_widget(*found_champion)
         else:
-            for champion in filtered_champions:
-                if text in champion.text.lower():
+            # show every available champion with name partly matching with the user input
+            for champion in self.available_champions:
+                if text.lower() in champion.text.lower():
                     self.add_widget(champion)
-
-    def restrict_champion_pool(self, champion_pool: List[str]) -> None:
-        self.champion_pool = champion_pool
-
 
 class ChampionArray(BoxLayout):
     """A BoxLayout child class used as a container for champions_data selected by the user.
@@ -384,6 +376,8 @@ class ChampionSelectUI(BoxLayout):
             champion_action=ChampionStates.PICK, champion_array=pick_array
         )
 
+        self.champion_pool: List[str] = []
+
     def ban_champion(
         self, champion: Union[ChampionButton, ChampionPlaceholder]
     ) -> None:
@@ -413,6 +407,11 @@ class ChampionSelectUI(BoxLayout):
 
         if not isinstance(champion, ChampionButton):
             # if it's not a ChampionButton we should not touch it
+            return
+
+        if self.champion_pool is None or champion.text not in self.champion_pool:
+            # FIXME: add a pop-up msg for the user
+            print(f"You don't have {champion.text}")
             return
 
         if self.ban_handler.champion_array.contains(champion):
@@ -483,8 +482,13 @@ class ChampionSelectUI(BoxLayout):
         return self.pick_handler.export_array_champions()
 
     def restrict_champion_pool(self) -> None:
-        """Restricts the ChampionSelect champion pool to champions_data owned by the user."""
+        """Restricts the ChampionSelect champion pool to champions owned by the user."""
         champion_pool = client_scraper.get_available_champions()
+
+        if champion_pool is None:
+            # in case of no connection with LCU
+            return
+
         unowned_champions = list(
             filter(
                 lambda champion: champion.text not in champion_pool
@@ -495,7 +499,8 @@ class ChampionSelectUI(BoxLayout):
         for unowned_champion in unowned_champions:
             self.pick_champion(unowned_champion)
             unowned_champion.recolor()
-        self.champion_select.restrict_champion_pool(champion_pool)
+
+        self.champion_pool = champion_pool
 
 
 class ChampionSelectInterface(BoxLayout):

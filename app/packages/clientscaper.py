@@ -6,7 +6,7 @@ from lcu_driver import Connector
 async def get_available_champions(connection) -> None:
     # gets the user's champions_data
     summoner_champions = await connection.request(
-        "get", "/lol-champions_data/v1/owned-champions_data-minimal"
+        "get", "/lol-champions/v1/owned-champions-minimal"
     )
     champions = [champ_data["alias"] for champ_data in await summoner_champions.json()]
     with open("available_champions.json", "w+") as output_file:
@@ -33,13 +33,15 @@ class ClientScraper:
         @self.connector.ready
         async def connector(connection):
             await get_available_champions(connection)
-            await get_available_summoner_spells(connection)
+            #await get_available_summoner_spells(connection)
 
     def request_data(self) -> None:
         self.connector.start()
 
     def get_available_champions(self) -> List[str]:
-        raise NotImplemented
+        self.request_data()
+        with open("available_champions.json", "r+") as input_file:
+            return json.load(input_file)
 
 
 # only this should be imported
