@@ -11,6 +11,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from packages.clientscaper import client_scraper
+from packages.utils import path_problem_solver
+
 
 # defines type hints and constants
 RGBA = List[float]
@@ -18,17 +20,6 @@ BAN_COLOR = [1, 0, 0, 1]
 PICK_COLOR = [0.2, 0.6, 1, 1]
 SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
-
-
-def path_problem_solver(*sub_dirs) -> str:
-    """An uniform way of referring to files in the project.
-
-    Returns:
-        The absolute path to a file or directory.
-
-    """
-    return os.path.join(os.path.dirname(__file__), "..", *sub_dirs)
-
 
 # loads the images' names into a list
 images_path = path_problem_solver("img", "champion_images")
@@ -108,7 +99,7 @@ class ChampionPlaceholder(Image):
 
 
 class ChampionSelect(StackLayout):
-    """ChampionSelect interface with two fields indicating the current selected champion."""
+    """ChampionSelect interface with a field indicating the current selected champion."""
 
     champion = ObjectProperty()
 
@@ -128,7 +119,7 @@ class ChampionSelect(StackLayout):
                 text=image_name[:-4],  # removes the '.png' from the image_name
                 font_size=0,
                 size_hint=(None, None),
-                size=(dp(80), dp(80)),  # can't make it bigger without stretching
+                size=(dp(80), dp(80)),
                 background_normal=os.path.join(images_path, image_name),
                 background_down=os.path.join(images_path, image_name),
             )
@@ -190,7 +181,12 @@ class ChampionSelect(StackLayout):
 
 
 class ChampionArray(BoxLayout):
-    """A BoxLayout child class used as a container for champions_data selected by the user."""
+    """A BoxLayout child class used as a container for champions_data selected by the user.
+
+    Attributes:
+        champion_number_limit: integer defining the size on the row array.
+
+    """
 
     champions = ListProperty()
 
@@ -238,6 +234,7 @@ class ChampionArray(BoxLayout):
         if self.champion_number_limit > len(self.champions):
             self.champions.append(new_champion)
         else:
+            # if the array is full replace the last champion with the new one
             self.champions[-1].reset()
             self.champions[-1] = new_champion
 

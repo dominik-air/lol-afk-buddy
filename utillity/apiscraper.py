@@ -6,13 +6,13 @@ summoners_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.16.1/da
 champions_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.16.1/data/en_US/champion.json").json()["data"]
 
 # get the summoner spells' names available on Summoner's Rift
-summoner_spells = [spell for spell in summoners_data.keys() if "CLASSIC" in summoners_data[spell]["modes"]]
+summoner_spells = [(spell, summoners_data[spell]['key']) for spell in summoners_data.keys() if "CLASSIC" in summoners_data[spell]["modes"]]
 # save it in json
 # FIXME: the file path needs a rework
-with open("../data/summoners.json", "w+") as output:
+with open("../data/summoner_spells.json", "w+") as output:
     json.dump(summoner_spells, output, indent=4)
 # get the summoners_data spells' icons
-for summoner_spell in summoner_spells:
+for (summoner_spell, _) in summoner_spells:
     icon = requests.get(f"http://ddragon.leagueoflegends.com/cdn/11.16.1/img/spell/{summoner_spell}.png")
     if icon.status_code == 200:
         # FIXME: the file path needs a rework

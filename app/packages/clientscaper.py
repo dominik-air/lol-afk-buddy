@@ -3,6 +3,26 @@ from typing import List
 from lcu_driver import Connector
 
 
+async def get_available_champions(connection) -> None:
+    # gets the user's champions_data
+    summoner_champions = await connection.request(
+        "get", "/lol-champions_data/v1/owned-champions_data-minimal"
+    )
+    champions = [champ_data["alias"] for champ_data in await summoner_champions.json()]
+    with open("available_champions.json", "w+") as output_file:
+        json.dump(champions, output_file, indent=4)
+
+
+async def get_available_summoner_spells(connection) -> None:
+    # gets the user's champions_data
+    summoner_spells = await connection.request(
+        "get", "/lol-champions_data/v1/owned-champions_data-minimal"
+    )
+    spells = [spell_data["alias"] for spell_data in await summoner_spells.json()]
+    with open("available_summoner_spells.json", "w+") as output_file:
+        json.dump(spells, output_file, indent=4)
+
+
 class ClientScraper:
     # TODO: the class functionality can be extended to other api calls.
 
@@ -12,24 +32,14 @@ class ClientScraper:
 
         @self.connector.ready
         async def connector(connection):
-            # gets the user's champions_data
-            summoner = await connection.request('get', '/lol-champions_data/v1/owned-champions_data-minimal')
-            champions = [champ_data["alias"] for champ_data in await summoner.json()]
-            if "MonkeyKing" in champions:
-                # exceptions I've noticed
-                # FIXME: after the api scraper will be fully implemented this if statement will be unnecessary
-                champions.remove("MonkeyKing")
-                champions.append("Wukong")
-                champions.sort()
-            with open("available_champions.json", "w+") as output_file:
-                json.dump(champions, output_file, indent=4)
+            await get_available_champions(connection)
+            await get_available_summoner_spells(connection)
 
     def request_data(self) -> None:
         self.connector.start()
 
     def get_available_champions(self) -> List[str]:
-        with open("available_champions.json", "r+") as input_file:
-            return json.load(input_file)
+        raise NotImplemented
 
 
 # only this should be imported

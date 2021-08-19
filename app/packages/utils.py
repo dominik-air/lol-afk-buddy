@@ -1,3 +1,4 @@
+import os
 from wmi import WMI
 
 
@@ -44,3 +45,13 @@ class LOLClientStatusInformer(metaclass=SingletonMeta):
             self._pid = None
 
         return self._pid
+
+
+def path_problem_solver(*sub_dirs) -> str:
+    """An uniform way of referring to files in the project.
+
+    Returns:
+        The absolute path to a file or directory.
+
+    """
+    return os.path.join(os.path.dirname(__file__), "..", "..", *sub_dirs)
