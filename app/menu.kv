@@ -110,6 +110,12 @@
     -size_hint_y: .7
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
+<LauncherButton>:
+    foo: root.nothing
+
+    -size_hint_y: .7
+    -pos_hint: {'center_x': .5, 'center_y': .5}
+
 <PlusMinusButton@BoxLayout>:
     # Dynamic class representing element which consists of 
     # minus button on the left plus on right and textInput in center
@@ -590,3 +596,35 @@
                         methodAdd: root.fooA
                         methodSub: root.fooB
                         input_value: str(root.number_of_bans)
+
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'search for a game'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    LauncherButton:
+                        # size_hint: .7, .2
+                        foo: self.find_match
+                        text: 'search'
+
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'cancel'
+                
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    LauncherButton:
+                        # size_hint: .7, .2
+                        foo: self.cancell
+                        text: 'cancel'
