@@ -15,10 +15,10 @@ class Command(ABC):
             self.receiver = receiver
             self.connection = self.receiver.connection
             self.locals = self.connection.locals
-            self._loop = loop
+            self._loop = self.receiver.loop
 
         else:
-            print('receiver is None type')
+            print(self.INFO_S, 'receiver is None type', sep=' ')
 
     @abstractmethod
     def execute(self):
@@ -44,7 +44,7 @@ class MatchFinder(Command):
 
     async def _execute(self):
         # print(self.locals['lobby'])
-        # print('\n\nmatch finder is working....\n\n')
+        # print('\n\nmatch finder is working`...\n\n')
 
         '''While in lobby start fingin a match.'''
         res = await self.connection.request('post', '/lol-lobby/v2/lobby/matchmaking/search')
@@ -60,3 +60,10 @@ class MatchFinder(Command):
 class Canceller(Command):
     def execute(self):
         print('\n\ncancell is working....\n\n')
+
+
+# classes for tests
+
+class Greet(Command):
+    def execute(self):
+        print('Greetings :J')
