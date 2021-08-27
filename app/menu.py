@@ -158,7 +158,6 @@ class LauncherButton(MyButton):
         self.execute_command()
 
 
-
 class PlusMinusButton(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

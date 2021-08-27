@@ -4,11 +4,7 @@ from command import Command
 from packages.champNameIdMapper import ChampNameIdMapper
 
 connector = Connector()
-# @staticmethod
-# def _error_whit_connection(res):
-#     print(colored('[error]', 'red'),
-#             f'An error occured while request. Err no.: {res.status}',
-#             end='')
+
 
 @connector.ready
 async def connect(connection):
