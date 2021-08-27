@@ -36,18 +36,18 @@ from champion_select import (
     ChampionSelectUI, ChampionSelect, ChampionSelectInterface)
 
 from lcu_driver import Connector, connector
-import aioconsole
 from termcolor import colored
 from pprint import pprint
 
 import command as cd
-from packages.champNameIdMapper import ChampNameIdMapper
 
 import threading
-import multiprocessing
-import asyncio
-import keyboard
 from packages.LauncherCommand import LauncherCommand, ConsoleController
+
+
+# import connector instance and websockets
+from connector import connector
+
 
 class AppLayout(TabbedPanel):
     '''Main container in the kivy file. Methods and properties
@@ -199,51 +199,26 @@ class MenuApp(App, KivyTheme):
     # Appearance settings
     info_wp_offset = NumericProperty(300)  # information wrapper left padding
 
-    # LCU driver connector object (static)
-    # connector = Connector()
-    # loop = None
-    # _is_running = None
-
     # DEFINITIONS OF METHODS
     def __init__(self, connector, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
 
         self.connector = connector
-        self._is_running = False
-
+        # self._is_running = False
 
         # LCU driver connector initialization
-        # ten watek nigdy nie zakończy swojego działania!!!! Nawet jak wyjdziesz z petli
-        self.t = threading.Thread(target=self.connector.start)
-        self.t.daemon = True
-        self.t.start()
+        self.connector_thread = threading.Thread(target=self.connector.start)
+        self.connector_thread.daemon = True
+        self.connector_thread.start()
 
+        # CololeController is class to handle and manage commands provied
+        # by user through console. console.start() starts a infinite loop
+        # which reads input
         self.console = ConsoleController(self.connector)
-        self.ct = threading.Thread(target=self.console.start)
-        self.ct.daemon = True
-        self.ct.start()
+        self.console_thread = threading.Thread(target=self.console.start)
+        self.console_thread.daemon = True
+        self.console_thread.start()
 
-
-        # to ma byc wylaczone!!!
-        # self.connector.start()
-
-    
-    # @classmethod
-    def get_is_running(cls) -> bool:
-        if cls._is_running != None:
-            return cls._is_running
-
-        else:
-            raise Exception('is_running property is None type.')
-
-    # @classmethod
-    def set_is_running(cls, value: bool) -> None:
-        if isinstance(value, bool):
-            cls._is_running = value
-        
-        else:
-            raise Exception('is_running can be assigned only to bool type.')
-    
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
         self.is_lol_client_running = self.lol_client._is_running
@@ -275,202 +250,10 @@ class MenuApp(App, KivyTheme):
         '''This methods does nothing. Use it carefully.'''
         pass
 
-    def on_start(self):
-        self.set_is_running(True)
-
-    def on_stop(self):
-        pass
-        # self.connector.stop()
-        # self.set_is_running(False)
-        # print(cd.Command.INFO_S, 'sending enter...', sep=' ')
-        # keyboard.send('enter')
-        # self.t.join()
-
     def build(self):
         app = AppLayout()
         Clock.schedule_interval(self.update_lol_client_status_property, 2)
         return app
-
-# LCU driver related
-# @staticmethod
-
-connector = Connector()
-
-@connector.ready
-async def connect(connection):
-    print(cd.Command.OK_S,
-        'LCU API is ready to be used.')
-    
-    # print('runnign LOOP: ' + asyncio.get_event_loop())
-    # print('all tasks: ' + asyncio.all_tasks())
-    # MenuApp.loop = asyncio.get_running_loop()
-    # print(cd.Command.INFO_S,
-    #         'Connector running on loop:',
-    #         MenuApp.loop, sep=' ')
-
-
-    # get summoner name
-    res = await connection.request('get', '/lol-summoner/v1/current-summoner')
-    if res.status == 200:
-        data = await res.json()
-        SUMMONER_NAME: str = data['internalName']
-        SUMMONER_ID: int = data['summonerId']
-        SUMMONER_PUUID: str = data['puuid']
-
-        print(cd.Command.OK_S,
-        'Logged in successfully\n',
-        '\t-Currently logged as summoner:',
-        colored(f'{SUMMONER_NAME}\n', attrs=('bold',)),
-        '\t-summoner id:',
-        colored(f'{SUMMONER_ID}\n', attrs=('bold',)),
-        sep=' ')
-
-        status = await ChampNameIdMapper.get_data()
-        print(cd.Command.OK_S,
-            'champion id and name mapped successfully',
-            f' .status: {status}')
-
-    else:
-        MenuApp._error_whit_connection(res)
-
-    # while True:
-    # # while True:
-    #     try:
-    #         # TU JEST PROBLEM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    #         u_command = await aioconsole.ainput('command:\n')
-
-    #     except KeyboardInterrupt:
-    #         break
-
-    #     except Exception:
-    #         break
-    
-
-    #     # command = LauncherrCommands()
-    #     # command.set_command(u_command)
-    #     # command.execute_command()
-
-
-    #     # Lobby and searching for game related
-    #     if u_command == 'findmatch':
-    #         '''While in lobby start fingin a match.'''
-    #         res = await connection.request('post', '/lol-lobby/v2/lobby/matchmaking/search')
-    #         if res.status == 200:
-    #             print(colored('[OK]', 'green'),
-    #                     'Game searching has been started.')
-
-    #         else:
-    #             MenuApp._error_whit_connection(res)
-
-    #     elif u_command == 'cancel':
-    #         res = await connection.request('delete', '/lol-lobby/v2/lobby/matchmaking/search')
-    #         if res.status == 200:
-    #             print(colored('[OK]', 'green'),
-    #                     'Search has been cancelled.')
-
-    #         else:
-    #             MenuApp._error_whit_connection(res)
-
-
-    # print('about to die')
-    # raise KeyboardInterrupt
-
-
-# @staticmethod
-@connector.close
-async def disconnect(_):
-    print('The client have been closed!')
-    await MenuApp.connector.stop()
-
-# @staticmethod
-# def _error_whit_connection(res):
-#     print(colored('[error]', 'red'),
-#             f'An error occured while request. Err no.: {res.status}',
-#             end='')
-
-
-# @staticmethod
-@connector.ws.register('/lol-lobby/v2/lobby', event_types=('UPDATE',))
-async def lobby(connection, event):
-    # print(type(event))
-
-    # helping variables
-    content: str = str()
-    header: str = colored('The game lobby started.', 'red')
-    data: dict = {
-        'Game mode': event.data['gameConfig']['gameMode'],
-    }
-
-    # fulfill content variable
-    for key, value in data.items():
-        content += colored(f"\t-{key}: ", 'red')
-        content += colored(f"{value}", 'red', attrs=('bold',))
-        content += '\n'
-
-    # print out data
-    print(header)
-    print(content)
-
-    # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
-    connection.locals.update({'lobby': event})
-    # pprint(connector.ws.registered_uris)
-
-# @staticmethod
-@connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',))
-async def session(connection, event):
-    
-        # print(type(event))
-
-        # helping variables
-        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
-        for e in event.data['actions']:
-            for d in e:
-                if d['isInProgress']:
-                    active_action_id = d['id']
-                    active_action = d
-                else:
-                    active_action_id = None
-                    active_action = None
-
-        try:
-            hovered_champ = champs[str(active_action['championId'])]
-
-        except KeyError:
-            hovered_champ = None
-        
-        except TypeError:
-            hovered_champ = None
-
-
-                # print(f'Champion {colored(champ, "red")} is hovered.')
-        content: str = str()
-        header: str = colored('Session has been updated:', 'red')
-        data: dict = {
-            'bans': event.data['bans']['myTeamBans'],
-            # 'benchChampionIds': event.data['benchChampionIds'],
-            # 'gameId': event.data['gameId'],
-            # 'actions': event.data['actions'],
-            'activeAction': active_action_id,
-            'hoveredChampion': hovered_champ,
-        }
-
-        # fulfill content variable
-        for key, value in data.items():
-            content += colored(f"\t-{key}: ", 'red')
-            content += colored(f"{value}", 'red', attrs=('bold',))
-            content += '\n'
-
-        # print out data
-        print(header)
-        print(content)
-
-        # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
-        connection.locals.update({'session': event,
-                                'active_id': active_action_id,
-                                'active_action': active_action,})
-        # pprint(connector.ws.registered_uris)
-
-
 
 
 if __name__ == "__main__":
