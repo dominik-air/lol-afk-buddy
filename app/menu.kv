@@ -111,7 +111,7 @@
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
 <LauncherButton>:
-    foo: root.nothing
+    buttons_method: root.default_action
 
     -size_hint_y: .7
     -pos_hint: {'center_x': .5, 'center_y': .5}
@@ -610,7 +610,7 @@
 
                     LauncherButton:
                         # size_hint: .7, .2
-                        foo: self.find_match
+                        buttons_method: self.find_match
                         text: 'search'
 
             SubInfoGridLayout:
@@ -626,5 +626,5 @@
 
                     LauncherButton:
                         # size_hint: .7, .2
-                        foo: self.cancell
+                        buttons_method: self.cancell
                         text: 'cancel'

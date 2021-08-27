@@ -1,5 +1,6 @@
 # kivy packages:
 import kivy
+from kivy.animation import CompoundAnimation
 from kivy.app import App
 from kivy.logger import ColoredFormatter
 from kivy.properties import (
@@ -39,7 +40,7 @@ from lcu_driver import Connector, connector
 from termcolor import colored
 from pprint import pprint
 
-import command as cd
+from command import *
 
 import threading
 from packages.LauncherCommand import LauncherCommand, ConsoleController
@@ -87,7 +88,6 @@ class InfoGridLayout(GridLayout):
 class SubInfoGridLayout(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
 
 class SettingsSpinner(Spinner):
     def __init__(self, **kwargs):
@@ -111,7 +111,6 @@ class SettingsSpinnerOption(SpinnerOption):
     #     if value == "down":
     #         self.canvas.before.children[0].rgba = self._app.btn_down_color
 
-
 class MyButton(ButtonBehavior, Label):
     '''Class created to represent my own button appearance and behaviour.'''
 
@@ -121,42 +120,55 @@ class MyButton(ButtonBehavior, Label):
         self._app = kivy.app.App.get_running_app()
         self.bind(state=self._app.click_effect)
 
+# currently working on
 class LauncherButton(MyButton):
+    '''This class is dedicated for all buttons related with
+    league of legends launcher.'''
     # foo = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.command: cd.Command = None
+        self.command: Command = None
         self._app = kivy.app.App.get_running_app()
-        
     
+
     def set_command(self, command):
-        # if isinstance(command, cd.Command):
+        # if isinstance(command, Command):
         self.command = command
-        
-        # else:
-        #     print(cd.Command.ERR_S, 'Failiture while assigning a command')
     
     def execute_command(self) -> None:
         try:
             self.command.execute()
-        except Exception as e:
-            print(e)
-    
-    def find_match(self):
-        self.set_command(cd.MatchFinder(receiver=self._app.connector))
 
-    def cancell(self):
-        self.set_command(cd.Canceller())
-    
-    def nothing(self):
-        print('abc')
+        except Exception as e:
+            print(Command.ERR_S, e, sep=' ')
 
     def on_press(self):
-        self.foo()
-        self.execute_command()
 
+        # this method is replaced inside kivy file by one of the
+        # following definitions of methods (find_match, cancell, ...)
+        # we call it to set a command... then we call execute() for
+        # setted command by calling execute_command (kinda wrapper)
+        self.buttons_method()
+
+        # ...then we call execute() for setted command
+        # by calling execute_command (kinda wrapper)
+        self.execute_command()
+    
+
+    # user defined methods which set a appropirate command:
+
+    def find_match(self):
+        self.set_command(MatchFinder())
+
+    def cancell(self):
+        self.set_command(Canceller())
+    
+    def default_action(self):
+        print(Command.INFO_S,
+              'For this button an action has not been set yet.',
+               sep=' ')
 
 class PlusMinusButton(BoxLayout):
     def __init__(self, **kwargs):
@@ -188,10 +200,6 @@ class MenuApp(App, KivyTheme):
     so they are here in order to provide easy communication between
     those classes.'''
 
-    # LOL client properties
-    lol_client = LOLClientStatusInformer()
-    is_lol_client_running = NumericProperty(0)
-
     # Font settings
     _font_size = NumericProperty(16)
 
@@ -202,18 +210,24 @@ class MenuApp(App, KivyTheme):
     def __init__(self, connector, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
 
-        self.connector = connector
+        # LOL client properties
+        self.lol_client = LOLClientStatusInformer()
+        self.is_lol_client_running = None
+
+
+        Command.receiver = connector
+        # Command.set_receiver(self.connector)
         # self._is_running = False
 
         # LCU driver connector initialization
-        self.connector_thread = threading.Thread(target=self.connector.start)
+        self.connector_thread = threading.Thread(target=connector.start)
         self.connector_thread.daemon = True
         self.connector_thread.start()
 
         # CololeController is class to handle and manage commands provied
         # by user through console. console.start() starts a infinite loop
         # which reads input
-        self.console = ConsoleController(self.connector)
+        self.console = ConsoleController()
         self.console_thread = threading.Thread(target=self.console.start)
         self.console_thread.daemon = True
         self.console_thread.start()
@@ -222,7 +236,7 @@ class MenuApp(App, KivyTheme):
         self.lol_client.is_running()
         self.is_lol_client_running = self.lol_client._is_running
 
-    # Button's on_press methods definitions:
+    # Buttons on_press method definitions:
     def switch_dark(self, b):
         self.change_theme("dark")
         self.update_theme(self)

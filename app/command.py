@@ -1,7 +1,6 @@
-from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
 
-from lcu_driver import connector
 from termcolor import colored
 # from menu import MenuApp
 
@@ -10,12 +9,14 @@ class Command(ABC):
     ERR_S = f"[{colored('ERROR', 'red')}]"
     INFO_S = f"[{colored('INFO ', 'blue')}]"
 
-    def __init__(self, receiver=None, loop=None):
-        if receiver:
-            self.receiver = receiver
-            self.connection = self.receiver.connection
-            self.locals = self.connection.locals
-            self._loop = self.receiver.loop
+    receiver = None
+
+    def __init__(self):
+        if Command.receiver:
+            # self.receiver = receiver
+            Command.connection = Command.receiver.connection
+            Command._loop = Command.receiver.loop
+            Command.locals = Command.connection.locals
 
         else:
             print(self.INFO_S, 'receiver is None type', sep=' ')
@@ -35,7 +36,7 @@ class MatchFinder(Command):
               'current loop from Command:',
               self._loop, sep=' ')
         
-        asyncio.run_coroutine_threadsafe(self._execute(), self._loop)
+        asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
         # print(f'running loop: {asyncio.get_running_loop()}')
 
         # loop = asyncio.new_event_loop()
@@ -60,7 +61,7 @@ class MatchFinder(Command):
 class Canceller(Command):
     def execute(self):
         print('\n\ncancell is working....\n\n')
-
+    
 
 # classes for tests
 

@@ -2,53 +2,52 @@ from command import *
 import threading
 
 class LauncherCommand:
+    '''Defines what function match witch command.'''
+
     def __init__(self):
         self.command: Command = None
-        self.u_input: str = None
     
     def set_command(self, command: Command):
         if isinstance(command, Command):
             self.command = command
 
     def execute_command(self):
-        if self.command:
+        try:
             self.command.execute()
         
-        else:
-            print(Command.ERR_S,
-                  'Command is not set.', sep=' ')
+        except Exception as e:
+            print(Command.ERR_S, e, sep=' ')
+    
+
+    def find_match(self):
+        self.set_command(MatchFinder())
+        self.execute_command()
+
 
 
 class ConsoleController:
-    def __init__(self, receiver):
-        self._input: str = None
-        self.run: bool = True
-        self.console: LauncherCommand = LauncherCommand()
-        self.receiver = receiver
-        self._loop = self.receiver.loop
+    '''This class is to provide method which starts ifinite loop
+    which reads input from the user and runs relevant method of
+    LaucherCommand class instance.'''
+
+    def __init__(self):
+        self.command: LauncherCommand = LauncherCommand()
 
     def start(self):
-        while self.run:
-            self._input = input('$>')
+        while True:
+            _input = input('$>')
 
-            if self._input == 'exit':
-                self.run = False
+            if _input == 'exit':
+                break
             
-            if self._input == 'findmatch':
-                self.console.set_command(MatchFinder(receiver=self.receiver))
-                self.console.execute_command()
-
-    
-    def stop(self):
-        self.run = False
-    
-    def get_input(self):
-        return self._input
+            if _input == 'findmatch':
+                self.command.find_match()
 
 
-import time
+# old code, not relevant
 if __name__ == '__main__':
 
+    import time
     cc = ConsoleController()
     t = threading.Thread(target=cc.start)
     t.daemon = True
@@ -57,13 +56,3 @@ if __name__ == '__main__':
     for i in range(10):
         time.sleep(.4)
         print(f'counter: {i}')
-
-    # keyboard.send('enter')
-    # cc.stop()
-    # keyboard.send('enter')
-    # t.join()
-
-
-    # console = LauncherCommand()
-    # console.set_command(Greet())
-    # console.execute_command()
