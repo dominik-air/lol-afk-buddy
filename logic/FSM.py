@@ -18,7 +18,7 @@ class Context:
     def __init__(self, state: State) -> None:
         self.transition_to(state)
 
-    def transition_to(self, state: State):
+    def transition_to(self, state: State) -> None:
         """
         The Context allows changing the State object at runtime.
         """
@@ -32,13 +32,13 @@ class Context:
     The Context delegates part of its behavior to the current State object.
     """
 
-    def previous_state(self):
+    def previous_state(self) -> None:
         self._state.previous()
 
-    def next_state(self):
+    def next_state(self) -> None:
         self._state.next()
 
-    def send_state_request(self):
+    def send_state_request(self) -> None:
         self._state.request()
 
 

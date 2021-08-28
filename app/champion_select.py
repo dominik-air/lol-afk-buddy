@@ -4,6 +4,7 @@ from typing import List, Union
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.popup import Popup
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
 from kivy.uix.stacklayout import StackLayout
@@ -171,6 +172,7 @@ class ChampionSelect(StackLayout):
             for champion in self.available_champions:
                 if text.lower() in champion.text.lower():
                     self.add_widget(champion)
+
 
 class ChampionArray(BoxLayout):
     """A BoxLayout child class used as a container for champions_data selected by the user.
@@ -410,8 +412,10 @@ class ChampionSelectUI(BoxLayout):
             return
 
         if self.champion_pool is None or champion.text not in self.champion_pool:
-            # FIXME: add a pop-up msg for the user
-            print(f"You don't have {champion.text}")
+            popup = Popup(title='Champion selection error', content=Label(text=f"You don't have {champion.text}"),
+                          auto_dismiss=True,
+                          size_hint=(None, None), size=(300, 300))
+            popup.open()
             return
 
         if self.ban_handler.champion_array.contains(champion):

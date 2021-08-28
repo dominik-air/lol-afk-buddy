@@ -1,5 +1,5 @@
 from lcu_driver import Connector
-
+import json
 connector = Connector()
 
 
@@ -17,34 +17,12 @@ async def connect(connection):
 
         data = await summoner.json()
         summonerId = data['summonerId']
-        request = f"/lol-collections/v1/inventories/{summonerId}/spells"
+        #request = f"/lol-perks/v1/perks"
+        request = f"/lol-perks/v1/currentpage"
         request_type = "get"
         summoner_spells = await connection.request(request_type, request)
-        print(await summoner_spells.json())
-
-        #
-        # for ID in range(0, 10):
-        #     request = f"/lol-champ-select/v1/session/actions/{ID}"
-        #     response = await connection.request(
-        #         "patch",
-        #         request,
-        #         data={
-        #             "championId": 76+ID,
-        #             "id": ID,
-        #             "isAllyAction": True,
-        #             "type": "ban",
-        #         },
-        #     )
-        #     check = response.status
-        #     if check not in (*list(range(200, 209)), 226):
-        #         print(f'brejkuje przy ID={ID}')
-        #         continue
-        #
-        #     print(await response.json())
-        #
-        #     complete_request = f"/lol-champ-select/v1/session/actions/{ID}/complete"
-        #     await connection.request(
-        #         "post",
-        #         complete_request)
-
+        save = await summoner_spells.json()
+        print(save)
+        # with open("rune_data.json", "w+") as f:
+        #     json.dump([(rune["name"], rune["id"]) for rune in save], f, indent=4)
 connector.start()
