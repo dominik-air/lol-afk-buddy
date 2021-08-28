@@ -43,7 +43,7 @@ from pprint import pprint
 from command import *
 
 import threading
-from packages.LauncherCommand import LauncherCommand, ConsoleController
+from packages.LauncherCommand import LauncherCommand
 
 
 # import connector instance and websockets
@@ -206,7 +206,7 @@ class MenuApp(App, KivyTheme):
     # Appearance settings
     info_wp_offset = NumericProperty(300)  # information wrapper left padding
 
-    # DEFINITIONS OF METHODS
+    # DEFINITIONS OF METHO
     def __init__(self, connector, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
 
