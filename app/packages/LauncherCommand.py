@@ -6,32 +6,24 @@ class LauncherCommand:
 
     def __init__(self):
         self.command: Command = None
-    
-    def set_command(self, command: Command):
-        if isinstance(command, Command):
-            self.command = command
 
-    def execute_command(self):
+    @classmethod
+    def set_command(cls, command: Command):
+        if isinstance(command, Command):
+            cls.command = command
+
+    @classmethod
+    def execute_command(cls):
         try:
-            self.command.execute()
+            cls.command.execute()
         
         except Exception as e:
             print(Command.ERR_S, e, sep=' ')
-    
 
-    def find_match(self):
-        self.set_command(MatchFinder())
-        self.execute_command()
-
-
-
-class ConsoleController:
-    '''This class is to provide method which starts ifinite loop
-    which reads input from the user and runs relevant method of
-    LaucherCommand class instance.'''
-
-    def __init__(self):
-        self.command: LauncherCommand = LauncherCommand()
+    @classmethod
+    def find_match(cls):
+        cls.set_command(MatchFinder())
+        cls.execute_command()
 
     def start(self):
         while True:
@@ -41,18 +33,37 @@ class ConsoleController:
                 break
             
             if _input == 'findmatch':
-                self.command.find_match()
+                LauncherCommand.command.find_match()
 
 
-# old code, not relevant
-if __name__ == '__main__':
+# class ConsoleController:
+#     '''This class is to provide method which starts ifinite loop
+#     which reads input from the user and runs relevant method of
+#     LaucherCommand class instance.'''
 
-    import time
-    cc = ConsoleController()
-    t = threading.Thread(target=cc.start)
-    t.daemon = True
-    t.start()
+#     def __init__(self):
+#         self.command: LauncherCommand = LauncherCommand()
 
-    for i in range(10):
-        time.sleep(.4)
-        print(f'counter: {i}')
+#     def start(self):
+#         while True:
+#             _input = input('$>')
+
+#             if _input == 'exit':
+#                 break
+            
+#             if _input == 'findmatch':
+#                 self.command.find_match()
+
+
+# # old code, not relevant
+# if __name__ == '__main__':
+
+#     import time
+#     cc = ConsoleController()
+#     t = threading.Thread(target=cc.start)
+#     t.daemon = True
+#     t.start()
+
+#     for i in range(10):
+#         time.sleep(.4)
+#         print(f'counter: {i}')

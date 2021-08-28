@@ -227,7 +227,7 @@ class MenuApp(App, KivyTheme):
         # CololeController is class to handle and manage commands provied
         # by user through console. console.start() starts a infinite loop
         # which reads input
-        self.console = ConsoleController()
+        self.console = LauncherCommand()
         self.console_thread = threading.Thread(target=self.console.start)
         self.console_thread.daemon = True
         self.console_thread.start()
