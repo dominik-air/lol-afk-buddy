@@ -1,4 +1,5 @@
 # kivy packages:
+from os import sep
 import kivy
 from kivy.animation import CompoundAnimation
 from kivy.app import App
@@ -58,8 +59,14 @@ class AppLayout(TabbedPanel):
     # QUESTION: this property should be here or in menu class?
     number_of_bans = NumericProperty(5)
 
+    btn = ObjectProperty(None)
+    spnr = ObjectProperty(None)
+
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
+        print(self.btn, self.spnr, sep='\n')
+        print()
+
 
     def spinner_clicked(self, value):
         opt = self.ids.spinner_id.text
@@ -125,6 +132,8 @@ class LauncherButton(MyButton):
     '''This class is dedicated for all buttons related with
     league of legends launcher.'''
     # foo = ObjectProperty(None)
+    # setting_spinner = ObjectProperty(None)
+    spnr = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -148,8 +157,7 @@ class LauncherButton(MyButton):
 
         # this method is replaced inside kivy file by one of the
         # following definitions of methods (find_match, cancell, ...)
-        # we call it to set a command... then we call execute() for
-        # setted command by calling execute_command (kinda wrapper)
+        # we call it to set a command...
         self.buttons_method()
 
         # ...then we call execute() for setted command
@@ -165,6 +173,15 @@ class LauncherButton(MyButton):
     def cancell(self):
         self.set_command(Canceller())
     
+    def accept(self):
+        self.set_command(Acceptor())
+    
+    def decline(self):
+        self.set_command(Decliner())
+    
+    def save_to_file(self):
+        self.set_command(Saver(opt=self.spnr.text))
+
     def default_action(self):
         print(Command.INFO_S,
               'For this button an action has not been set yet.',

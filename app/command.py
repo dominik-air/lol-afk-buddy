@@ -21,50 +21,71 @@ class Command(ABC):
         else:
             print(self.INFO_S, 'receiver is None type', sep=' ')
 
-    @abstractmethod
     def execute(self):
+        asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
+        
+    @abstractmethod
+    async def _execute(self):
         pass
 
 
 class MatchFinder(Command):
-    def execute(self):
-        # asyncio.run(self._execute())
-        # print('im running')
-
-        # TODO: jak z tego poziomu dostac loop?
-        print(self.INFO_S,
-              'current loop from Command:',
-              self._loop, sep=' ')
-        
-        asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
-        # print(f'running loop: {asyncio.get_running_loop()}')
-
-        # loop = asyncio.new_event_loop()
-        # loop.run_until_complete(self._execute())
-        # loop.close()
 
     async def _execute(self):
-        # print(self.locals['lobby'])
-        # print('\n\nmatch finder is working`...\n\n')
 
-        '''While in lobby start fingin a match.'''
         res = await self.connection.request('post', '/lol-lobby/v2/lobby/matchmaking/search')
-        if res.status == 200:
-            print(colored('[OK]', 'green'),
+        if res.status == 204:
+            print(self.OK_S,
                     'Game searching has been started.')
 
         else:
-            print(f'error {res.status}')
+            print(self.ERR_S, f'error: {res.status}')
             # _error_whit_connection(res)
 
-
 class Canceller(Command):
-    def execute(self):
-        print('\n\ncancell is working....\n\n')
+    async def _execute(self):
+
+        res = await self.connection.request('delete', '/lol-lobby/v2/lobby/matchmaking/search')
+        if res.status == 204:
+            print(self.OK_S,
+                    'Gamer searching has been cancelled.')
+
+        else:
+            print(self.ERR_S, f'error: {res.status}')
+            # _error_whit_connection(res)
     
+class Acceptor(Command):
+    async def _execute(self):
 
-# classes for tests
+        reqs = '/lol-matchmaking/v1/ready-check/accept'
+        res = await self.connection.request('post', reqs)
 
-class Greet(Command):
-    def execute(self):
-        print('Greetings :J')
+        if res.status == 200:
+            print(self.OK_S,
+                    'Game has been accepted.', sep=' ')
+
+        else:
+            print(self.ERR_S, f'error: {res.status}')
+            # _error_whit_connection(res)
+
+class Decliner(Command):
+    async def _execute(self):
+
+        reqs = '/lol-matchmaking/v1/ready-check/decline'
+        res = await self.connection.request('post', reqs)
+
+        if res.status == 200:
+            print(self.OK_S,
+                    'Game has been declined.', sep=' ')
+
+        else:
+            print(self.ERR_S, f'error: {res.status}')
+            # _error_whit_connection(res)
+
+class Saver(Command):
+    def __init__(self, opt):
+        super().__init__()
+        self.opt = opt
+
+    async def _execute(self):
+        print(f'the option {self.opt} has been passed.')
