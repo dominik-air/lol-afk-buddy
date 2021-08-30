@@ -236,8 +236,8 @@
 # ------------------------------- MAIN APP CODE ------------------------------ #
 <AppLayout>:
     # Tabs settings
-    btn: iButton
-    spnr: spinner_option
+    save_selection: spinner_option
+    name_of_json_file: textinput_json_file
 
     do_default_tab: False
     tab_pos: 'top_mid'
@@ -675,7 +675,7 @@
                 cols: 2
 
                 SettingsLabel:
-                    text: 'save json to a file'
+                    text: 'save [name_of_json_file]'
                 
                 BoxLayout:
                     size_hint_x: 1
@@ -687,14 +687,30 @@
                         text: 'choose'
                         values: ['session', 'lobby', 'nothing']
                         on_text: root.spinner_clicked(spinner_id.text)
-                    
+
                     LauncherButton:
-                        id: iButton
-                        spnr: root.spnr
+                        save_selection: root.save_selection
+                        name_of_json_file: root.name_of_json_file
 
                         buttons_method: self.save_to_file
-                        # text: spinner_option.text
                         text: 'save'
+                    
+                    Label:
+                        text: 'as'
+                        size_hint_x: None
+                        width: 20
+
+                    TextInput:
+                        id: textinput_json_file
+                        size_hint_x: None
+                        size_hint_y: .7
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        cursor_color: 0, 0, 0, .8
+                        halign: 'center'
+                        # valign: 'middle'
+                        # padding_y: (self.height)/4
+                    
+
                     # LauncherButton:
                     #     # size_hint: .7, .2
                     #     buttons_method: self.decline

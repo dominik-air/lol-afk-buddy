@@ -59,12 +59,9 @@ class AppLayout(TabbedPanel):
     # QUESTION: this property should be here or in menu class?
     number_of_bans = NumericProperty(5)
 
-    btn = ObjectProperty(None)
-    spnr = ObjectProperty(None)
-
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
-        print(self.btn, self.spnr, sep='\n')
+        # print(self.btn, self.spnr, sep='\n')
         print()
 
 
@@ -133,7 +130,8 @@ class LauncherButton(MyButton):
     league of legends launcher.'''
     # foo = ObjectProperty(None)
     # setting_spinner = ObjectProperty(None)
-    spnr = ObjectProperty(None)
+    save_selection = ObjectProperty(None)
+    name_of_json_file = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -180,7 +178,11 @@ class LauncherButton(MyButton):
         self.set_command(Decliner())
     
     def save_to_file(self):
-        self.set_command(Saver(opt=self.spnr.text))
+        self.set_command(
+                         WS_JSONSaver(
+                             spinner=self.save_selection,
+                             textinput=self.name_of_json_file)
+                         )
 
     def default_action(self):
         print(Command.INFO_S,

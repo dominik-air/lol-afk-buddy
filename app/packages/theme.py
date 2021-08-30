@@ -17,8 +17,8 @@ class Theme:
     def __init__(self, _type="dark"):
         self.theme_type = _type
 
-        print(os.listdir())
-        print(os.getcwd())
+        # print(os.listdir())
+        # print(os.getcwd())
 
         self._load_theme_from_file()
 

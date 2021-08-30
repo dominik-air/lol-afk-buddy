@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
+from packages.JSONsaver import JSONSaver
 
 from termcolor import colored
 # from menu import MenuApp
@@ -82,10 +83,51 @@ class Decliner(Command):
             print(self.ERR_S, f'error: {res.status}')
             # _error_whit_connection(res)
 
-class Saver(Command):
-    def __init__(self, opt):
+class WS_JSONSaver(Command):
+    def __init__(self, spinner, textinput):
         super().__init__()
-        self.opt = opt
+        self.text, self.values = spinner.text, spinner.values
+        self.filename = textinput.text
+        self.saver = JSONSaver()
+
 
     async def _execute(self):
-        print(f'the option {self.opt} has been passed.')
+
+        if self.text == 'session':
+            try:
+                to_save = Command.locals['session'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'session is empty')
+
+            else:
+                print(Command.OK_S,
+                    f'the saving the {self.text}.',
+                    f'Name of file: {self.filename}.',
+                    sep=' ')
+                    
+                self.saver.save(what=to_save,
+                                filename=self.filename,
+                                type=self.text)
+
+
+        elif self.text == 'lobby':
+            try:
+                to_save = Command.locals['lobby'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'lobby is empty')
+
+            else:
+                name = self.saver.save(what=to_save, 
+                                       filename=self.filename,
+                                       type=self.text)
+
+                print(Command.OK_S,
+                    f'the saving the "{self.text}".',
+                    f'Name of file: "{name}".',
+                    sep=' ')
+                  
+
+        elif self.text == 'nothing':
+            print('opierdalansko hue hue.')
