@@ -45,6 +45,7 @@ class ChampNameIdMapper():
         else:
             raise Exception
 
+
     @classmethod
     def save_to_json(cls):
         cls._update_champion_dict()

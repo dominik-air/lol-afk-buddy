@@ -1,6 +1,8 @@
+# from LCU_driver_test.get_lobby_status import session
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
 from packages.JSONsaver import JSONSaver
+from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
 # from menu import MenuApp
@@ -131,3 +133,130 @@ class WS_JSONSaver(Command):
 
         elif self.text == 'nothing':
             print('opierdalansko hue hue.')
+
+class AllyBansGetter(Command):
+    async def _execute(self):
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        my_team_bans = self.locals['session'].data['bans']['myTeamBans']
+        bans = (champs[str(ban)] for ban in my_team_bans)
+        
+        try:
+            print('Our team bans: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
+
+        except KeyError as e:
+            print(f'key error:\n{e}')
+        
+        # except Exception as e:
+        #     print(e)
+        #     print(e.with_traceback)
+
+
+class EnemyBansGetter(Command):
+    async def _execute(self):
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        my_team_bans = self.locals['session'].data['bans']['theirTeamBans']
+        bans = (champs[str(ban)] for ban in my_team_bans)
+        
+        try:
+            print('Our team bans: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
+
+        except KeyError as e:
+            print(f'key error:\n{e}')
+        
+        # except Exception as e:
+        #     print(e)
+        #     print(e.with_traceback)
+
+class Hover(Command):
+    def __init__(self, champion: str = None):
+        super().__init__()
+        try:
+            self.champion = int(champion)
+
+        except ValueError:
+            champs = ChampNameIdMapper.get_champion_dict(order='normal')
+
+            try:
+                self.champion = champs[champion]
+
+            except KeyError:
+                print(Command.ERR_S,
+                      'Invalid name of the champion.',
+                      'Note, that this field is case-sensitive', sep=' ')
+
+    async def _execute(self):
+        champ_id = self.champion
+        active_action = Command.locals['active_action']
+        reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
+
+        res = await self.connection.request('patch', reqs,
+                                            data={'championId': champ_id})
+
+        if res.status in list(range(200, 209)):
+            print(Command.OK_S,
+                  'successfully changed hovered champ to:',
+                    colored(self.champion, 'red'), sep=' ')
+
+        else:
+            print(Command.ERR_S,
+                  'something went wrong while hovering the champion',
+                    colored(self.champion, 'red'), sep=' ')
+
+
+class HoverGetter(Command):
+    async def _execute(self):
+        action = self.locals['active_action']
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+
+        if action['championId']:
+            champ = champs[str(action['championId'])]
+            print(f'Champion {colored(champ, "red")} is hovered.')
+        
+        else:
+            print('A champion has not been selected yet.')
+
+class MyTeamChampsGetter(Command):
+    pass
+
+class EnemyTeamChampsGetter(Command):
+    pass
+
+class MyPositionGetter(Command):
+    async def _execute(self):
+
+        # TODO: this shoudl be available globally
+        reqs = '/lol-summoner/v1/current-summoner'
+        res = await self.connection.request('get', reqs)
+
+        data = await res.json()
+        SUMMONER_ID = data['summonerId']
+
+        for player in self.locals['session'].data['myTeam']:
+            if player['summonerId'] == SUMMONER_ID:
+                if player['assignedPosition']:
+                    print(f"Your position: {player['assignedPosition']}")
+
+                else:
+                    print('In this mode positioning is disabled')
+
+class Complete(Command):
+
+    async def _execute(self):
+        active_action = self.locals['active_action']
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        action_type = active_action['type']
+        champ_id = active_action['championId']
+
+        # reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
+        # res = await connection.request('patch', reqs,
+        #                                data={'isInProgress': False})
+
+        reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}/complete'
+        res = await self.connection.request('post', reqs)
+
+        if res.status in list(range(200, 209)):
+            act = lambda: action_type + 'n' if action_type == 'ban'\
+                                            else action_type
+            print(Command.OK_S,
+                    f'Champion has been {act()}ed.',
+                    colored(champs[str(champ_id)], 'red'), sep=' ')

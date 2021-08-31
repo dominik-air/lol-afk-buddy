@@ -132,6 +132,7 @@ class LauncherButton(MyButton):
     # setting_spinner = ObjectProperty(None)
     save_selection = ObjectProperty(None)
     name_of_json_file = ObjectProperty(None)
+    champion = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -183,6 +184,30 @@ class LauncherButton(MyButton):
                              spinner=self.save_selection,
                              textinput=self.name_of_json_file)
                          )
+    
+    def get_ally_bans(self):
+        self.set_command(AllyBansGetter())
+
+    def get_enemy_bans(self):
+        self.set_command(EnemyBansGetter())
+
+    def hover(self):
+        self.set_command(Hover(self.champion.text))
+
+    def get_hover(self):
+        self.set_command(HoverGetter())
+
+    def get_my_team_champs(self):
+        pass
+
+    def get_enemy_team_champs(self):
+        pass
+
+    def get_my_position(self):
+        self.set_command(MyPositionGetter())
+
+    def complete(self):
+        self.set_command(Complete())
 
     def default_action(self):
         print(Command.INFO_S,
