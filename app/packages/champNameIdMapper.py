@@ -80,6 +80,7 @@ async def main():
         # json.dump(dict(sorted(champs_dict.items(), key=lambda x: int(x[1]))), file, indent=4)
 
     pprint(champs_dict)
+    print(champs_dict.get('0'))
 
     ChampNameIdMapper.save_to_json()
 

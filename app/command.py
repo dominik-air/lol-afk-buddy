@@ -31,7 +31,6 @@ class Command(ABC):
     async def _execute(self):
         pass
 
-
 class MatchFinder(Command):
 
     async def _execute(self):
@@ -150,15 +149,14 @@ class AllyBansGetter(Command):
         #     print(e)
         #     print(e.with_traceback)
 
-
 class EnemyBansGetter(Command):
     async def _execute(self):
         champs = ChampNameIdMapper.get_champion_dict(order='reversed')
-        my_team_bans = self.locals['session'].data['bans']['theirTeamBans']
-        bans = (champs[str(ban)] for ban in my_team_bans)
+        enemy_team_bans = self.locals['session'].data['bans']['theirTeamBans']
+        bans = (champs[str(ban)] for ban in enemy_team_bans)
         
         try:
-            print('Our team bans: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
+            print('enemy team bans: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
 
         except KeyError as e:
             print(f'key error:\n{e}')
@@ -202,7 +200,6 @@ class Hover(Command):
                   'something went wrong while hovering the champion',
                     colored(self.champion, 'red'), sep=' ')
 
-
 class HoverGetter(Command):
     async def _execute(self):
         action = self.locals['active_action']
@@ -216,10 +213,28 @@ class HoverGetter(Command):
             print('A champion has not been selected yet.')
 
 class MyTeamChampsGetter(Command):
-    pass
+    async def _execute(self):
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        my_team_picks = self.locals['session'].data['myTeam']
+        bans = (champs.get(str(ban['championId'])) for ban in my_team_picks)
+        
+        try:
+            print('Our team picks: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
+
+        except KeyError as e:
+            print(f'key error:\n{e}')
 
 class EnemyTeamChampsGetter(Command):
-    pass
+    async def _execute(self):
+        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        my_team_picks = self.locals['session'].data['theirTeam']
+        bans = (champs.get(str(ban['championId'])) for ban in my_team_picks)
+        
+        try:
+            print('enemy team picks: |', *[colored(f'{b}', 'cyan') + ' |' for b in bans])
+
+        except KeyError as e:
+            print(f'key error:\n{e}')
 
 class MyPositionGetter(Command):
     async def _execute(self):

@@ -198,10 +198,10 @@ class LauncherButton(MyButton):
         self.set_command(HoverGetter())
 
     def get_my_team_champs(self):
-        pass
+        self.set_command(MyTeamChampsGetter())
 
     def get_enemy_team_champs(self):
-        pass
+        self.set_command(EnemyTeamChampsGetter())
 
     def get_my_position(self):
         self.set_command(MyPositionGetter())
