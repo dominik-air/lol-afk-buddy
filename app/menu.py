@@ -1,5 +1,7 @@
 # kivy packages:
+from os import sep
 import kivy
+from kivy.animation import CompoundAnimation
 from kivy.app import App
 from kivy.logger import ColoredFormatter
 from kivy.properties import (
@@ -35,6 +37,19 @@ from packages.utils import LOLClientStatusInformer
 from champion_select import (
     ChampionSelectUI, ChampionSelect, ChampionSelectInterface)
 
+from lcu_driver import Connector, connector
+from termcolor import colored
+from pprint import pprint
+
+from command import *
+
+import threading
+from packages.LauncherCommand import LauncherCommand
+
+
+# import connector instance and websockets
+from connector import connector
+
 
 class AppLayout(TabbedPanel):
     '''Main container in the kivy file. Methods and properties
@@ -46,6 +61,9 @@ class AppLayout(TabbedPanel):
 
     def __init__(self, **kwargs):
         super(AppLayout, self).__init__(**kwargs)
+        # print(self.btn, self.spnr, sep='\n')
+        print()
+
 
     def spinner_clicked(self, value):
         opt = self.ids.spinner_id.text
@@ -74,7 +92,6 @@ class InfoGridLayout(GridLayout):
 class SubInfoGridLayout(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
 
 class SettingsSpinner(Spinner):
     def __init__(self, **kwargs):
@@ -98,7 +115,6 @@ class SettingsSpinnerOption(SpinnerOption):
     #     if value == "down":
     #         self.canvas.before.children[0].rgba = self._app.btn_down_color
 
-
 class MyButton(ButtonBehavior, Label):
     '''Class created to represent my own button appearance and behaviour.'''
 
@@ -107,6 +123,96 @@ class MyButton(ButtonBehavior, Label):
 
         self._app = kivy.app.App.get_running_app()
         self.bind(state=self._app.click_effect)
+
+# currently working on
+class LauncherButton(MyButton):
+    '''This class is dedicated for all buttons related with
+    league of legends launcher.'''
+    # foo = ObjectProperty(None)
+    # setting_spinner = ObjectProperty(None)
+    save_selection = ObjectProperty(None)
+    name_of_json_file = ObjectProperty(None)
+    champion = ObjectProperty(None)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.command: Command = None
+        self._app = kivy.app.App.get_running_app()
+    
+
+    def set_command(self, command):
+        # if isinstance(command, Command):
+        self.command = command
+    
+    def execute_command(self) -> None:
+        try:
+            self.command.execute()
+
+        except Exception as e:
+            print(Command.ERR_S, e, sep=' ')
+
+    def on_press(self):
+
+        # this method is replaced inside kivy file by one of the
+        # following definitions of methods (find_match, cancell, ...)
+        # we call it to set a command...
+        self.buttons_method()
+
+        # ...then we call execute() for setted command
+        # by calling execute_command (kinda wrapper)
+        self.execute_command()
+    
+
+    # user defined methods which set a appropirate command:
+
+    def find_match(self):
+        self.set_command(MatchFinder())
+
+    def cancell(self):
+        self.set_command(Canceller())
+    
+    def accept(self):
+        self.set_command(Acceptor())
+    
+    def decline(self):
+        self.set_command(Decliner())
+    
+    def save_to_file(self):
+        self.set_command(
+                         WS_JSONSaver(
+                             spinner=self.save_selection,
+                             textinput=self.name_of_json_file)
+                         )
+    
+    def get_ally_bans(self):
+        self.set_command(AllyBansGetter())
+
+    def get_enemy_bans(self):
+        self.set_command(EnemyBansGetter())
+
+    def hover(self):
+        self.set_command(Hover(self.champion.text))
+
+    def get_hover(self):
+        self.set_command(HoverGetter())
+
+    def get_my_team_champs(self):
+        self.set_command(MyTeamChampsGetter())
+
+    def get_enemy_team_champs(self):
+        self.set_command(EnemyTeamChampsGetter())
+
+    def get_my_position(self):
+        self.set_command(MyPositionGetter())
+
+    def complete(self):
+        self.set_command(Complete())
+
+    def default_action(self):
+        print(Command.INFO_S,
+              'For this button an action has not been set yet.',
+               sep=' ')
 
 class PlusMinusButton(BoxLayout):
     def __init__(self, **kwargs):
@@ -126,7 +232,6 @@ class PlusMinusButton(BoxLayout):
         '''Temporary method for testing purposes.'''
         print('go is running')
     
-
 class DropDown(ScrollView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -139,27 +244,43 @@ class MenuApp(App, KivyTheme):
     so they are here in order to provide easy communication between
     those classes.'''
 
-    # LOL client properties
-    lol_client = LOLClientStatusInformer()
-    is_lol_client_running = NumericProperty(0)
-
     # Font settings
     _font_size = NumericProperty(16)
 
     # Appearance settings
     info_wp_offset = NumericProperty(300)  # information wrapper left padding
 
-
-
-    # DEFINITIONS OF METHODS
-    def __init__(self, **kwargs):
+    # DEFINITIONS OF METHO
+    def __init__(self, connector, **kwargs):
         super(MenuApp, self).__init__(**kwargs)
+
+        # LOL client properties
+        self.lol_client = LOLClientStatusInformer()
+        self.is_lol_client_running = None
+
+
+        Command.receiver = connector
+        # Command.set_receiver(self.connector)
+        # self._is_running = False
+
+        # LCU driver connector initialization
+        self.connector_thread = threading.Thread(target=connector.start)
+        self.connector_thread.daemon = True
+        self.connector_thread.start()
+
+        # CololeController is class to handle and manage commands provied
+        # by user through console. console.start() starts a infinite loop
+        # which reads input
+        self.console = LauncherCommand()
+        self.console_thread = threading.Thread(target=self.console.start)
+        self.console_thread.daemon = True
+        self.console_thread.start()
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
         self.is_lol_client_running = self.lol_client._is_running
 
-    # Button's on_press methods definitions:
+    # Buttons on_press method definitions:
     def switch_dark(self, b):
         self.change_theme("dark")
         self.update_theme(self)
@@ -193,4 +314,4 @@ class MenuApp(App, KivyTheme):
 
 
 if __name__ == "__main__":
-    MenuApp().run()
+    MenuApp(connector).run()

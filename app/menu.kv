@@ -110,6 +110,12 @@
     -size_hint_y: .7
     -pos_hint: {'center_x': .5, 'center_y': .5}
 
+<LauncherButton>:
+    buttons_method: root.default_action
+
+    -size_hint_y: .7
+    -pos_hint: {'center_x': .5, 'center_y': .5}
+
 <PlusMinusButton@BoxLayout>:
     # Dynamic class representing element which consists of 
     # minus button on the left plus on right and textInput in center
@@ -230,6 +236,10 @@
 # ------------------------------- MAIN APP CODE ------------------------------ #
 <AppLayout>:
     # Tabs settings
+    save_selection: spinner_option
+    name_of_json_file: textinput_json_file
+    hovered_champion: champion_name
+
     do_default_tab: False
     tab_pos: 'top_mid'
     tab_width: 120
@@ -590,3 +600,235 @@
                         methodAdd: root.fooA
                         methodSub: root.fooB
                         input_value: str(root.number_of_bans)
+
+
+    TabbedPanelItem:
+        text: "Launcher"
+
+        MyScroll:
+            InfoGridLayout:
+                -padding: 0, 0, 0,0
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'search for a game'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.find_match
+                            text: 'search'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'cancel searching'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.cancell
+                            text: 'cancel'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'accept ready-check'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.accept
+                            text: 'accept'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'decline ready-check'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.decline
+                            text: 'decline'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'save [name_of_json_file]'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        SettingsSpinner:
+                            id: spinner_option
+                            text: 'choose'
+                            values: ['session', 'lobby', 'nothing']
+                            on_text: root.spinner_clicked(spinner_id.text)
+
+                        LauncherButton:
+                            save_selection: root.save_selection
+                            name_of_json_file: root.name_of_json_file
+
+                            buttons_method: self.save_to_file
+                            text: 'save'
+                        
+                        Label:
+                            text: 'as'
+                            size_hint_x: None
+                            width: 20
+
+                        TextInput:
+                            id: textinput_json_file
+                            size_hint_x: None
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+                            # valign: 'middle'
+                            # padding_y: (self.height)/4
+                        
+
+                        # LauncherButton:
+                        #     # size_hint: .7, .2
+                        #     buttons_method: self.decline
+                        #     text: 'decline'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'hover a champion'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        TextInput:
+                            id: champion_name
+                            size_hint_x: None
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.hover
+                            champion: root.hovered_champion
+                            text: 'Hover'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'pick/ban/OK'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.complete
+                            text: 'complete'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'show currently hovered champion'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_hover
+                            text: 'get hovered'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'get my position'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_my_position
+                            text: 'get'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'get bans'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_ally_bans
+                            text: 'ally'
+                            
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_enemy_bans
+                            text: 'enemy'
+                            
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'get picks'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_my_team_champs
+                            text: 'ally'
+                            
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.get_enemy_team_champs
+                            text: 'enemy'
