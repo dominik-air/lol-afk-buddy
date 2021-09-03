@@ -25,7 +25,7 @@ try:
     search_bar = cv2.imread(os.path.join(PATH_IP, 'search bar banning.png'),
                             cv2.IMREAD_GRAYSCALE)
 
-    # GDZIE JEST PLIK champions.json?????????
+    # GDZIE JEST PLIK champions_data.json?????????
     # no zgubił się, ale webscraper go ma ogarniać i ogólnie już to powinno działać
     with open("../data/champions.json", "r") as champions_file:
         champions = json.load(champions_file)

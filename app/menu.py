@@ -3,39 +3,26 @@ from os import sep
 import kivy
 from kivy.animation import CompoundAnimation
 from kivy.app import App
-from kivy.logger import ColoredFormatter
 from kivy.properties import (
-    ObjectProperty,
     NumericProperty,
-    ListProperty,
-    StringProperty,
 )
-from kivy.core.window import Window
-from kivy.factory import Factory
 from kivy.clock import Clock
 from kivy.uix.behaviors.button import ButtonBehavior
-from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
-from kivy.uix.widget import Widget
 from kivy.uix.spinner import SpinnerOption, Spinner
 from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.graphics import Color
-from kivy.graphics import Canvas
-from kivy.utils import rgba
 
 # non-kivy packages:
-from collections import defaultdict
-from functools import wraps
-from typing import overload
 
 # my packages:
-from packages.theme import Theme, KivyTheme
+from packages.theme import KivyTheme
 from packages.utils import LOLClientStatusInformer
-from champion_select import (
-    ChampionSelectUI, ChampionSelect, ChampionSelectInterface)
+
+from champion_select import ChampionSelectUI, ChampionSelect, ChampionSelectInterface
+from summoner_perks import SummonerPerksSlotUI
 
 from lcu_driver import Connector, connector
 from termcolor import colored

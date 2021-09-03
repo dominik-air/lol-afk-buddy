@@ -1,0 +1,17 @@
+{
+    "keystone": "Guardian",
+    "main_tree_perks": [
+        "Shield Bash",
+        "Bone Plating",
+        "Unflinching"
+    ],
+    "secondary_tree_perks": [
+        "Zombie Ward",
+        "Ultimate Hunter"
+    ],
+    "shards": [
+        "Adaptive",
+        "Adaptive",
+        "Armor"
+    ]
+}

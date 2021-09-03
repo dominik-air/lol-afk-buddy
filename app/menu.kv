@@ -371,13 +371,13 @@
     # ------------------------ TABBLED PANEL ITEM THREE ---------------------- #
     TabbedPanelItem:
         text: "start" # set text for the button
-        orientation: 'horizontal'
+        orientation: "vertical"
 
         ChampionSelectInterface:
             canvas.before:
                 Color:
                     rgba: app.bckg_col
-                
+
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
@@ -411,6 +411,7 @@
                 champion_select: champion_select
 
                 GridLayout:
+                    id: champion_select_ui_grid
                     cols: 2
                     spacing: 5
 
@@ -437,7 +438,7 @@
                         text: "clear picks"
                         font_size: 20
                         on_press: champion_select_ui.clear_picks()
-
+                SummonerPerksSlotUI:
 
 
     # ------------------------ TABBLED PANEL ITEM FOUR ---------------------- #

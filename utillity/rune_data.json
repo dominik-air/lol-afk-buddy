@@ -1,0 +1,382 @@
+[
+    [
+        "HealthScaling",
+        5001
+    ],
+    [
+        "Armor",
+        5002
+    ],
+    [
+        "MagicRes",
+        5003
+    ],
+    [
+        "AttackSpeed",
+        5005
+    ],
+    [
+        "CDRScaling",
+        5007
+    ],
+    [
+        "Adaptive",
+        5008
+    ],
+    [
+        "Template",
+        7000
+    ],
+    [
+        "The Brazen Perfect",
+        8004
+    ],
+    [
+        "Press the Attack",
+        8005
+    ],
+    [
+        "The Eternal Champion",
+        8006
+    ],
+    [
+        "The Savant",
+        8007
+    ],
+    [
+        "Lethal Tempo",
+        8008
+    ],
+    [
+        "Presence of Mind",
+        8009
+    ],
+    [
+        "Conqueror",
+        8010
+    ],
+    [
+        "Coup de Grace",
+        8014
+    ],
+    [
+        "The Merciless Elite",
+        8016
+    ],
+    [
+        "Cut Down",
+        8017
+    ],
+    [
+        "Fleet Footwork",
+        8021
+    ],
+    [
+        "Relentless Hunter",
+        8105
+    ],
+    [
+        "Ultimate Hunter",
+        8106
+    ],
+    [
+        "The Wicked Maestro ",
+        8109
+    ],
+    [
+        "Electrocute",
+        8112
+    ],
+    [
+        "The Immortal Butcher",
+        8114
+    ],
+    [
+        "The Aether Blade",
+        8115
+    ],
+    [
+        "Ghost Poro",
+        8120
+    ],
+    [
+        "Predator",
+        8124
+    ],
+    [
+        "Cheap Shot",
+        8126
+    ],
+    [
+        "The Twisted Surgeon",
+        8127
+    ],
+    [
+        "Dark Harvest",
+        8128
+    ],
+    [
+        "Ingenious Hunter",
+        8134
+    ],
+    [
+        "Ravenous Hunter",
+        8135
+    ],
+    [
+        "Zombie Ward",
+        8136
+    ],
+    [
+        "Eyeball Collection",
+        8138
+    ],
+    [
+        "Taste of Blood",
+        8139
+    ],
+    [
+        "Sudden Impact",
+        8143
+    ],
+    [
+        "The Incontestable Spellslinger",
+        8205
+    ],
+    [
+        "The Cryptic",
+        8207
+    ],
+    [
+        "The Ancient One",
+        8208
+    ],
+    [
+        "Transcendence",
+        8210
+    ],
+    [
+        "Summon Aery",
+        8214
+    ],
+    [
+        "The Calamity",
+        8220
+    ],
+    [
+        "Nullifying Orb",
+        8224
+    ],
+    [
+        "Manaflow Band",
+        8226
+    ],
+    [
+        "Arcane Comet",
+        8229
+    ],
+    [
+        "Phase Rush",
+        8230
+    ],
+    [
+        "Waterwalking",
+        8232
+    ],
+    [
+        "Absolute Focus",
+        8233
+    ],
+    [
+        "Celerity",
+        8234
+    ],
+    [
+        "Gathering Storm",
+        8236
+    ],
+    [
+        "Scorch",
+        8237
+    ],
+    [
+        "Unflinching",
+        8242
+    ],
+    [
+        "Nimbus Cloak",
+        8275
+    ],
+    [
+        "Last Stand",
+        8299
+    ],
+    [
+        "Magical Footwear",
+        8304
+    ],
+    [
+        "Hextech Flashtraption",
+        8306
+    ],
+    [
+        "Perfect Timing",
+        8313
+    ],
+    [
+        "Minion Dematerializer",
+        8316
+    ],
+    [
+        "The Ruthless Visionary",
+        8318
+    ],
+    [
+        "The Stargazer",
+        8319
+    ],
+    [
+        "The Timeless",
+        8320
+    ],
+    [
+        "Future's Market",
+        8321
+    ],
+    [
+        "Celestial Body",
+        8339
+    ],
+    [
+        "The Elegant Duelist ",
+        8344
+    ],
+    [
+        "Biscuit Delivery",
+        8345
+    ],
+    [
+        "Cosmic Insight",
+        8347
+    ],
+    [
+        "Glacial Augment",
+        8351
+    ],
+    [
+        "Time Warp Tonic",
+        8352
+    ],
+    [
+        "Prototype: Omnistone",
+        8358
+    ],
+    [
+        "Kleptomancy",
+        8359
+    ],
+    [
+        "Unsealed Spellbook",
+        8360
+    ],
+    [
+        "Shield Bash",
+        8401
+    ],
+    [
+        "Approach Velocity",
+        8410
+    ],
+    [
+        "The Behemoth",
+        8414
+    ],
+    [
+        "The Arcane Colossus",
+        8415
+    ],
+    [
+        "The Enlightened Titan",
+        8416
+    ],
+    [
+        "Conditioning",
+        8429
+    ],
+    [
+        "Iron Skin",
+        8430
+    ],
+    [
+        "Mirror Shell",
+        8435
+    ],
+    [
+        "Grasp of the Undying",
+        8437
+    ],
+    [
+        "Aftershock",
+        8439
+    ],
+    [
+        "Second Wind",
+        8444
+    ],
+    [
+        "Demolish",
+        8446
+    ],
+    [
+        "Overgrowth",
+        8451
+    ],
+    [
+        "Revitalize",
+        8453
+    ],
+    [
+        "The Leviathan",
+        8454
+    ],
+    [
+        "Font of Life",
+        8463
+    ],
+    [
+        "Guardian",
+        8465
+    ],
+    [
+        "Chrysalis",
+        8472
+    ],
+    [
+        "Bone Plating",
+        8473
+    ],
+    [
+        "Overheal",
+        9101
+    ],
+    [
+        "Legend: Bloodline",
+        9103
+    ],
+    [
+        "Legend: Alacrity",
+        9104
+    ],
+    [
+        "Legend: Tenacity",
+        9105
+    ],
+    [
+        "Triumph",
+        9111
+    ],
+    [
+        "Hail of Blades",
+        9923
+    ]
+]
