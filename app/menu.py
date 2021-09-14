@@ -1,10 +1,11 @@
 # kivy packages:
 from os import sep
+from sys import argv
 import kivy
 from kivy.animation import CompoundAnimation
 from kivy.app import App
 from kivy.properties import (
-    NumericProperty,
+    NumericProperty, ObjectProperty, StringProperty
 )
 from kivy.clock import Clock
 from kivy.uix.behaviors.button import ButtonBehavior
@@ -24,14 +25,16 @@ from packages.utils import LOLClientStatusInformer
 from champion_select import ChampionSelectUI, ChampionSelect, ChampionSelectInterface
 from summoner_perks import SummonerPerksSlotUI
 
-from lcu_driver import Connector, connector
+from lcu_driver import Connector
 from termcolor import colored
 from pprint import pprint
+import asyncio
 
 from command import *
 
 import threading
 from packages.LauncherCommand import LauncherCommand
+from packages.launcher import Launcher, LobbyState
 
 
 # import connector instance and websockets
@@ -121,6 +124,9 @@ class LauncherButton(MyButton):
     name_of_json_file = ObjectProperty(None)
     champion = ObjectProperty(None)
 
+    endpoint_url_text_btn = StringProperty(None)
+    endpoint_json_filename_btn = StringProperty(None)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -195,6 +201,14 @@ class LauncherButton(MyButton):
 
     def complete(self):
         self.set_command(Complete())
+    
+    def save_endpoint(self):
+        self.set_command(
+                EndpointSaver(
+                    reqs=self.endpoint_url_text_btn,
+                    filename=self.endpoint_json_filename_btn
+                )
+            )
 
     def default_action(self):
         print(Command.INFO_S,
@@ -262,6 +276,22 @@ class MenuApp(App, KivyTheme):
         self.console_thread = threading.Thread(target=self.console.start)
         self.console_thread.daemon = True
         self.console_thread.start()
+
+        # Try to make this function async!!
+        asyncio.run_coroutine_threadsafe(self._init_launcher(), connector.loop)
+        # self.state = Launcher(LobbyState())
+        # Command.state = self.state
+        # self.state_thread = threading.Thread(target=self.state._scan_for_state_change)
+        # self.state_thread.daemon = True
+        # self.state_thread.start()
+
+    async def _init_launcher(self):
+        self.state = Launcher(LobbyState())
+        Command.state = self.state
+        await self.state._scan_for_state_change()
+        # self.state_thread = threading.Thread(target=self.state._scan_for_state_change)
+        # self.state_thread.daemon = True
+        # self.state_thread.start()
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()

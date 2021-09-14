@@ -5,6 +5,13 @@ from packages.champNameIdMapper import ChampNameIdMapper
 
 connector = Connector()
 
+# FLAGS
+IS_CONNECTED = False
+async def wait_for_connection():
+    while True:
+        if IS_CONNECTED:
+            return True
+    
 
 @connector.ready
 async def connect(connection):
@@ -14,6 +21,7 @@ async def connect(connection):
     # get summoner name
     res = await connection.request('get', '/lol-summoner/v1/current-summoner')
     if res.status == 200:
+        IS_CONNECTED = True
         data = await res.json()
         SUMMONER_NAME: str = data['internalName']
         SUMMONER_ID: int = data['summonerId']
@@ -118,3 +126,58 @@ async def session(connection, event):
                                 'active_id': active_action_id,
                                 'active_action': active_action,})
         # pprint(connector.ws.registered_uris)
+
+@connector.ws.register('/lol-game-queues/v1/queues', event_types=('UPDATE',))
+async def queue(connection, event):
+    # print(type(event))
+
+    # helping variables
+    content: str = str()
+    header: str = colored('The queue has been updated.', 'red')
+    data: dict = {
+        'type of the queue': event.data['type'],
+        'name of the queue': event.data['name'],
+    }
+
+    # fulfill content variable
+    for key, value in data.items():
+        content += colored(f"\t-{key}: ", 'red')
+        content += colored(f"{value}", 'red', attrs=('bold',))
+        content += '\n'
+
+    # print out data
+    print(header)
+    print(content)
+
+    # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
+    connection.locals.update({'queue': event})
+    # pprint(connector.ws.registered_uris)
+
+@connector.ws.register('/lol-matchmaking/v1/search', event_types=('UPDATE',))
+async def queue(connection, event):
+    # print(type(event))
+
+    # helping variables
+    content: str = str()
+    header: str = colored('The search has been updated.', 'red')
+    data: dict = {
+        'est queue time': event.data['estimatedQueueTime'],
+        'is currently in queue': event.data['isCurrentlyInQueue'],
+        'lobby id': event.data['lobbyId'],
+        'search state': event.data['searchState'],
+        'time in queue': event.data['timeInQueue'],
+    }
+
+    # fulfill content variable
+    for key, value in data.items():
+        content += colored(f"\t-{key}: ", 'red')
+        content += colored(f"{value}", 'red', attrs=('bold',))
+        content += '\n'
+
+    # print out data
+    print(header)
+    print(content)
+
+    # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
+    connection.locals.update({'search': event})
+    # pprint(connector.ws.registered_uris)

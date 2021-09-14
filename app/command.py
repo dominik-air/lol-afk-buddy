@@ -1,6 +1,7 @@
 # from LCU_driver_test.get_lobby_status import session
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
+from typing import Optional
 from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
@@ -13,6 +14,7 @@ class Command(ABC):
     INFO_S = f"[{colored('INFO ', 'blue')}]"
 
     receiver = None
+    state = None
 
     def __init__(self):
         if Command.receiver:
@@ -25,7 +27,7 @@ class Command(ABC):
             print(self.INFO_S, 'receiver is None type', sep=' ')
 
     def execute(self):
-        asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
+        return asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
         
     @abstractmethod
     async def _execute(self):
@@ -130,8 +132,39 @@ class WS_JSONSaver(Command):
                     sep=' ')
                   
 
-        elif self.text == 'nothing':
-            print('opierdalansko hue hue.')
+        elif self.text == 'queue':
+            try:
+                to_save = Command.locals['queue'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'queue is empty')
+
+            else:
+                name = self.saver.save(what=to_save, 
+                                       filename=self.filename,
+                                       type=self.text)
+
+                print(Command.OK_S,
+                    f'the saving the "{self.text}".',
+                    f'Name of file: "{name}".',
+                    sep=' ')
+
+        elif self.text == 'search':
+            try:
+                to_save = Command.locals['search'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'search is empty')
+
+            else:
+                name = self.saver.save(what=to_save, 
+                                       filename=self.filename,
+                                       type=self.text)
+
+                print(Command.OK_S,
+                    f'the saving the "{self.text}".',
+                    f'Name of file: "{name}".',
+                    sep=' ')
 
 class AllyBansGetter(Command):
     async def _execute(self):
@@ -275,3 +308,116 @@ class Complete(Command):
             print(Command.OK_S,
                     f'Champion has been {act()}ed.',
                     colored(champs[str(champ_id)], 'red'), sep=' ')
+
+class EndpointSaver(Command):
+    def __init__(self, reqs: str, filename: str):
+        super().__init__()
+
+        self.reqs: str = reqs
+        self.filename: str = filename
+        self.saver = JSONSaver()
+
+    async def _execute(self):
+        res = await self.connection.request('get', self.reqs)
+
+        if res.status in list(range(200, 209)):
+            print(Command.OK_S,
+                    f'endpoint requested successfully', sep=' ')
+
+            data = await res.json()
+            name = self.saver.save(what=data,
+                                   filename=self.filename,
+                                   type='customEndpoint')
+        
+        else:
+            print(Command.ERR_S,
+                  f'error no.: {res.status}', sep=' ')
+
+# Made for Launcher class:
+class InitState(Command):
+    async def _execute(self):
+        self.state.next()
+        self.state.initialized = True
+
+class GameModeGetter(Command):
+
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+    async def _execute(self):
+        game_mode = None
+        try:
+            data = Command.locals['lobby']
+        except KeyError:
+            print(Command.INFO_S,
+                  'lobby object not found in locals\n',
+                  '       acquring new data...',
+                  sep=' ')
+            
+            await self.update_locals()
+            data = Command.locals['lobby']
+
+        else:
+            self._return = data['gameConfig']['gameMode']
+        
+    async def update_locals(self):
+        reqs = '/lol-lobby/v2/lobby'
+        res = await self.connection.request('get', reqs)
+        data = await res.json()
+        Command.locals.update({'lobby': data})
+
+    def get_result(self):
+        return self._return
+
+class ReadyCheckGetter(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+        # self.arg = arg_ready_check
+
+    async def _execute(self):
+        is_found = False
+        try:
+            data = Command.locals['search'].data
+        except KeyError:
+            print(Command.INFO_S,
+                  'search object not found in search\n',
+                #   '       acquring new data...',
+                  sep=' ')
+            
+            # await self.update_locals()
+            # data = Command.locals['queue']
+
+        else:
+            self._return = data
+            # if len(data) != 0:
+            #     in_queue = data['isCurrentlyInQueue']
+            #     is_found = data['searchState']
+
+            #     if in_queue and is_found:
+            #         self.arg.allowed_to_change_state = True
+                # self._return = game_mode
+
+    def get_return(self):
+        return self._return
+
+class IsActiveable(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+    async def _execute(self):
+        try:
+            data = Command.locals['queue'].data
+        except KeyError:
+            print(Command.INFO_S,
+                  'search object not found in search\n',
+                #   '       acquring new data...',
+                  sep=' ')
+
+        else:
+            self._return = data
+
+    def get_return(self):
+        return self._return
