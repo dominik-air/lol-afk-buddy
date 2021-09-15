@@ -73,7 +73,8 @@ async def lobby(connection, event):
     connection.locals.update({'lobby': event})
     # pprint(connector.ws.registered_uris)
 
-@connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',))
+@connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',
+                                                                    'DELETE'))
 async def session(connection, event):
     
         # print(type(event))

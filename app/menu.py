@@ -36,7 +36,6 @@ import threading
 from packages.LauncherCommand import LauncherCommand
 from packages.launcher import Launcher, LobbyState
 
-
 # import connector instance and websockets
 from connector import connector
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
+from sys import argv
 from typing import Match
 from time import sleep
 from command import *
@@ -77,62 +78,60 @@ class State(ABC):
 
 
 class LobbyState(State):
-    initialized: bool = False
+    initialized : bool = False
+
     def __init__(self) -> None:
         super().__init__()
-        # self.get_game_mode_cmd : Command = None
-
+        self.lobby_getter_cmd : Command = None
+        Command.actual_state = self
+        
     def next(self) -> None:
         self._set_command(MatchFinder())
 
-        # if self.allowed_to_change_state:
         try:
             self._execute_command()
         
         except Exception as e:
-            print('exception during executing "next" command in LobbyState')
+            print(Command.ERR_S,
+                  'exception during executing "next" command in LobbyState')
             print(e)
         
         else:
             self._context.change_state(ReadyCheckState())
 
-        # else:
-        #     print(Command.INFO_S,
-        #           'Not allowed to change state', sep=' ')
-
-    
     def cancel(self) -> None:
         print(Command.ERR_S,
               'For this state "cancel" does not make sense.',
                sep=' ')
-        # self._set_command(Canceller())
-
-        # try:
-        #     self._execute_command()
-        
-        # except Exception as e:
-        #     print('exception during executing "cancel" command in LobbyState')
     
     async def _scan(self) -> None:
-        get_game_mode_cmd = GameModeGetter()
-        get_game_mode_cmd.execute()
+        if not self.lobby_getter_cmd:
+            self.lobby_getter_cmd = LobbyGetter()
 
-        # if self.initialized:
-        #     self.next()
+        self.lobby_getter_cmd.execute()
 
-        if LobbyState.initialized or get_game_mode_cmd.get_result():
+        gamemode = self.lobby_getter_cmd.get_result()
+        if gamemode:
+            gamemode = gamemode['gameConfig']['gameMode']
+
+        # QUESTION: why I cant use LobbyState.initialized?
+        # The value of initialized won't change after performing _execute
+        # inside InitState class
+        print(self.initialized)
+        if self.initialized and gamemode:
             self.next()
-
-        # res = get_game_mode_cmd.get_result()
-        # if res:
-        #     self.allowed_to_change_state = True
+        
+        # else:
+            # if gamemode will be None, but InitState will be performed by user
+            # then, in order to switch to next state user must explicitly
+            # run command again.
+            # self.initialized = False
 
 
 class ReadyCheckState(State):
     def __init__(self) -> None:
         super().__init__()
-        self.get_ready_check_cmd : Command = None
-        self.get_lobby_cmd : Command = None
+        self.search_getter_cmd : Command = None
 
     def next(self) -> None:
         self._set_command(Acceptor())
@@ -150,91 +149,88 @@ class ReadyCheckState(State):
 
     
     def cancel(self) -> None:
-        pass
+        self._set_command(Canceller())
+
+        try:
+            self._execute_command()
+
+        except Exception as e:
+            print('exception during executing "cancel" command in ReadyCheckState')
+            print(e)
+        
+        else:
+            LobbyState.initialized = False
+            self._context.change_state(LobbyState())
     
     async def _scan(self) -> None:
-        print('###scanning from ReadyCheckState')
         # should involve next state but this next state under some conditions
         # can back to this one
-        if not self.get_ready_check_cmd:
-            print(Command.INFO_S, 'creating new instance of ReadyCheck')
-            self.get_ready_check_cmd = ReadyCheckGetter()
+        if not self.search_getter_cmd:
+            self.search_getter_cmd = SearchGetter()
 
-        # if not self.get_lobby_cmd:
-        #     self.get_lobby_cmd = IsActiveable()
-
-        # if not self.get_lobby_cmd._return:
-        #     print(Command.INFO_S, 'getting data...')
-        #     self.get_lobby_cmd.execute()
-
-        else:
-            print(Command.INFO_S, 'data is not empty: ')
-            print(self.get_ready_check_cmd._return)
-
-        self.get_ready_check_cmd.execute()
-        data = self.get_ready_check_cmd.get_return()
-        # is_activeable = self.get_lobby_cmd.get_return()
-        # second approach - get_return is async and await it
+        self.search_getter_cmd.execute()
+        data = self.search_getter_cmd.get_return()
 
         if data:
-            print('$$$data is retreved:')
+            print(Command.INFO_S, 'DATA IS RETRIVED:')
             print(data)
+
             # in_queue = data['isCurrentlyInQueue']
             is_found = data['searchState'] == 'Found'
             is_in_progress = data['readyCheck']['state'] == 'InProgress'
             self_declined = data['readyCheck']['playerResponse'] == 'Declined'
             decliner_ids = data['readyCheck']['declinerIds']
 
-            print(f'is found: {is_found}')
-            print(f'is in progress: {is_in_progress}')
-            print(f'self declined: {self_declined}')
-            print(f'decliner ids: {decliner_ids}')
-
+            # TODO: add delay
             if (is_in_progress and is_found
                 and not self_declined and not decliner_ids):
-                print('pass to the next state')
                 self.next()
+            
+            elif self_declined:
+                self.cancel()
             
             # elif is_activeable['canStartActivity']:
             #     LobbyState.initialized = False
             #     self._context.change_state(LobbyState())
 
-
 class DeclarePositionState(State):
+    def __init__(self) -> None:
+        super().__init__()
+        self.lobby_getter_command: Command = None
+        self.session_getter_command: Command = None
+
     def next(self) -> None:
-        pass
+        print('executing next command for DeclarePositionState class.')
     
     def cancel(self) -> None:
         pass
     
     async def _scan(self) -> None:
+        # TODO: you should just check if session exist here.
+        # if existes go next (so execute command and switch to next)
+        # you should chack if lobby has been hanged as well
+        # canStartActivity is useful to terermine if everyone accepted
         print(Command.OK_S, 'HURRAAAAA!', sep=' ')
-        get_ready_check_cmd = ReadyCheckGetter()
-        get_ready_check_cmd.execute()
+
+        if not self.lobby_getter_command:
+            self.lobby_getter_command = LobbyGetter()
+        
+        self.lobby_getter_command.execute()
+
+        if not self.session_getter_command:
+            self.session_getter_command = SessionGetter()
+        
+        self.session_getter_command.execute()
 
         # Check if after your acceptance someone else declined
-        if data := get_ready_check_cmd.get_return():
-            self_declined = True \
-                            if data['readyCheck']['playerRespone'] == 'Declined' \
-                            else False
-            decliner_ids = data['readyCheck']['declinerIds']
-            is_in_progress = True \
-                             if data['readyCheck']['state'] == 'InProgress' \
-                             else False
+        if lobby := self.lobby_getter_command.get_result():
+            if not lobby['canStartActivity']:
 
-            if (decliner_ids or not is_in_progress):
-                print(Command.INFO_S,
-                      'Returning to ReadyCheckState', sep=' ')
+                # fix this (if someone dodge, then session will still exit)
+                if self.session_getter_command.get_return():
+                    self.next()
+            else:
                 self._context.change_state(ReadyCheckState())
-
-            if (self_declined or not is_in_progress):
-                print(Command.INFO_S,
-                      'Returning to LobbyState', sep=' ')
-                self._context.change_state(LobbyState())
-
-        
-        # TODO: chekc if session exists then execute next (hover and change state)
-
 
 
 class BanningState(State):

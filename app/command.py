@@ -14,7 +14,7 @@ class Command(ABC):
     INFO_S = f"[{colored('INFO ', 'blue')}]"
 
     receiver = None
-    state = None
+    actual_state = None
 
     def __init__(self):
         if Command.receiver:
@@ -336,10 +336,10 @@ class EndpointSaver(Command):
 # Made for Launcher class:
 class InitState(Command):
     async def _execute(self):
-        self.state.next()
-        self.state.initialized = True
+        Command.actual_state.initialized = True
 
 class GameModeGetter(Command):
+    '''Depreciated, TODO: change all occurences with replacement: LobbyGetter'''
 
     def __init__(self):
         super().__init__()
@@ -370,7 +370,7 @@ class GameModeGetter(Command):
     def get_result(self):
         return self._return
 
-class ReadyCheckGetter(Command):
+class SearchGetter(Command):
     def __init__(self):
         super().__init__()
         self._return = None
@@ -402,7 +402,60 @@ class ReadyCheckGetter(Command):
     def get_return(self):
         return self._return
 
-class IsActiveable(Command):
+class LobbyGetter(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+    async def _execute(self):
+        try:
+            data = Command.locals['lobby']
+
+        except KeyError:
+            print(Command.INFO_S,
+                  'lobby object not found in locals\n',
+                  '       acquring new data...',
+                  sep=' ')
+            
+            await self._update_locals()
+            data = Command.locals['lobby']
+
+        else:
+            self._return = data
+        
+    async def _update_locals(self):
+        reqs = '/lol-lobby/v2/lobby'
+        res = await self.connection.request('get', reqs)
+        data = await res.json()
+        Command.locals.update({'lobby': data})
+
+        self._return = data
+
+    def get_result(self):
+        return self._return
+
+class SessionGetter(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+    async def _execute(self):
+        try:
+            data = Command.locals['session'].data
+
+        except KeyError:
+            print(Command.INFO_S,
+                  'session object not found in session\n',
+                #   '       acquring new data...',
+                  sep=' ')
+
+        else:
+            self._return = data
+
+    def get_return(self):
+        return self._return
+
+class QueueGetter(Command):
     def __init__(self):
         super().__init__()
         self._return = None
@@ -410,9 +463,10 @@ class IsActiveable(Command):
     async def _execute(self):
         try:
             data = Command.locals['queue'].data
+
         except KeyError:
             print(Command.INFO_S,
-                  'search object not found in search\n',
+                  'queue object not found in queue\n',
                 #   '       acquring new data...',
                   sep=' ')
 
