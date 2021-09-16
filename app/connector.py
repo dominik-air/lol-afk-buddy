@@ -34,6 +34,7 @@ async def connect(connection):
         '\t-summoner id:',
         colored(f'{SUMMONER_ID}\n', attrs=('bold',)),
         sep=' ')
+        connection.locals.update({'lobby': None})
 
         status = await ChampNameIdMapper.get_data()
         print(Command.OK_S,
@@ -48,27 +49,36 @@ async def disconnect(_):
     print('The client have been closed!')
     await connector.stop()
 
-@connector.ws.register('/lol-lobby/v2/lobby', event_types=('UPDATE',))
+@connector.ws.register('/lol-lobby/v2/lobby', event_types=('UPDATE',
+                                                           'DELETE'))
 async def lobby(connection, event):
     # print(type(event))
 
     # helping variables
     content: str = str()
     header: str = colored('The game lobby started.', 'red')
-    data: dict = {
-        'Game mode': event.data['gameConfig']['gameMode'],
-    }
 
-    # fulfill content variable
-    for key, value in data.items():
-        content += colored(f"\t-{key}: ", 'red')
-        content += colored(f"{value}", 'red', attrs=('bold',))
-        content += '\n'
+    # If event does not exist then function will never called
+    # If event lobby is deleted then event exist but it's data is empty
+    if event.data:
+        data: dict = {
+            'Game mode': event.data['gameConfig']['gameMode'],
+        }
 
-    # print out data
-    print(header)
-    print(content)
+        # fulfill content variable
+        for key, value in data.items():
+            content += colored(f"\t-{key}: ", 'red')
+            content += colored(f"{value}", 'red', attrs=('bold',))
+            content += '\n'
 
+        # print out data
+        print(header)
+        print(content)
+
+    else:
+        data: dict = {'Game mode': None}
+        # event.data = None
+        
     # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
     connection.locals.update({'lobby': event})
     # pprint(connector.ws.registered_uris)
@@ -154,30 +164,33 @@ async def queue(connection, event):
     connection.locals.update({'queue': event})
     # pprint(connector.ws.registered_uris)
 
-@connector.ws.register('/lol-matchmaking/v1/search', event_types=('UPDATE',))
+@connector.ws.register('/lol-matchmaking/v1/search', event_types=('UPDATE',
+                                                                  'DELETE'))
 async def queue(connection, event):
     # print(type(event))
 
     # helping variables
     content: str = str()
     header: str = colored('The search has been updated.', 'red')
-    data: dict = {
-        'est queue time': event.data['estimatedQueueTime'],
-        'is currently in queue': event.data['isCurrentlyInQueue'],
-        'lobby id': event.data['lobbyId'],
-        'search state': event.data['searchState'],
-        'time in queue': event.data['timeInQueue'],
-    }
 
-    # fulfill content variable
-    for key, value in data.items():
-        content += colored(f"\t-{key}: ", 'red')
-        content += colored(f"{value}", 'red', attrs=('bold',))
-        content += '\n'
+    if event.data:
+        data: dict = {
+            'est queue time': event.data['estimatedQueueTime'],
+            'is currently in queue': event.data['isCurrentlyInQueue'],
+            'lobby id': event.data['lobbyId'],
+            'search state': event.data['searchState'],
+            'time in queue': event.data['timeInQueue'],
+        }
 
-    # print out data
-    print(header)
-    print(content)
+        # fulfill content variable
+        for key, value in data.items():
+            content += colored(f"\t-{key}: ", 'red')
+            content += colored(f"{value}", 'red', attrs=('bold',))
+            content += '\n'
+
+        # print out data
+        print(header)
+        print(content)
 
     # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
     connection.locals.update({'search': event})

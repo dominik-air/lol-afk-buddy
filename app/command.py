@@ -6,6 +6,7 @@ from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
+# from packages.launcher import LobbyState
 # from menu import MenuApp
 
 class Command(ABC):
@@ -333,10 +334,18 @@ class EndpointSaver(Command):
             print(Command.ERR_S,
                   f'error no.: {res.status}', sep=' ')
 
+
 # Made for Launcher class:
 class InitState(Command):
     async def _execute(self):
         Command.actual_state.initialized = True
+
+
+class DeinitState(Command):
+    async def _execute(self):
+        Command.actual_state.initialized = False
+        Canceller().execute()
+
 
 class GameModeGetter(Command):
     '''Depreciated, TODO: change all occurences with replacement: LobbyGetter'''
@@ -374,65 +383,106 @@ class SearchGetter(Command):
     def __init__(self):
         super().__init__()
         self._return = None
+
+        self.data = None
+        self.type = None
         # self.arg = arg_ready_check
 
     async def _execute(self):
-        is_found = False
+        '''Do not modify locals['search'] in this method!'''
+
         try:
-            data = Command.locals['search'].data
+            # If it does exit that means it was created by websocket
+            # and containt data as well as type fields
+            self._return = Command.locals['search']
+
         except KeyError:
-            print(Command.INFO_S,
-                  'search object not found in search\n',
-                #   '       acquring new data...',
-                  sep=' ')
-            
-            # await self.update_locals()
-            # data = Command.locals['queue']
+            print(Command.ERR_S,
+                  'search object not found in locals.')
 
         else:
-            self._return = data
-            # if len(data) != 0:
-            #     in_queue = data['isCurrentlyInQueue']
-            #     is_found = data['searchState']
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
 
-            #     if in_queue and is_found:
-            #         self.arg.allowed_to_change_state = True
-                # self._return = game_mode
+                self.type = self._return.type
 
     def get_return(self):
         return self._return
+    
+    def get_data(self):
+        return self.data
+    
+    def get_type(self):
+        return self.type
 
 class LobbyGetter(Command):
     def __init__(self):
         super().__init__()
-        self._return = None
+
+        self._return = None # for internal usage only!
+        self.data = None
+        self.type = None
 
     async def _execute(self):
+        '''Do not modify locals['lobby'] in this method!'''
+
         try:
-            data = Command.locals['lobby']
+            # If it does exit that means it was created by websocket
+            # and containt data as well as type fields
+            self._return = Command.locals['lobby']
 
         except KeyError:
+            print(Command.ERR_S,
+                  'lobby object not found in locals!')
             print(Command.INFO_S,
-                  'lobby object not found in locals\n',
-                  '       acquring new data...',
-                  sep=' ')
-            
-            await self._update_locals()
-            data = Command.locals['lobby']
+                  'requesting for the data.')
+
+            await self.request_data()
 
         else:
-            self._return = data
+            if self._return: 
+                if self._return.data:
+                    self.data = self._return.data
+
+                self.type = self._return.type
+
+            # If data is empty that means that lobby has been removed
+            # else:
+            #     print(Command.INFO_S,
+            #         'data is NoneType\n')
+                
+            #     self._reutrn
+            #     self.type = self._return.type
         
-    async def _update_locals(self):
+    async def request_data(self):
+        '''Use this method force data acqusition '''
+
         reqs = '/lol-lobby/v2/lobby'
         res = await self.connection.request('get', reqs)
-        data = await res.json()
-        Command.locals.update({'lobby': data})
+        if res.status in list(range(200, 210)):
+            print(Command.INFO_S, 'Getting lobby data')
+            self.data = await res.json()
+            self.type = 'Manual'
+        
+        else:
+            print(Command.ERR_S, 'Requested data cannot be get')
+            self.data = None
+            self.type = None
 
-        self._return = data
 
     def get_result(self):
+        '''Return direct return from locals.update'''
         return self._return
+    
+    def get_data(self):
+        '''100% ensured that this is actual data (.json)'''
+        return self.data
+    
+    def get_type(self):
+        '''type can be Update or Delete.
+        NoneType should be threated as Update'''
+        return self.type
 
 class SessionGetter(Command):
     def __init__(self):

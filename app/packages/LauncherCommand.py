@@ -20,6 +20,7 @@ class CMDCode(Enum):
     MY_POS = auto()
     COMPLETE = auto()
     INIT_STATE = auto()
+    DEINIT_STATE = auto()
 
 
 class LauncherCommand:
@@ -40,6 +41,7 @@ class LauncherCommand:
         CMDCode.MY_POS: ['getMyPosition', 'gmp'],
         CMDCode.COMPLETE: ['complete', 'ok'],
         CMDCode.INIT_STATE: ['start', 'st', 'init'],
+        CMDCode.DEINIT_STATE: ['stop', 'terminate', 'term', 'deinit'],
     }
 
     def __init__(self):
@@ -133,6 +135,11 @@ class LauncherCommand:
     def init(cls):
         cls.set_command(InitState())
         cls.execute_command()
+    
+    @classmethod
+    def deinit(cls):
+        cls.set_command(DeinitState())
+        cls.execute_command()
 
     @classmethod
     def default_action(cls):
@@ -193,6 +200,9 @@ class LauncherCommand:
             
             elif _cmd in self.CMD[CMDCode.INIT_STATE]:
                 LauncherCommand.init()
+
+            elif _cmd in self.CMD[CMDCode.DEINIT_STATE]:
+                LauncherCommand.deinit()
 
             else:
                 LauncherCommand.default_action()

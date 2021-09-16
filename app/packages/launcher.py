@@ -83,7 +83,7 @@ class LobbyState(State):
     def __init__(self) -> None:
         super().__init__()
         self.lobby_getter_cmd : Command = None
-        Command.actual_state = self
+        Command.actual_state = LobbyState
         
     def next(self) -> None:
         self._set_command(MatchFinder())
@@ -110,23 +110,15 @@ class LobbyState(State):
 
         self.lobby_getter_cmd.execute()
 
-        gamemode = self.lobby_getter_cmd.get_result()
-        if gamemode:
-            gamemode = gamemode['gameConfig']['gameMode']
+        lobby = self.lobby_getter_cmd.get_data()
+        _type = self.lobby_getter_cmd.get_type()
+        can_start = True if _type != None \
+                    and _type != 'Delete' else False
 
-        # QUESTION: why I cant use LobbyState.initialized?
-        # The value of initialized won't change after performing _execute
-        # inside InitState class
-        print(self.initialized)
-        if self.initialized and gamemode:
+        print(LobbyState.initialized)
+        if LobbyState.initialized and lobby and can_start:
             self.next()
         
-        # else:
-            # if gamemode will be None, but InitState will be performed by user
-            # then, in order to switch to next state user must explicitly
-            # run command again.
-            # self.initialized = False
-
 
 class ReadyCheckState(State):
     def __init__(self) -> None:
@@ -159,39 +151,42 @@ class ReadyCheckState(State):
             print(e)
         
         else:
-            LobbyState.initialized = False
             self._context.change_state(LobbyState())
     
     async def _scan(self) -> None:
-        # should involve next state but this next state under some conditions
-        # can back to this one
+
         if not self.search_getter_cmd:
             self.search_getter_cmd = SearchGetter()
 
-        self.search_getter_cmd.execute()
-        data = self.search_getter_cmd.get_return()
+        # if not self.lobby_getter_cmd:
+        #     self.lobby_getter_cmd = LobbyGetter()
 
-        if data:
-            print(Command.INFO_S, 'DATA IS RETRIVED:')
-            print(data)
+        # run coroutine threadsafe here????????
+        self.search_getter_cmd.execute()
+        search = self.search_getter_cmd.get_data()
+
+
+        print('searching state is active now')
+
+        if search:
+            print(Command.INFO_S, 'searching...')
 
             # in_queue = data['isCurrentlyInQueue']
-            is_found = data['searchState'] == 'Found'
-            is_in_progress = data['readyCheck']['state'] == 'InProgress'
-            self_declined = data['readyCheck']['playerResponse'] == 'Declined'
-            decliner_ids = data['readyCheck']['declinerIds']
+            # is_found = search['searchState'] == 'Found'
+            is_in_progress = search['readyCheck']['state'] == 'InProgress'
+            self_declined = search['readyCheck']['playerResponse'] == 'Declined'
+            # decliner_ids = search['readyCheck']['declinerIds']
 
-            # TODO: add delay
-            if (is_in_progress and is_found
-                and not self_declined and not decliner_ids):
+            # TODO: add delay (using counter for safety)
+            if is_in_progress and not self_declined:
                 self.next()
             
             elif self_declined:
-                self.cancel()
+                LobbyState.initialized = False
             
-            # elif is_activeable['canStartActivity']:
-            #     LobbyState.initialized = False
-            #     self._context.change_state(LobbyState())
+        else:
+            self._context.change_state(LobbyState())
+
 
 class DeclarePositionState(State):
     def __init__(self) -> None:
