@@ -175,7 +175,8 @@ class ReadyCheckState(State):
             # is_found = search['searchState'] == 'Found'
             is_in_progress = search['readyCheck']['state'] == 'InProgress'
             self_declined = search['readyCheck']['playerResponse'] == 'Declined'
-            # decliner_ids = search['readyCheck']['declinerIds']
+            decliner_ids = search['readyCheck']['declinerIds']
+            print('     >decliner ids: ', decliner_ids)
 
             # TODO: add delay (using counter for safety)
             if is_in_progress and not self_declined:
