@@ -191,6 +191,9 @@ async def queue(connection, event):
         # print out data
         print(header)
         print(content)
+    
+    else:
+        event.data = None
 
     # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
     connection.locals.update({'search': event})

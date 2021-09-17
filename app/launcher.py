@@ -121,6 +121,8 @@ class LobbyState(State):
         
 
 class ReadyCheckState(State):
+    verbose : bool = True
+
     def __init__(self) -> None:
         super().__init__()
         self.search_getter_cmd : Command = None
@@ -139,7 +141,6 @@ class ReadyCheckState(State):
             # tutaj jakies zabezpieczenie jesli gra zostanie zdeclie'owana przez kogos
             self._context.change_state(DeclarePositionState())
 
-    
     def cancel(self) -> None:
         self._set_command(Canceller())
 
@@ -164,26 +165,29 @@ class ReadyCheckState(State):
         # run coroutine threadsafe here????????
         await self.search_getter_cmd._execute()
         search = self.search_getter_cmd.get_data()
+        deleted = self.search_getter_cmd.get_type() == 'Delete'
 
+        if search and not deleted:
+            print(Command.INFO_S, 'searching...') if self.verbose else None
 
-        print('searching state is active now')
+            # is_in_progress = search['readyCheck']['state'] == 'InProgress'
+            is_found = search['searchState'] == 'Found'
 
-        if search:
-            print(Command.INFO_S, 'searching...')
+            if is_found:
+                print(Command.INFO_S, 'game is found') if self.verbose else None
+                await asyncio.sleep(3)
 
-            # in_queue = data['isCurrentlyInQueue']
-            # is_found = search['searchState'] == 'Found'
-            is_in_progress = search['readyCheck']['state'] == 'InProgress'
-            self_declined = search['readyCheck']['playerResponse'] == 'Declined'
-            decliner_ids = search['readyCheck']['declinerIds']
-            print('     >decliner ids: ', decliner_ids)
-
-            # TODO: add delay (using counter for safety)
-            if is_in_progress and not self_declined:
-                self.next()
-            
-            elif self_declined:
-                LobbyState.initialized = False
+                self_declined = search['readyCheck']['playerResponse'] == 'Declined'
+                decliner_ids = search['readyCheck']['declinerIds']
+                print('     >decliner ids: ', decliner_ids)
+                
+                if not self_declined:
+                    print(Command.INFO_S, 'transition to next state') if self.verbose else None
+                    self.next()
+                
+                else:
+                    print(Command.INFO_S, 'self declination detected') if self.verbose else None
+                    LobbyState.initialized = False
             
         else:
             self._context.change_state(LobbyState())
