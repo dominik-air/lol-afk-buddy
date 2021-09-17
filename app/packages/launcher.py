@@ -162,7 +162,7 @@ class ReadyCheckState(State):
         #     self.lobby_getter_cmd = LobbyGetter()
 
         # run coroutine threadsafe here????????
-        self.search_getter_cmd.execute()
+        await self.search_getter_cmd._execute()
         search = self.search_getter_cmd.get_data()
 
 

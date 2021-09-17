@@ -1,7 +1,7 @@
 # from LCU_driver_test.get_lobby_status import session
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
-from typing import Optional
+from typing import Optional, final
 from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
@@ -16,6 +16,7 @@ class Command(ABC):
 
     receiver = None
     actual_state = None
+    lock = asyncio.Lock()
 
     def __init__(self):
         if Command.receiver:
