@@ -348,75 +348,6 @@ class DeinitState(Command):
         Canceller().execute()
 
 
-class GameModeGetter(Command):
-    '''Depreciated, TODO: change all occurences with replacement: LobbyGetter'''
-
-    def __init__(self):
-        super().__init__()
-        self._return = None
-
-    async def _execute(self):
-        game_mode = None
-        try:
-            data = Command.locals['lobby']
-        except KeyError:
-            print(Command.INFO_S,
-                  'lobby object not found in locals\n',
-                  '       acquring new data...',
-                  sep=' ')
-            
-            await self.update_locals()
-            data = Command.locals['lobby']
-
-        else:
-            self._return = data['gameConfig']['gameMode']
-        
-    async def update_locals(self):
-        reqs = '/lol-lobby/v2/lobby'
-        res = await self.connection.request('get', reqs)
-        data = await res.json()
-        Command.locals.update({'lobby': data})
-
-    def get_result(self):
-        return self._return
-
-class SearchGetter(Command):
-    def __init__(self):
-        super().__init__()
-        self._return = None
-
-        self.data = None
-        self.type = None
-        # self.arg = arg_ready_check
-
-    async def _execute(self):
-        '''Do not modify locals['search'] in this method!'''
-
-        try:
-            # If it does exit that means it was created by websocket
-            # and containt data as well as type fields
-            self._return = Command.locals['search']
-
-        except KeyError:
-            print(Command.ERR_S,
-                  'search object not found in locals.')
-
-        else:
-            if self._return:
-                if self._return.data:
-                    self.data = self._return.data
-
-                self.type = self._return.type
-
-    def get_return(self):
-        return self._return
-    
-    def get_data(self):
-        return self.data
-    
-    def get_type(self):
-        return self.type
-
 class LobbyGetter(Command):
     def __init__(self):
         super().__init__()
@@ -472,57 +403,125 @@ class LobbyGetter(Command):
             self.type = None
 
 
-    def get_result(self):
-        '''Return direct return from locals.update'''
+    def _get_return(self):
+        '''Return direct return from Command.locals['lobby']'''
         return self._return
     
     def get_data(self):
-        '''100% ensured that this is actual data (.json)'''
+        '''json file describing lobby (acquired from locals or requested)'''
         return self.data
     
     def get_type(self):
-        '''type can be Update or Delete.
-        NoneType should be threated as Update'''
+        '''type can be Update or Delete or Manual.
+        take value only if data is acquired from websocket.'''
         return self.type
+
+
+class SearchGetter(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+        self.data = None
+        self.type = None
+        # self.arg = arg_ready_check
+
+    async def _execute(self):
+        '''Do not modify locals['search'] in this method!'''
+
+        try:
+            # If it does exit that means it was created by websocket
+            # and containt data as well as type fields
+            self._return = Command.locals['search']
+
+        except KeyError:
+            print(Command.ERR_S,
+                  'search object not found in locals.')
+
+        else:
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
+
+                self.type = self._return.type
+
+    def _get_return(self):
+        '''Return direct return from Command.locals['search']'''
+        return self._return
+    
+    def get_data(self):
+        '''json file describing lobby (acquired from locals or requested)'''
+        return self.data
+    
+    def get_type(self):
+        '''type can be Update or Delete or Manual.
+        take value only if data is acquired from websocket'''
+        return self.type
+
 
 class SessionGetter(Command):
     def __init__(self):
         super().__init__()
+
         self._return = None
+        self.data = None
+        self.type = None
 
     async def _execute(self):
+        '''Do not modify locals['session'] in this method'''
+
         try:
-            data = Command.locals['session'].data
+            self._return = Command.locals['session']
 
         except KeyError:
-            print(Command.INFO_S,
-                  'session object not found in session\n',
-                #   '       acquring new data...',
-                  sep=' ')
+            print(Command.ERR_S,
+                  'session object not found in session\n')
 
         else:
-            self._return = data
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
+                
+                self.type = self._return.type
 
-    def get_return(self):
+    def _get_return(self):
         return self._return
+    
+    def get_data(self):
+        return self.data
+    
+    def get_type(self):
+        return self.type
+
 
 class QueueGetter(Command):
     def __init__(self):
         super().__init__()
+
         self._return = None
+        self.data = None
+        self.type = None
 
     async def _execute(self):
         try:
-            data = Command.locals['queue'].data
+            data = Command.locals['queue']
 
         except KeyError:
-            print(Command.INFO_S,
-                  'queue object not found in queue\n',
-                #   '       acquring new data...',
-                  sep=' ')
+            print(Command.ERR_S,
+                  'queue object not found in queue\n')
 
         else:
-            self._return = data
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
 
-    def get_return(self):
+                self.type = self._return.type
+
+    def _get_return(self):
         return self._return
+    
+    def get_data(self):
+        return self.data
+    
+    def get_type(self):
+        return self.type

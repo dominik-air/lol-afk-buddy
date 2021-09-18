@@ -617,6 +617,27 @@
                     cols: 2
 
                     SettingsLabel:
+                        text: 'start/stop automatic game search initialization'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.init
+                            text: 'init'
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.deinit
+                            text: 'deinit'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
                         text: 'search for a game'
                     
                     BoxLayout:

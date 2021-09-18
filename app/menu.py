@@ -208,6 +208,12 @@ class LauncherButton(MyButton):
                     filename=self.endpoint_json_filename_btn
                 )
             )
+    
+    def init(self):
+        self.set_command(InitState())
+    
+    def deinit(self):
+        self.set_command(DeinitState())
 
     def default_action(self):
         print(Command.INFO_S,

@@ -108,7 +108,8 @@ class LobbyState(State):
         if not self.lobby_getter_cmd:
             self.lobby_getter_cmd = LobbyGetter()
 
-        self.lobby_getter_cmd.execute()
+        # self.lobby_getter_cmd.execute()
+        await self.lobby_getter_cmd._execute()
 
         lobby = self.lobby_getter_cmd.get_data()
         _type = self.lobby_getter_cmd.get_type()
@@ -194,43 +195,68 @@ class ReadyCheckState(State):
 
 
 class DeclarePositionState(State):
+    verbose : bool = True
+
     def __init__(self) -> None:
         super().__init__()
-        self.lobby_getter_command: Command = None
-        self.session_getter_command: Command = None
+        self.lobby_getter_cmd: Command = None
+        self.session_getter_cmd: Command = None
+        self.search_getter_cmd: Command = None
 
     def next(self) -> None:
-        print('executing next command for DeclarePositionState class.')
+        print('executing next command for DeclarePositionState class.')\
+            if self.verbose else None
+        
+        self._set_command(Hover('Zed'))
+
+        try:
+            self._execute_command()
+        
+        except Exception:
+            print(Command.ERR_S, 'Error occured while calling next funcion',
+                  'in DeclarePositionState class object')
+        
+        else:
+            self._context.change_state(BanningState())
+
     
     def cancel(self) -> None:
         pass
     
     async def _scan(self) -> None:
-        # TODO: you should just check if session exist here.
-        # if existes go next (so execute command and switch to next)
-        # you should chack if lobby has been hanged as well
-        # canStartActivity is useful to terermine if everyone accepted
-        print(Command.OK_S, 'HURRAAAAA!', sep=' ')
+        print(Command.INFO_S,
+              'scanning in DeclarePositionState') if self.verbose else None
 
-        if not self.lobby_getter_command:
-            self.lobby_getter_command = LobbyGetter()
+        # SEARCH GETTER INITIALIZATION
+        if not self.search_getter_cmd:
+            self.search_getter_cmd = SearchGetter()
         
-        self.lobby_getter_command.execute()
+        await self.search_getter_cmd._execute()
 
-        if not self.session_getter_command:
-            self.session_getter_command = SessionGetter()
-        
-        self.session_getter_command.execute()
+        is_search_deleted = self.search_getter_cmd.get_type() == 'Delete'
 
-        # Check if after your acceptance someone else declined
-        if lobby := self.lobby_getter_command.get_result():
-            if not lobby['canStartActivity']:
+        if is_search_deleted:
+            print(Command.INFO_S, 'search is deleted') if self.verbose else None
+            # SESSION GETTER INITIALIZATION
+            if not self.session_getter_cmd:
+                self.session_getter_cmd = SessionGetter()
+            
+            # self.session_getter_command.execute()
+            await self.session_getter_cmd._execute()
 
-                # fix this (if someone dodge, then session will still exit)
-                if self.session_getter_command.get_return():
-                    self.next()
+
+            if self.session_getter_cmd.get_data():
+                print(Command.INFO_S, 'Changing to a next state') if self.verbose else None
+                self.next()
+            
             else:
-                self._context.change_state(ReadyCheckState())
+                print(Command.INFO_S, 'Returning to Lobby State') if self.verbose else None
+                self._context.change_state(LobbyState())
+                # LOBBY GETTER INITIALIZATION
+                # if not self.lobby_getter_cmd:
+                #     self.lobby_getter_cmd = LobbyGetter()
+                
+                # await self.lobby_getter_cmd._execute()
 
 
 class BanningState(State):
