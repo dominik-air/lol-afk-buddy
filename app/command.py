@@ -2,6 +2,8 @@
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
 from typing import Optional, final
+
+from lcu_driver import connector
 from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
@@ -98,7 +100,7 @@ class WS_JSONSaver(Command):
 
     async def _execute(self):
 
-        if self.text == 'session':
+        if self.text == 'session' or self.text == 'all':
             try:
                 to_save = Command.locals['session'].data
 
@@ -116,7 +118,7 @@ class WS_JSONSaver(Command):
                                 type=self.text)
 
 
-        elif self.text == 'lobby':
+        if self.text == 'lobby' or self.text == 'all':
             try:
                 to_save = Command.locals['lobby'].data
 
@@ -134,7 +136,7 @@ class WS_JSONSaver(Command):
                     sep=' ')
                   
 
-        elif self.text == 'queue':
+        if self.text == 'queue' or self.text == 'all':
             try:
                 to_save = Command.locals['queue'].data
 
@@ -151,7 +153,7 @@ class WS_JSONSaver(Command):
                     f'Name of file: "{name}".',
                     sep=' ')
 
-        elif self.text == 'search':
+        if self.text == 'search' or self.text == 'all':
             try:
                 to_save = Command.locals['search'].data
 
@@ -220,6 +222,20 @@ class Hover(Command):
     async def _execute(self):
         champ_id = self.champion
         active_action = Command.locals['active_action']
+
+        # START (printing variables)
+        print(f"active action from locals: {active_action}")
+        d = await self.connection.request('get', '/lol-champ-select/v1/session')
+        json = await d.json()
+        for e in json:
+            for i in e:
+                if i['isInProgress']:
+                    active_action2 = i
+
+        print(f"active action from request: {active_action2}")
+        # STOP (printing variables)
+
+
         reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
 
         res = await self.connection.request('patch', reqs,

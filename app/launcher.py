@@ -203,20 +203,30 @@ class DeclarePositionState(State):
         self.session_getter_cmd: Command = None
         self.search_getter_cmd: Command = None
 
-    def next(self) -> None:
+    async def next(self) -> None:
         print('executing next command for DeclarePositionState class.')\
             if self.verbose else None
         
-        self._set_command(Hover('Zed'))
+        hover_command = Hover('Singed')
+        print(f"hover command: {hover_command}")
+        print("before sleep")
+        await asyncio.sleep(10)
+        print("after sleep")
+        # self._set_command(Hover('Zed'))
 
         try:
-            self._execute_command()
+            # self._execute_command()
+            print("before _execute")
+            await hover_command._execute()
+            print("after _execute")
         
-        except Exception:
+        except Exception as e:
             print(Command.ERR_S, 'Error occured while calling next funcion',
                   'in DeclarePositionState class object')
+            print(e)
         
         else:
+            print("before state change")
             self._context.change_state(BanningState())
 
     
@@ -228,30 +238,35 @@ class DeclarePositionState(State):
               'scanning in DeclarePositionState') if self.verbose else None
 
         # SEARCH GETTER INITIALIZATION
-        if not self.search_getter_cmd:
-            self.search_getter_cmd = SearchGetter()
+        # if not self.search_getter_cmd:
+        #     self.search_getter_cmd = SearchGetter()
         
-        await self.search_getter_cmd._execute()
+        # await self.search_getter_cmd._execute()
 
-        is_search_deleted = self.search_getter_cmd.get_type() == 'Delete'
+        # is_search_deleted = self.search_getter_cmd.get_type() == 'Delete'
 
-        if is_search_deleted:
-            print(Command.INFO_S, 'search is deleted') if self.verbose else None
-            # SESSION GETTER INITIALIZATION
-            if not self.session_getter_cmd:
-                self.session_getter_cmd = SessionGetter()
+        # SESSION GETTER INITIALIZATION
+        if not self.session_getter_cmd:
+            self.session_getter_cmd = SessionGetter()
+        
+        # self.session_getter_command.execute()
+        await self.session_getter_cmd._execute()
+
+        session_data = self.session_getter_cmd.get_data()
+        session_type = self.session_getter_cmd.get_type()
+        print(Command.INFO_S, f"session type: {session_type}") if self.verbose else None
+
+        if session_data:
+            print(Command.INFO_S, 'session exists') if self.verbose else None
+            await self.next()
+
+
+            # if self.session_getter_cmd.get_data():
+            #     print(Command.INFO_S, 'Changing to a next state') if self.verbose else None
             
-            # self.session_getter_command.execute()
-            await self.session_getter_cmd._execute()
-
-
-            if self.session_getter_cmd.get_data():
-                print(Command.INFO_S, 'Changing to a next state') if self.verbose else None
-                self.next()
-            
-            else:
-                print(Command.INFO_S, 'Returning to Lobby State') if self.verbose else None
-                self._context.change_state(LobbyState())
+            # else:
+            #     print(Command.INFO_S, 'Returning to Lobby State') if self.verbose else None
+            #     self._context.change_state(LobbyState())
                 # LOBBY GETTER INITIALIZATION
                 # if not self.lobby_getter_cmd:
                 #     self.lobby_getter_cmd = LobbyGetter()
@@ -260,11 +275,18 @@ class DeclarePositionState(State):
 
 
 class BanningState(State):
+    verbose: bool = True
+
     def next(self) -> None:
         pass
     
     def cancel(self) -> None:
         pass
+
+    def _scan(self) -> None:
+        print(Command.INFO_S,
+              'Scanning in banning state...') if self.verbose else None
+
 
 
 class PickingState(State):

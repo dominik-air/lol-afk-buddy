@@ -84,7 +84,8 @@ async def lobby(connection, event):
     # pprint(connector.ws.registered_uris)
 
 @connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',
-                                                                    'DELETE'))
+                                                                    'DELETE',
+                                                                    'CREATE'))
 async def session(connection, event):
     
         # print(type(event))
