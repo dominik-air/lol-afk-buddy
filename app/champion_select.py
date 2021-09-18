@@ -1,6 +1,7 @@
 import os
 from enum import Enum, auto
 from typing import List, Union
+
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
@@ -11,7 +12,8 @@ from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from packages.clientscaper import client_scraper
+
+import champion_select_utils
 from packages.utils import path_problem_solver
 
 
@@ -487,7 +489,7 @@ class ChampionSelectUI(BoxLayout):
 
     def restrict_champion_pool(self) -> None:
         """Restricts the ChampionSelect champion pool to champions owned by the user."""
-        champion_pool = client_scraper.get_available_champions()
+        champion_pool = champion_select_utils.get_available_champions()
 
         if champion_pool is None:
             # in case of no connection with LCU
@@ -501,6 +503,7 @@ class ChampionSelectUI(BoxLayout):
             )
         )
         for unowned_champion in unowned_champions:
+            # calling this method on an selected champion clears the pick
             self.pick_champion(unowned_champion)
             unowned_champion.recolor()
 
