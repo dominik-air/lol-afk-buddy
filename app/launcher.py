@@ -88,16 +88,16 @@ class LobbyState(State):
     def next(self) -> None:
         self._set_command(MatchFinder())
 
-        try:
-            self._execute_command()
+        # try:
+        self._execute_command()
         
-        except Exception as e:
-            print(Command.ERR_S,
-                  'exception during executing "next" command in LobbyState')
-            print(e)
+        # except Exception as e:
+        #     print(Command.ERR_S,
+        #           'exception during executing "next" command in LobbyState')
+        #     print(e)
         
-        else:
-            self._context.change_state(ReadyCheckState())
+        # else:
+        self._context.change_state(ReadyCheckState())
 
     def cancel(self) -> None:
         print(Command.ERR_S,
