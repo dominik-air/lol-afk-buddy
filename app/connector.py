@@ -104,11 +104,13 @@ async def session(connection, event):
         except KeyError:
             hovered_champ = None
         
-        except TypeError:
-            hovered_champ = None
+        # except TypeError:
+        #     hovered_champ = None
         
         except UnboundLocalError:
             hovered_champ = None
+            active_action = None
+            active_action_id = None
 
 
                 # print(f'Champion {colored(champ, "red")} is hovered.')
