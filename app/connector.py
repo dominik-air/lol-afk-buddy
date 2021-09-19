@@ -97,9 +97,6 @@ async def session(connection, event):
                 if d['isInProgress']:
                     active_action_id = d['id']
                     active_action = d
-                else:
-                    active_action_id = None
-                    active_action = None
 
         try:
             hovered_champ = champs[str(active_action['championId'])]
@@ -108,6 +105,9 @@ async def session(connection, event):
             hovered_champ = None
         
         except TypeError:
+            hovered_champ = None
+        
+        except UnboundLocalError:
             hovered_champ = None
 
 

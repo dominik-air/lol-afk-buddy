@@ -8,6 +8,7 @@ from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
+from pprint import pprint
 # from packages.launcher import LobbyState
 # from menu import MenuApp
 
@@ -224,16 +225,25 @@ class Hover(Command):
         active_action = Command.locals['active_action']
 
         # START (printing variables)
-        print(f"active action from locals: {active_action}")
-        d = await self.connection.request('get', '/lol-champ-select/v1/session')
-        json = await d.json()
-        for e in json:
-            for i in e:
-                if i['isInProgress']:
-                    active_action2 = i
+        print(Command.INFO_S, f"active action from locals: {active_action}")
+        # d = await self.connection.request('get', '/lol-champ-select/v1/session')
+        # if d.status in range(200, 210):
+        #     json = await d.json()
+        #     for e in json:
+        #         for i in e:
+        #             if i['isInProgress']:
+        #                 active_action2 = i
 
-        print(f"active action from request: {active_action2}")
-        # STOP (printing variables)
+        #     print(Command.INFO_S, f"active action from request: {active_action2}")
+        # else:
+        #     print(Command.ERR_S,
+        #           f"Error while requesting new data from session:",
+        #           f"\nstatus: {d.status}",
+        #           f"\nreturned value: {d}")
+        
+        # print(Command.INFO_S, f"locals['session'].data['action']:")
+        # pprint(Command.locals['session'].data['action'])
+        #     # STOP (printing variables)
 
 
         reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
