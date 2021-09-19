@@ -1,4 +1,5 @@
 import os
+import json
 from typing import List, Tuple
 from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
@@ -8,23 +9,33 @@ from packages.utils import path_problem_solver
 
 import champion_select_utils
 
-icons_path = path_problem_solver("img", "summoner_spells_icons")
+ICONS_PATH = path_problem_solver("img", "summoner_spells_icons")
+
+CHAMPION_PERKS_SETTINGS_PATH = path_problem_solver("data") + "\\" + "champion_select_perks.json"
+# loads saved data about in app champion select
+with open(CHAMPION_PERKS_SETTINGS_PATH, "r") as settings_file:
+    try:
+        settings = json.load(settings_file)
+    except json.JSONDecodeError:
+        settings = {"summoner_spells": None, "runes": None}
+    finally:
+        LOADED_SUMMONER_SPELLS, LOADED_RUNES = settings.values()
 
 
 def import_rune_pages() -> List[str]:
     # FIXME placeholder function
-    return [f"rune page {i}" for i in range(5)]
+    return [LOADED_RUNES] + [f"rune page {i}" for i in range(5)]
 
 
 def import_summoner_spell_icons() -> List[str]:
     # FIXME it should check for summoner spell availability
     return [
-        f for f in os.listdir(icons_path) if os.path.isfile(os.path.join(icons_path, f))
+        f[:-4] for f in os.listdir(ICONS_PATH) if os.path.isfile(os.path.join(ICONS_PATH, f))
     ]
 
 
-rune_pages = import_rune_pages()
-icons = import_summoner_spell_icons()
+RUNE_PAGES = import_rune_pages()
+ICON_NAMES = import_summoner_spell_icons()
 
 
 class SummonerSpellDropDown(DropDown):
@@ -41,17 +52,17 @@ class SummonerSpellDropDown(DropDown):
     _current_summoner_spell = StringProperty()
 
     def __init__(
-        self, default_summoner_spell: str, reassign_function: callable, **kwargs
+            self, default_summoner_spell: str, reassign_function: callable, **kwargs
     ):
         super().__init__(**kwargs)
 
         # creates an option in the dropdown for every available summoner spell
-        for icon in icons:
+        for icon_name in ICON_NAMES:
             btn = Button(
-                text=icon[:-4],  # removes '.png'
+                text=icon_name,
                 font_size=0,
-                background_normal=os.path.join(icons_path, icon),
-                background_down=os.path.join(icons_path, icon),
+                background_normal=os.path.join(ICONS_PATH, icon_name + ".png"),
+                background_down=os.path.join(ICONS_PATH, icon_name + ".png"),
                 size_hint_y=None,
                 height=60,
             )
@@ -62,13 +73,13 @@ class SummonerSpellDropDown(DropDown):
 
         # the select button in the dropdown
         self.main_button = Button(
-            background_normal=os.path.join(icons_path, default_summoner_spell),
-            background_down=os.path.join(icons_path, default_summoner_spell),
+            background_normal=os.path.join(ICONS_PATH, default_summoner_spell + ".png"),
+            background_down=os.path.join(ICONS_PATH, default_summoner_spell + ".png"),
             size_hint=(None, None),
         )
 
         self.main_button.bind(on_release=self.open)
-        self._current_summoner_spell = default_summoner_spell[:-4]  # removes '.png'
+        self._current_summoner_spell = default_summoner_spell
         self.bind(on_select=reassign_function)
 
     @property
@@ -118,6 +129,9 @@ class RunesDropDown(DropDown):
         """Returns the selected rune page's name."""
         return self.main_button.text
 
+    def set_selected_rune_page(self, rune_page_name: str):
+        self.main_button.text = rune_page_name
+
 
 class SummonerPerksSlotUI(BoxLayout):
     """The interface class for selecting summoner spells and rune pages. Supposed to be called from the .kv file."""
@@ -125,12 +139,14 @@ class SummonerPerksSlotUI(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        d_key_summoner, f_key_summoner = LOADED_SUMMONER_SPELLS
+
         self.d_key_summoner_spell = SummonerSpellDropDown(
-            default_summoner_spell=icons[0],
+            default_summoner_spell=d_key_summoner,
             reassign_function=self.reassign_summoner_spells_icons,
         )
         self.f_key_summoner_spell = SummonerSpellDropDown(
-            default_summoner_spell=icons[1],
+            default_summoner_spell=f_key_summoner,
             reassign_function=self.reassign_summoner_spells_icons,
         )
 
@@ -141,7 +157,7 @@ class SummonerPerksSlotUI(BoxLayout):
         self.add_widget(self.runes.main_button)
 
     def reassign_summoner_spells_icons(
-        self, key: SummonerSpellDropDown, selected_button: Button
+            self, key: SummonerSpellDropDown, selected_button: Button
     ):
         """
         Changes the current summoner spell for the selected one. In case when the selected summoner spell is
@@ -177,6 +193,9 @@ class SummonerPerksSlotUI(BoxLayout):
         setattr(key.main_button, "background_down", selected_button.background_down)
         key.current_summoner_spell = selected_button.text
 
+        # saves the changes to the settings file after a change in summoner spells
+        self._save_current_settings()
+
     def get_selected_summoner_spells(self) -> Tuple[str, str]:
         """Returns the selected summoner spells in the D-key, F-key order."""
         return (
@@ -187,3 +206,9 @@ class SummonerPerksSlotUI(BoxLayout):
     def get_selected_rune_page(self) -> str:
         """Returns the selected rune page."""
         return self.runes.get_selected_rune_page()
+
+    def _save_current_settings(self):
+        """Macro for saving the current settings regarding summoner spells and runes to a JSON file."""
+        current_settings = {"summoner_spells": self.get_selected_summoner_spells(),
+                            "selected_runes": self.get_selected_rune_page()}
+        champion_select_utils.save_settings(filepath=CHAMPION_PERKS_SETTINGS_PATH, settings=current_settings)

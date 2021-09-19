@@ -3,6 +3,8 @@ from typing import List
 from packages.utils import path_problem_solver
 from command import EndpointSaver
 
+saved_to_json = None
+
 
 def get_summoner_id(output_filename="users_summoner_id") -> str:
     """Function returns the user's summoner id."""
@@ -62,3 +64,10 @@ def get_available_summoner_spells(output_filename="users_summoner_spells") -> Li
         spells = json.load(spells_file)
 
     return [spell for spell, id in spells if id in spell_ids]
+
+
+def save_settings(filepath: str, settings: dict) -> saved_to_json:
+    """Saves provided settings to a JSON file, which filepath is also given in the arguments."""
+
+    with open(filepath, "w") as save_file:
+        json.dump(settings, save_file, indent=4)

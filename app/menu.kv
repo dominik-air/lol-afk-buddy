@@ -375,6 +375,8 @@
     TabbedPanelItem:
         text: "start" # set text for the button
         orientation: "vertical"
+        on_press:
+            champion_select_ui._load_default_settings()
 
         ChampionSelectInterface:
             canvas.before:
@@ -387,6 +389,7 @@
                     radius: [2]
 
             orientation: 'horizontal'
+            id: champion_select_interface
             BoxLayout:
                 padding: "0dp", "10dp", "0dp", "10dp"
                 orientation: "vertical"
@@ -422,26 +425,35 @@
                         id: ban_button
                         text: "ban"
                         font_size: 20
-                        on_press: champion_select_ui.ban_champion(champion_select.champion)
+                        on_press:
+                            champion_select_ui.ban_champion(champion_select.champion)
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: clear_bans_button
                         text: "clear bans"
                         font_size: 20
-                        on_press: champion_select_ui.clear_bans()
+                        on_press:
+                            champion_select_ui.clear_bans()
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: pick_button
                         text: "pick"
                         font_size: 20
-                        on_press: champion_select_ui.pick_champion(champion_select.champion)
+                        on_press:
+                            champion_select_ui.pick_champion(champion_select.champion)
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: clear_picks_button
                         text: "clear picks"
                         font_size: 20
-                        on_press: champion_select_ui.clear_picks()
+                        on_press:
+                            champion_select_ui.clear_picks()
+                            champion_select_ui._save_current_settings()
                 SummonerPerksSlotUI:
+                    id: summoner_perks_slot_ui
 
 
     # ------------------------ TABBLED PANEL ITEM FOUR ---------------------- #
@@ -522,25 +534,6 @@
 
                             text: "Load"
                             on_press: app.load_new_theme_config()
-
-                SubInfoGridLayout:
-                    cols: 2
-                    SettingsLabel:
-                        text: 'Load available champions:'
-
-                    BoxLayout:
-                        size_hint_x: .5
-                        padding: 20, 0, 20, 0
-
-                        # Align to right
-                        # Widget:
-
-                        SwitchButton:
-                            -size_hint_x: 1
-                            # -width: root.width/2
-
-                            text: "Load"
-                            on_press: champion_select_ui.restrict_champion_pool()
 
 
                 
