@@ -1,6 +1,8 @@
 import os
+import json
 from enum import Enum, auto
 from typing import List, Union
+
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, ListProperty
 from kivy.uix.behaviors import ButtonBehavior
@@ -11,12 +13,14 @@ from kivy.uix.stacklayout import StackLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from packages.clientscaper import client_scraper
+
+import champion_select_utils
 from packages.utils import path_problem_solver
 
 
 # defines type hints and constants
 RGBA = List[float]
+saved_to_json = None  # indicates that function's return state is saved to a json file
 BAN_COLOR = [1, 0, 0, 1]
 PICK_COLOR = [0.2, 0.6, 1, 1]
 SELECT_COLOR = [1, 0.875, 0, 1]
@@ -411,10 +415,14 @@ class ChampionSelectUI(BoxLayout):
             # if it's not a ChampionButton we should not touch it
             return
 
-        if self.champion_pool is None or champion.text not in self.champion_pool:
-            popup = Popup(title='Champion selection error', content=Label(text=f"You don't have {champion.text}"),
-                          auto_dismiss=True,
-                          size_hint=(None, None), size=(300, 300))
+        if self.champion_pool is not None and champion.text not in self.champion_pool:
+            popup = Popup(
+                title="Champion selection error",
+                content=Label(text=f"You don't have {champion.text}"),
+                auto_dismiss=True,
+                size_hint=(None, None),
+                size=(300, 300),
+            )
             popup.open()
             return
 
@@ -441,12 +449,7 @@ class ChampionSelectUI(BoxLayout):
 
         """
         self.clear_bans()
-        champion_bans = list(
-            filter(
-                lambda champion: champion.text in bans,
-                self.champion_select.available_champions,
-            )
-        )
+        champion_bans = [champion for champion in self.champion_select.available_champions if champion.text in bans]
         for champion_ban in champion_bans:
             self.ban_champion(champion_ban)
 
@@ -467,40 +470,46 @@ class ChampionSelectUI(BoxLayout):
         for champion_pick in champion_picks:
             self.pick_champion(champion_pick)
 
-    def export_bans(self) -> List[str]:
+    def export_bans(self) -> saved_to_json:
         """Exports bans from the champion array.
 
         Returns:
-            List of champion names as strings.
+            List of champion names as strings saved to a JSON file.
 
         """
-        return self.ban_handler.export_array_champions()
+        # FIXME: the output file's directory is to be discussed
+        with open("app_champion_select_bans.json", "w") as bans_output:
+            json.dump(self.ban_handler.export_array_champions(), bans_output, indent=4)
 
-    def export_picks(self) -> List[str]:
+    def export_picks(self) -> saved_to_json:
         """Exports pick from the champion array.
 
         Returns:
-            List of champion names as strings.
+            List of champion names as strings saved to a JSON file.
 
         """
-        return self.pick_handler.export_array_champions()
+        # FIXME: the output file's directory is to be discussed
+        with open("app_champion_select_picks.json", "w") as picks_output:
+            json.dump(
+                self.pick_handler.export_array_champions(), picks_output, indent=4
+            )
 
     def restrict_champion_pool(self) -> None:
         """Restricts the ChampionSelect champion pool to champions owned by the user."""
-        champion_pool = client_scraper.get_available_champions()
+        champion_pool = champion_select_utils.get_available_champions()
 
         if champion_pool is None:
             # in case of no connection with LCU
             return
 
-        unowned_champions = list(
-            filter(
-                lambda champion: champion.text not in champion_pool
-                and self.pick_handler.champion_array.contains(champion),
-                self.champion_select.available_champions,
-            )
-        )
+        unowned_champions = [
+            champion
+            for champion in self.champion_select.available_champions
+            if champion.text not in champion_pool
+            and self.pick_handler.champion_array.contains(champion)
+        ]
         for unowned_champion in unowned_champions:
+            # calling this method on an selected champion clears the pick
             self.pick_champion(unowned_champion)
             unowned_champion.recolor()
 
