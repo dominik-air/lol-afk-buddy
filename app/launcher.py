@@ -116,7 +116,7 @@ class LobbyState(State):
         can_start = True if _type != None \
                     and _type != 'Delete' else False
 
-        print(LobbyState.initialized)
+        # print(LobbyState.initialized)
         if LobbyState.initialized and lobby and can_start:
             self.next()
         
