@@ -240,6 +240,9 @@
     name_of_json_file: textinput_json_file
     hovered_champion: champion_name
 
+    endpoint_url_text_la: endpoint_url_text_id
+    endpoint_json_filename_la: endpoint_json_filename_id
+
     do_default_tab: False
     tab_pos: 'top_mid'
     tab_width: 120
@@ -614,6 +617,27 @@
                     cols: 2
 
                     SettingsLabel:
+                        text: 'start/stop automatic game search initialization'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.init
+                            text: 'init'
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.deinit
+                            text: 'deinit'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
                         text: 'search for a game'
                     
                     BoxLayout:
@@ -688,7 +712,7 @@
                         SettingsSpinner:
                             id: spinner_option
                             text: 'choose'
-                            values: ['session', 'lobby', 'nothing']
+                            values: ['session', 'lobby', 'queue', 'search', 'all']
                             on_text: root.spinner_clicked(spinner_id.text)
 
                         LauncherButton:
@@ -718,6 +742,57 @@
                         #     # size_hint: .7, .2
                         #     buttons_method: self.decline
                         #     text: 'decline'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'custom endpoint'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        Label:
+                            text: 'URL:'
+                            size_hint_x: None
+                            # width: 40
+
+                        TextInput:
+                            id: endpoint_url_text_id
+                            size_hint_x: None
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+                            # valign: 'middle'
+                            # padding_y: (self.height)/4
+                            
+                        Label:
+                            text: 'filename:'
+                            size_hint_x: None
+                            # width: 20
+
+                        TextInput:
+                            id: endpoint_json_filename_id
+                            size_hint_x: None
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+                            # valign: 'middle'
+                            # padding_y: (self.height)/4
+
+                        LauncherButton:
+                            endpoint_url_text_btn: root.endpoint_url_text_la.text
+                            endpoint_json_filename_btn: root.endpoint_json_filename_la.text
+                            # save_selection: root.save_selection
+                            # name_of_json_file: root.name_of_json_file
+
+                            buttons_method: self.save_endpoint
+                            text: 'get'
+
 
                 SubInfoGridLayout:
                     cols: 2

@@ -19,6 +19,8 @@ class CMDCode(Enum):
     EN_PICKS = auto()
     MY_POS = auto()
     COMPLETE = auto()
+    INIT_STATE = auto()
+    DEINIT_STATE = auto()
 
 
 class LauncherCommand:
@@ -38,6 +40,8 @@ class LauncherCommand:
         CMDCode.EN_PICKS: ['getEnemyPicks', 'gep'],
         CMDCode.MY_POS: ['getMyPosition', 'gmp'],
         CMDCode.COMPLETE: ['complete', 'ok'],
+        CMDCode.INIT_STATE: ['start', 'st', 'init'],
+        CMDCode.DEINIT_STATE: ['stop', 'terminate', 'term', 'deinit'],
     }
 
     def __init__(self):
@@ -128,6 +132,16 @@ class LauncherCommand:
         cls.execute_command()
 
     @classmethod
+    def init(cls):
+        cls.set_command(InitState())
+        cls.execute_command()
+    
+    @classmethod
+    def deinit(cls):
+        cls.set_command(DeinitState())
+        cls.execute_command()
+
+    @classmethod
     def default_action(cls):
         print(Command.INFO_S,
               'For this button an action has not been set yet.',
@@ -183,6 +197,12 @@ class LauncherCommand:
 
             elif _cmd in self.CMD[CMDCode.COMPLETE]:
                 LauncherCommand.complete()
+            
+            elif _cmd in self.CMD[CMDCode.INIT_STATE]:
+                LauncherCommand.init()
+
+            elif _cmd in self.CMD[CMDCode.DEINIT_STATE]:
+                LauncherCommand.deinit()
 
             else:
                 LauncherCommand.default_action()

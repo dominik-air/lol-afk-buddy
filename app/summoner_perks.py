@@ -6,6 +6,7 @@ from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from packages.utils import path_problem_solver
 
+import champion_select_utils
 
 icons_path = path_problem_solver("img", "summoner_spells_icons")
 
@@ -15,7 +16,7 @@ def import_rune_pages() -> List[str]:
     return [f"rune page {i}" for i in range(5)]
 
 
-def import_summoner_spells() -> List[str]:
+def import_summoner_spell_icons() -> List[str]:
     # FIXME it should check for summoner spell availability
     return [
         f for f in os.listdir(icons_path) if os.path.isfile(os.path.join(icons_path, f))
@@ -23,7 +24,7 @@ def import_summoner_spells() -> List[str]:
 
 
 rune_pages = import_rune_pages()
-icons = import_summoner_spells()
+icons = import_summoner_spell_icons()
 
 
 class SummonerSpellDropDown(DropDown):

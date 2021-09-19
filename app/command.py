@@ -1,10 +1,14 @@
 # from LCU_driver_test.get_lobby_status import session
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
+from typing import Optional, final
+
+from lcu_driver import connector
 from packages.JSONsaver import JSONSaver
 from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
+# from packages.launcher import LobbyState
 # from menu import MenuApp
 
 class Command(ABC):
@@ -13,6 +17,8 @@ class Command(ABC):
     INFO_S = f"[{colored('INFO ', 'blue')}]"
 
     receiver = None
+    actual_state = None
+    lock = asyncio.Lock()
 
     def __init__(self):
         if Command.receiver:
@@ -25,7 +31,7 @@ class Command(ABC):
             print(self.INFO_S, 'receiver is None type', sep=' ')
 
     def execute(self):
-        asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
+        return asyncio.run_coroutine_threadsafe(self._execute(), Command._loop)
         
     @abstractmethod
     async def _execute(self):
@@ -94,7 +100,7 @@ class WS_JSONSaver(Command):
 
     async def _execute(self):
 
-        if self.text == 'session':
+        if self.text == 'session' or self.text == 'all':
             try:
                 to_save = Command.locals['session'].data
 
@@ -112,7 +118,7 @@ class WS_JSONSaver(Command):
                                 type=self.text)
 
 
-        elif self.text == 'lobby':
+        if self.text == 'lobby' or self.text == 'all':
             try:
                 to_save = Command.locals['lobby'].data
 
@@ -130,8 +136,39 @@ class WS_JSONSaver(Command):
                     sep=' ')
                   
 
-        elif self.text == 'nothing':
-            print('opierdalansko hue hue.')
+        if self.text == 'queue' or self.text == 'all':
+            try:
+                to_save = Command.locals['queue'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'queue is empty')
+
+            else:
+                name = self.saver.save(what=to_save, 
+                                       filename=self.filename,
+                                       type=self.text)
+
+                print(Command.OK_S,
+                    f'the saving the "{self.text}".',
+                    f'Name of file: "{name}".',
+                    sep=' ')
+
+        if self.text == 'search' or self.text == 'all':
+            try:
+                to_save = Command.locals['search'].data
+
+            except KeyError:
+                print(Command.ERR_S, 'search is empty')
+
+            else:
+                name = self.saver.save(what=to_save, 
+                                       filename=self.filename,
+                                       type=self.text)
+
+                print(Command.OK_S,
+                    f'the saving the "{self.text}".',
+                    f'Name of file: "{name}".',
+                    sep=' ')
 
 class AllyBansGetter(Command):
     async def _execute(self):
@@ -185,6 +222,20 @@ class Hover(Command):
     async def _execute(self):
         champ_id = self.champion
         active_action = Command.locals['active_action']
+
+        # START (printing variables)
+        print(f"active action from locals: {active_action}")
+        d = await self.connection.request('get', '/lol-champ-select/v1/session')
+        json = await d.json()
+        for e in json:
+            for i in e:
+                if i['isInProgress']:
+                    active_action2 = i
+
+        print(f"active action from request: {active_action2}")
+        # STOP (printing variables)
+
+
         reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
 
         res = await self.connection.request('patch', reqs,
@@ -275,3 +326,218 @@ class Complete(Command):
             print(Command.OK_S,
                     f'Champion has been {act()}ed.',
                     colored(champs[str(champ_id)], 'red'), sep=' ')
+
+class EndpointSaver(Command):
+    def __init__(self, reqs: str, filename: str):
+        super().__init__()
+
+        self.reqs: str = reqs
+        self.filename: str = filename
+        self.saver = JSONSaver()
+
+    async def _execute(self):
+        res = await self.connection.request('get', self.reqs)
+
+        if res.status in list(range(200, 209)):
+            print(Command.OK_S,
+                    f'endpoint requested successfully', sep=' ')
+
+            data = await res.json()
+            name = self.saver.save(what=data,
+                                   filename=self.filename,
+                                   type='customEndpoint')
+        
+        else:
+            print(Command.ERR_S,
+                  f'error no.: {res.status}', sep=' ')
+
+
+# Made for Launcher class:
+class InitState(Command):
+    async def _execute(self):
+        Command.actual_state.initialized = True
+
+
+class DeinitState(Command):
+    async def _execute(self):
+        Command.actual_state.initialized = False
+        Canceller().execute()
+
+
+class LobbyGetter(Command):
+    def __init__(self):
+        super().__init__()
+
+        self._return = None # for internal usage only!
+        self.data = None
+        self.type = None
+
+    async def _execute(self):
+        '''Do not modify locals['lobby'] in this method!'''
+
+        try:
+            # If it does exit that means it was created by websocket
+            # and containt data as well as type fields
+            self._return = Command.locals['lobby']
+
+        except KeyError:
+            print(Command.ERR_S,
+                  'lobby object not found in locals!')
+            print(Command.INFO_S,
+                  'requesting for the data.')
+
+            await self.request_data()
+
+        else:
+            if self._return: 
+                if self._return.data:
+                    self.data = self._return.data
+
+                self.type = self._return.type
+
+            # If data is empty that means that lobby has been removed
+            # else:
+            #     print(Command.INFO_S,
+            #         'data is NoneType\n')
+                
+            #     self._reutrn
+            #     self.type = self._return.type
+        
+    async def request_data(self):
+        '''Use this method force data acqusition '''
+
+        reqs = '/lol-lobby/v2/lobby'
+        res = await self.connection.request('get', reqs)
+        if res.status in list(range(200, 210)):
+            print(Command.INFO_S, 'Getting lobby data')
+            self.data = await res.json()
+            self.type = 'Manual'
+        
+        else:
+            print(Command.ERR_S, 'Requested data cannot be get')
+            self.data = None
+            self.type = None
+
+
+    def _get_return(self):
+        '''Return direct return from Command.locals['lobby']'''
+        return self._return
+    
+    def get_data(self):
+        '''json file describing lobby (acquired from locals or requested)'''
+        return self.data
+    
+    def get_type(self):
+        '''type can be Update or Delete or Manual.
+        take value only if data is acquired from websocket.'''
+        return self.type
+
+
+class SearchGetter(Command):
+    def __init__(self):
+        super().__init__()
+        self._return = None
+
+        self.data = None
+        self.type = None
+        # self.arg = arg_ready_check
+
+    async def _execute(self):
+        '''Do not modify locals['search'] in this method!'''
+
+        try:
+            # If it does exit that means it was created by websocket
+            # and containt data as well as type fields
+            self._return = Command.locals['search']
+
+        except KeyError:
+            print(Command.ERR_S,
+                  'search object not found in locals.')
+
+        else:
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
+
+                self.type = self._return.type
+
+    def _get_return(self):
+        '''Return direct return from Command.locals['search']'''
+        return self._return
+    
+    def get_data(self):
+        '''json file describing lobby (acquired from locals or requested)'''
+        return self.data
+    
+    def get_type(self):
+        '''type can be Update or Delete or Manual.
+        take value only if data is acquired from websocket'''
+        return self.type
+
+
+class SessionGetter(Command):
+    def __init__(self):
+        super().__init__()
+
+        self._return = None
+        self.data = None
+        self.type = None
+
+    async def _execute(self):
+        '''Do not modify locals['session'] in this method'''
+
+        try:
+            self._return = Command.locals['session']
+
+        except KeyError:
+            print(Command.ERR_S,
+                  'session object not found in session\n')
+
+        else:
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
+                
+                self.type = self._return.type
+
+    def _get_return(self):
+        return self._return
+    
+    def get_data(self):
+        return self.data
+    
+    def get_type(self):
+        return self.type
+
+
+class QueueGetter(Command):
+    def __init__(self):
+        super().__init__()
+
+        self._return = None
+        self.data = None
+        self.type = None
+
+    async def _execute(self):
+        try:
+            data = Command.locals['queue']
+
+        except KeyError:
+            print(Command.ERR_S,
+                  'queue object not found in queue\n')
+
+        else:
+            if self._return:
+                if self._return.data:
+                    self.data = self._return.data
+
+                self.type = self._return.type
+
+    def _get_return(self):
+        return self._return
+    
+    def get_data(self):
+        return self.data
+    
+    def get_type(self):
+        return self.type

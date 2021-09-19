@@ -5,6 +5,13 @@ from packages.champNameIdMapper import ChampNameIdMapper
 
 connector = Connector()
 
+# FLAGS
+IS_CONNECTED = False
+async def wait_for_connection():
+    while True:
+        if IS_CONNECTED:
+            return True
+    
 
 @connector.ready
 async def connect(connection):
@@ -14,6 +21,7 @@ async def connect(connection):
     # get summoner name
     res = await connection.request('get', '/lol-summoner/v1/current-summoner')
     if res.status == 200:
+        IS_CONNECTED = True
         data = await res.json()
         SUMMONER_NAME: str = data['internalName']
         SUMMONER_ID: int = data['summonerId']
@@ -26,6 +34,7 @@ async def connect(connection):
         '\t-summoner id:',
         colored(f'{SUMMONER_ID}\n', attrs=('bold',)),
         sep=' ')
+        connection.locals.update({'lobby': None})
 
         status = await ChampNameIdMapper.get_data()
         print(Command.OK_S,
@@ -40,32 +49,43 @@ async def disconnect(_):
     print('The client have been closed!')
     await connector.stop()
 
-@connector.ws.register('/lol-lobby/v2/lobby', event_types=('UPDATE',))
+@connector.ws.register('/lol-lobby/v2/lobby', event_types=('UPDATE',
+                                                           'DELETE'))
 async def lobby(connection, event):
     # print(type(event))
 
     # helping variables
     content: str = str()
     header: str = colored('The game lobby started.', 'red')
-    data: dict = {
-        'Game mode': event.data['gameConfig']['gameMode'],
-    }
 
-    # fulfill content variable
-    for key, value in data.items():
-        content += colored(f"\t-{key}: ", 'red')
-        content += colored(f"{value}", 'red', attrs=('bold',))
-        content += '\n'
+    # If event does not exist then function will never called
+    # If event lobby is deleted then event exist but it's data is empty
+    if event.data:
+        data: dict = {
+            'Game mode': event.data['gameConfig']['gameMode'],
+        }
 
-    # print out data
-    print(header)
-    print(content)
+        # fulfill content variable
+        for key, value in data.items():
+            content += colored(f"\t-{key}: ", 'red')
+            content += colored(f"{value}", 'red', attrs=('bold',))
+            content += '\n'
 
+        # print out data
+        print(header)
+        print(content)
+
+    else:
+        data: dict = {'Game mode': None}
+        # event.data = None
+        
     # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
     connection.locals.update({'lobby': event})
     # pprint(connector.ws.registered_uris)
 
-@connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',))
+@connector.ws.register('/lol-champ-select/v1/session', event_types=('UPDATE',
+                                                                    'DELETE',
+                                                                    'CREATE'))
 async def session(connection, event):
     
         # print(type(event))
@@ -118,3 +138,64 @@ async def session(connection, event):
                                 'active_id': active_action_id,
                                 'active_action': active_action,})
         # pprint(connector.ws.registered_uris)
+
+@connector.ws.register('/lol-game-queues/v1/queues', event_types=('UPDATE',))
+async def queue(connection, event):
+    # print(type(event))
+
+    # helping variables
+    content: str = str()
+    header: str = colored('The queue has been updated.', 'red')
+    data: dict = {
+        'type of the queue': event.data['type'],
+        'name of the queue': event.data['name'],
+    }
+
+    # fulfill content variable
+    for key, value in data.items():
+        content += colored(f"\t-{key}: ", 'red')
+        content += colored(f"{value}", 'red', attrs=('bold',))
+        content += '\n'
+
+    # print out data
+    print(header)
+    print(content)
+
+    # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
+    connection.locals.update({'queue': event})
+    # pprint(connector.ws.registered_uris)
+
+@connector.ws.register('/lol-matchmaking/v1/search', event_types=('UPDATE',
+                                                                  'DELETE'))
+async def queue(connection, event):
+    # print(type(event))
+
+    # helping variables
+    content: str = str()
+    header: str = colored('The search has been updated.', 'red')
+
+    if event.data:
+        data: dict = {
+            'est queue time': event.data['estimatedQueueTime'],
+            'is currently in queue': event.data['isCurrentlyInQueue'],
+            'lobby id': event.data['lobbyId'],
+            'search state': event.data['searchState'],
+            'time in queue': event.data['timeInQueue'],
+        }
+
+        # fulfill content variable
+        for key, value in data.items():
+            content += colored(f"\t-{key}: ", 'red')
+            content += colored(f"{value}", 'red', attrs=('bold',))
+            content += '\n'
+
+        # print out data
+        print(header)
+        print(content)
+    
+    else:
+        event.data = None
+
+    # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
+    connection.locals.update({'search': event})
+    # pprint(connector.ws.registered_uris)
