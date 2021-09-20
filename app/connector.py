@@ -34,7 +34,9 @@ async def connect(connection):
         '\t-summoner id:',
         colored(f'{SUMMONER_ID}\n', attrs=('bold',)),
         sep=' ')
-        connection.locals.update({'lobby': None})
+        # connection.locals.update({'lobby': None})
+        connection.locals.update({'my_summoner_id': SUMMONER_ID})
+        connection.locals.update({'my_cell_id': 'Unknown'})
 
         status = await ChampNameIdMapper.get_data()
         print(Command.OK_S,
@@ -94,9 +96,12 @@ async def session(connection, event):
         champs = ChampNameIdMapper.get_champion_dict(order='reversed')
         for e in event.data['actions']:
             for d in e:
+                actor_cell_id = d['actorCellId']
                 if d['isInProgress']:
                     active_action_id = d['id']
                     active_action = d
+        
+        # for for event.data['myTeam']
 
         try:
             hovered_champ = champs[str(active_action['championId'])]
@@ -111,6 +116,7 @@ async def session(connection, event):
             hovered_champ = None
             active_action = None
             active_action_id = None
+            actor_cell_id = None
 
 
                 # print(f'Champion {colored(champ, "red")} is hovered.')
@@ -123,6 +129,8 @@ async def session(connection, event):
             # 'actions': event.data['actions'],
             'activeAction': active_action_id,
             'hoveredChampion': hovered_champ,
+            'actorCellId': actor_cell_id,
+            'myCellId': Command.locals['my_cell_id'],
         }
 
         # fulfill content variable
@@ -138,7 +146,8 @@ async def session(connection, event):
         # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
         connection.locals.update({'session': event,
                                 'active_id': active_action_id,
-                                'active_action': active_action,})
+                                'active_action': active_action,
+                                'actor_cell_id': actor_cell_id})
         # pprint(connector.ws.registered_uris)
 
 @connector.ws.register('/lol-game-queues/v1/queues', event_types=('UPDATE',))

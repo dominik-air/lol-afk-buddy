@@ -206,6 +206,8 @@ class EnemyBansGetter(Command):
 class Hover(Command):
     def __init__(self, champion: str = None):
         super().__init__()
+        self.my_cell_id = None
+
         try:
             self.champion = int(champion)
 
@@ -223,6 +225,14 @@ class Hover(Command):
     async def _execute(self):
         champ_id = self.champion
         active_action = Command.locals['active_action']
+
+        if not self.my_cell_id:
+            for my_team in Command.locals['session'].data['myTeam']:
+                for teammate in my_team:
+                    if teammate['summonerId'] == Command.locals['my_summoner_id']:
+                        self.my_cell_id = teammate['cellId']
+                        Command.locals.update({'myCellId': self.my_cell_id})
+                
 
         # START (printing variables)
         print(Command.INFO_S, f"active action from locals: {active_action}")
@@ -248,18 +258,22 @@ class Hover(Command):
 
         reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
 
-        res = await self.connection.request('patch', reqs,
-                                            data={'championId': champ_id})
+        if Command.locals['actorCellId'] == self.my_cell_id:
+            res = await self.connection.request('patch', reqs,
+                                                data={'championId': champ_id})
 
-        if res.status in list(range(200, 209)):
-            print(Command.OK_S,
-                  'successfully changed hovered champ to:',
-                    colored(self.champion, 'red'), sep=' ')
+            if res.status in list(range(200, 209)):
+                print(Command.OK_S,
+                    'successfully changed hovered champ to:',
+                        colored(self.champion, 'red'), sep=' ')
 
+            else:
+                print(Command.ERR_S,
+                    'something went wrong while hovering the champion',
+                        colored(self.champion, 'red'), sep=' ')
+        
         else:
-            print(Command.ERR_S,
-                  'something went wrong while hovering the champion',
-                    colored(self.champion, 'red'), sep=' ')
+            print(Command.INFO_S, "This is not your cell.")
 
 class HoverGetter(Command):
     async def _execute(self):
