@@ -17,8 +17,8 @@ async def connect(connection):
 
         data = await summoner.json()
         summonerId = data['summonerId']
-        #request = f"/lol-perks/v1/perks"
-        request = f"/lol-perks/v1/currentpage"
+        request = f"/lol-perks/v1/perks"
+        #request = f"/lol-perks/v1/currentpage"
         request_type = "get"
         summoner_spells = await connection.request(request_type, request)
         save = await summoner_spells.json()

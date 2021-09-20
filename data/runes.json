@@ -1,12 +1,12 @@
 {
-    "keystone": "Guardian",
+    "keystone": "Grasp of the Undying",
     "main_tree_perks": [
         "Shield Bash",
-        "Bone Plating",
-        "Unflinching"
+        "Second Wind",
+        "Revitalize"
     ],
     "secondary_tree_perks": [
-        "Zombie Ward",
+        "Cheap Shot",
         "Ultimate Hunter"
     ],
     "shards": [

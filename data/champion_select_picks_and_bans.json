@@ -1,10 +1,16 @@
 {
     "picks": [
-        "AurelionSol",
-        "Brand"
+        "Blitzcrank",
+        "Camille",
+        "Aphelios",
+        "Darius",
+        "Malphite"
     ],
     "bans": [
-        "Amumu",
-        "Akshan"
+        "Vayne",
+        "Varus",
+        "Thresh",
+        "Shen",
+        "Kindred"
     ]
 }

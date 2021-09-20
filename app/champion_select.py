@@ -462,7 +462,8 @@ class ChampionSelectUI(BoxLayout):
         """
         self.clear_bans()
         champion_bans = [champion for champion in self.champion_select.available_champions if champion.text in bans]
-        for champion_ban in champion_bans:
+        for champion_ban in reversed(champion_bans):
+            # banning champions in the reversed order to preserve their priority
             self.ban_champion(champion_ban)
 
     def load_picks(self, picks: List[str]) -> None:
@@ -473,13 +474,9 @@ class ChampionSelectUI(BoxLayout):
 
         """
         self.clear_picks()
-        champion_picks = list(
-            filter(
-                lambda champion: champion.text in picks,
-                self.champion_select.available_champions,
-            )
-        )
-        for champion_pick in champion_picks:
+        champion_picks = [champion for champion in self.champion_select.available_champions if champion.text in picks]
+        for champion_pick in reversed(champion_picks):
+            # picking champions in the reversed order to preserve their priority
             self.pick_champion(champion_pick)
 
     def export_bans(self) -> List[str]:

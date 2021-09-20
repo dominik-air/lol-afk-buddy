@@ -924,6 +924,37 @@
     },
     {
         "active": true,
+        "alias": "Karthus",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/30.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Karthus/Skins/Base/KarthusLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/30/30000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/30.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 30,
+        "name": "Karthus",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1632063935000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1632063935000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/30.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/30.ogg",
+        "title": "the Deathsinger"
+    },
+    {
+        "active": true,
         "alias": "Chogath",
         "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/31.ogg",
         "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Chogath/skins/base/ChogathLoadScreen.jpg",

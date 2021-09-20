@@ -541,3 +541,25 @@ class QueueGetter(Command):
     
     def get_type(self):
         return self.type
+
+
+class EndpointSender(Command):
+    """Class for sending POST, PUT and DELETE requests to the LCU through the LCU driver.
+
+    Attributes:
+        request: link of the endpoint.
+        request_data: dictionary with necessary request body.
+        request_type: type of the request it can be POST, PUT and DELETE(GET request doesn't make sense here).
+
+    """
+
+    def __init__(self, request: str, request_data: dict, request_type: str):
+        super().__init__()
+        self.request = request
+        self.request_data = request_data
+        self.request_type = request_type
+
+    async def _execute(self):
+        result = await self.connection.request(self.request_type, self.request, data=self.request_data)
+        # check if the request was successful
+        return result.status in list(range(200, 209))
