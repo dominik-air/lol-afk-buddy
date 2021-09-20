@@ -1,9 +1,13 @@
+from session_manager import SessionManager, Action
 from lcu_driver import Connector
 from termcolor import colored
 from command import Command
 from packages.champNameIdMapper import ChampNameIdMapper
+from pprint import pprint
 
 connector = Connector()
+session_manager = SessionManager()
+Command.session_manager = session_manager
 
 # FLAGS
 IS_CONNECTED = False
@@ -26,6 +30,8 @@ async def connect(connection):
         SUMMONER_NAME: str = data['internalName']
         SUMMONER_ID: int = data['summonerId']
         SUMMONER_PUUID: str = data['puuid']
+
+        session_manager.set_summoner_id(SUMMONER_ID)
 
         print(Command.OK_S,
         'Logged in successfully\n',
@@ -89,65 +95,36 @@ async def lobby(connection, event):
                                                                     'DELETE',
                                                                     'CREATE'))
 async def session(connection, event):
-    
-        # print(type(event))
 
-        # helping variables
-        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
-        for e in event.data['actions']:
-            for d in e:
-                actor_cell_id = d['actorCellId']
-                if d['isInProgress']:
-                    active_action_id = d['id']
-                    active_action = d
+        if event.type in ('Update', 'Create'):
+            if d := event.data:
+                # FIRST MUST BE SYNCED myTeam THAT'S IMPORTANT!!!
+                session_manager.my_team.sync_with_websocket(d['myTeam'])
+                session_manager.actions.sync_with_websocket(d['actions'])
         
-        # for for event.data['myTeam']
+        my_action: Action = session_manager.get_my_action()
 
-        try:
-            hovered_champ = champs[str(active_action['championId'])]
+        if my_action:
+            champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
 
-        except KeyError:
-            hovered_champ = None
-        
-        # except TypeError:
-        #     hovered_champ = None
-        
-        except UnboundLocalError:
-            hovered_champ = None
-            active_action = None
-            active_action_id = None
-            actor_cell_id = None
+            try:
+                hovered_champ: str = champs[str(my_action.champion_id)]
 
+            except KeyError:
+                # If not hovering any champion set None
+                hovered_champ: str = None
 
-                # print(f'Champion {colored(champ, "red")} is hovered.')
-        content: str = str()
-        header: str = colored('Session has been updated:', 'red')
-        data: dict = {
-            'bans': event.data['bans']['myTeamBans'],
-            # 'benchChampionIds': event.data['benchChampionIds'],
-            # 'gameId': event.data['gameId'],
-            # 'actions': event.data['actions'],
-            'activeAction': active_action_id,
-            'hoveredChampion': hovered_champ,
-            'actorCellId': actor_cell_id,
-            'myCellId': Command.locals['my_cell_id'],
-        }
+            pprint(my_action.__dict__)
+            print(f"hovered champion name: {hovered_champ}")
 
-        # fulfill content variable
-        for key, value in data.items():
-            content += colored(f"\t-{key}: ", 'red')
-            content += colored(f"{value}", 'red', attrs=('bold',))
-            content += '\n'
-
-        # print out data
-        print(header)
-        print(content)
 
         # ADD EVENT OBJECT TO CONNECTION'S LOCALS IN OREDER TO GAIN OUTER ACCESS
-        connection.locals.update({'session': event,
-                                'active_id': active_action_id,
-                                'active_action': active_action,
-                                'actor_cell_id': actor_cell_id})
+        connection.locals.update({'session': event})
+
+        # connection.locals.update({'session': event,
+        #                         'active_id': active_action_id,
+        #                         'active_action': active_action,
+        #                         'actor_cell_id': actor_cell_id})
         # pprint(connector.ws.registered_uris)
 
 @connector.ws.register('/lol-game-queues/v1/queues', event_types=('UPDATE',))

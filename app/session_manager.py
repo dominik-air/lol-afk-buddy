@@ -8,20 +8,42 @@ class SessionManager:
         self.actions: ActionList = ActionList(self)
         self.SUMMONER_ID: int = summoner_id
     
-    def get_my_cell_id(self):
+    def get_my_cell_id(self) -> int:
         return self.my_team.get_me().cell_id
     
     def get_summoner_id(self):
         return self.SUMMONER_ID
     
-    def get_my_action(self):
+    def get_my_action(self) -> Action:
         return self.actions.get_my_action()
     
-    def get_actions_in_progress(self):
+    def get_actions_in_progress(self) -> list:
         return self.actions.get_actions_in_progress()
+    
+    def get_action_in_progress(self) -> Action:
+        return self.actions.get_action_in_progress()
     
     def get_my_champion_pick_intent(self):
         return self.my_team.get_me().champion_pick_intent
+    
+    # def get_my_active_action(self) -> Action:
+    #     '''Try to get your active action. If your action is
+    #     not active return None'''
+
+    #     actions_in_progress: list = self.get_actions_in_progress()
+    #     my_cell_id: int = self.get_my_cell_id()
+    #     my_active_action: Action = None
+        
+    #     if actions_in_progress:
+    #         action: Action
+    #         for action in actions_in_progress:
+    #             if my_cell_id == action.actor_cell_id:
+    #                 my_active_action = action
+
+    #     return my_active_action
+    
+    def set_summoner_id(self, arg_summoner_id: int):
+        self.SUMMONER_ID: int = arg_summoner_id
     
 
 class Action:
@@ -55,15 +77,29 @@ class ActionList(list):
 
     def __init__(self, arg_session_manager: SessionManager) -> None:
         self.session_manager: SessionManager = arg_session_manager
+
+        # your summoner action which is currently in progress
         self.my_action: Action = None
         self.actions_in_progress: list = None
     
-    def get_actions_in_progress(self):
+    def get_actions_in_progress(self) -> list:
         '''This method shouldn't iterate through ActionList to find actions in
         progress. The variable should be updated by syn_with_websocket and
         always be updated.'''
 
         return self.actions_in_progress
+    
+    def get_action_in_progress(self) -> Action:
+        '''This method tries returns action (instead of list of actions)
+        directly if list consists of one element.'''
+
+        if (actions := self.get_actions_in_progress()):
+            if len(actions) == 1:
+                return actions[0]
+
+            else:
+                return None
+            
     
     def get_my_action(self):
         '''Simirally as get_action_n_progress - it shouldn't iterate through
@@ -91,11 +127,13 @@ class ActionList(list):
             self.append(new_action)
             
             # If newly created instance's actor_cell_id attribute is filled 
-            # with data wich value is equal to your cell id of current session,
+            # with data wich value is equal to your cell id of current session
+            # and the action is in progress,
             # update my_action wich represents your action object in
             # session (the action part). Note that this is always checked
             # when sync occures (this is - when websocked is CREATED, UPDATED)
-            if new_action.actor_cell_id == self.session_manager.get_my_cell_id():
+            if (new_action.actor_cell_id == self.session_manager.get_my_cell_id()
+                and new_action.is_in_progress):
                 self.my_action = new_action
             
             # Gather all action instances wich are tagged as 'isInProgress'

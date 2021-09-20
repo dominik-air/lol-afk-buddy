@@ -1,4 +1,3 @@
-# from LCU_driver_test.get_lobby_status import session
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
 from typing import Optional, final
@@ -9,6 +8,7 @@ from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
 from pprint import pprint
+from session_manager import SessionManager, Action
 # from packages.launcher import LobbyState
 # from menu import MenuApp
 
@@ -19,6 +19,7 @@ class Command(ABC):
 
     receiver = None
     actual_state = None
+    session_manager: SessionManager = None
     lock = asyncio.Lock()
 
     def __init__(self):
@@ -206,7 +207,6 @@ class EnemyBansGetter(Command):
 class Hover(Command):
     def __init__(self, champion: str = None):
         super().__init__()
-        self.my_cell_id = None
 
         try:
             self.champion = int(champion)
@@ -224,41 +224,12 @@ class Hover(Command):
 
     async def _execute(self):
         champ_id = self.champion
-        active_action = Command.locals['active_action']
+        my_active_action: Action = self.session_manager.get_my_action()
 
-        if not self.my_cell_id:
-            for my_team in Command.locals['session'].data['myTeam']:
-                for teammate in my_team:
-                    if teammate['summonerId'] == Command.locals['my_summoner_id']:
-                        self.my_cell_id = teammate['cellId']
-                        Command.locals.update({'myCellId': self.my_cell_id})
-                
+        if my_active_action:
+            action_id = my_active_action.id
+            reqs = f'/lol-champ-select/v1/session/actions/{action_id}'
 
-        # START (printing variables)
-        print(Command.INFO_S, f"active action from locals: {active_action}")
-        # d = await self.connection.request('get', '/lol-champ-select/v1/session')
-        # if d.status in range(200, 210):
-        #     json = await d.json()
-        #     for e in json:
-        #         for i in e:
-        #             if i['isInProgress']:
-        #                 active_action2 = i
-
-        #     print(Command.INFO_S, f"active action from request: {active_action2}")
-        # else:
-        #     print(Command.ERR_S,
-        #           f"Error while requesting new data from session:",
-        #           f"\nstatus: {d.status}",
-        #           f"\nreturned value: {d}")
-        
-        # print(Command.INFO_S, f"locals['session'].data['action']:")
-        # pprint(Command.locals['session'].data['action'])
-        #     # STOP (printing variables)
-
-
-        reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
-
-        if Command.locals['actorCellId'] == self.my_cell_id:
             res = await self.connection.request('patch', reqs,
                                                 data={'championId': champ_id})
 
@@ -268,12 +239,13 @@ class Hover(Command):
                         colored(self.champion, 'red'), sep=' ')
 
             else:
-                print(Command.ERR_S,
+                print(Command.INFO_S,
                     'something went wrong while hovering the champion',
                         colored(self.champion, 'red'), sep=' ')
+                print(Command.ERR_S, f"Error code: {res.status}")
         
         else:
-            print(Command.INFO_S, "This is not your cell.")
+            print(Command.INFO_S, "Your active action does not exist.")
 
 class HoverGetter(Command):
     async def _execute(self):
@@ -332,19 +304,25 @@ class MyPositionGetter(Command):
 class Complete(Command):
 
     async def _execute(self):
-        active_action = self.locals['active_action']
-        champs = ChampNameIdMapper.get_champion_dict(order='reversed')
-        action_type = active_action['type']
-        champ_id = active_action['championId']
+        champs = ChampNameIdMapper.get_champion_dict(order='normal')
+        my_active_action: Action = self.session_manager.get_my_action()
+        champ_id: int = my_active_action.id
+
+        # active_action: Action = self.session_manager.get_action_in_progress()
+        # champs = ChampNameIdMapper.get_champion_dict(order='reversed')
+        # action_type = active_action.type
+        # champ_id = active_action.champion_id
 
         # reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}'
         # res = await connection.request('patch', reqs,
         #                                data={'isInProgress': False})
 
-        reqs = f'/lol-champ-select/v1/session/actions/{active_action["id"]}/complete'
+        action_id: int = my_active_action.id
+        reqs = f'/lol-champ-select/v1/session/actions/{action_id}/complete'
         res = await self.connection.request('post', reqs)
 
         if res.status in list(range(200, 209)):
+            action_type: str = my_active_action.type
             act = lambda: action_type + 'n' if action_type == 'ban'\
                                             else action_type
             print(Command.OK_S,
