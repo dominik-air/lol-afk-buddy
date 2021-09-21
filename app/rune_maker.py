@@ -8,6 +8,10 @@ from packages.utils import path_problem_solver
 from command import EndpointSender
 
 
+with open(path_problem_solver("data") + "\\" + "op_gg_rune_name_mapping.json", "r") as f:
+    PROBLEMATIC_NAMES = json.load(f)
+
+
 def _prepare_name(rune_name: str, prefix: Optional[str], suffix: Optional[str]) -> str:
     """Normalizes the input rune's name into a format recognizable by other parts in the app.
 
@@ -22,7 +26,6 @@ def _prepare_name(rune_name: str, prefix: Optional[str], suffix: Optional[str]) 
     """
 
     # this part handles exceptional naming conventions of u.gg
-    # FIXME: more research is needed
     if "Adaptive" in rune_name:
         suffix = " Force" + suffix
     # most common fix
@@ -30,6 +33,8 @@ def _prepare_name(rune_name: str, prefix: Optional[str], suffix: Optional[str]) 
         rune_name = rune_name[len(prefix):]
     if suffix is not None:
         rune_name = rune_name[:-(len(suffix))]
+    if problematic_rune_name := PROBLEMATIC_NAMES.get(rune_name):
+        return problematic_rune_name
     return rune_name
 
 
@@ -51,6 +56,11 @@ def import_runes_for(champion_name: str, output_filename: str = "send_this_runes
     """
 
     lower_case_champion_name = champion_name.lower()
+
+    if lower_case_champion_name == "monkeyking":
+        # RIOT calls Wukong 'Monkey King' so we need to change that here
+        lower_case_champion_name = "wukong"
+
     webpage = f"https://u.gg/lol/champions/{lower_case_champion_name}/runes"  # source website
     result = requests.get(webpage)
 
@@ -79,21 +89,11 @@ def import_runes_for(champion_name: str, output_filename: str = "send_this_runes
     suffix_to_remove = " Shard"
     shards = [_prepare_name(shard, prefix_to_remove, suffix_to_remove) for shard in shards]
 
-    runes = {"keystone": keystone_perk_active,
-             "main_tree_perks": perks[:3],
-             "secondary_tree_perks": perks[3:],
-             "shards": shards}
-
     # open file with [rune_name, rune_id] mapping
     with open(path_problem_solver("data") + "//" + "rune_data.json", "r") as rune_id_data:
         rune_data = json.load(rune_id_data)
 
     all_runes = [keystone_perk_active, *perks, *shards]
-
-    # FIXME: it's for testing purposes only, after every rune name is checked there will be no need to keep this
-    with open(path_problem_solver("data") + "//" + "runes.json", "w+") as save_file:
-        json.dump(runes, save_file, indent=4)
-
     rune_ids = [_get_rune_id(rune_name, rune_data) for rune_name in all_runes]
 
     with open(output_filename, "w+") as rune_ids_to_send:
@@ -106,8 +106,13 @@ def send_most_optimal_runes_for(champion: str) -> None:
     """Function fetches the best runes from u.gg for a provided champion and outputs it in a JSON file.
     Returns list of ids for every perk(rune), which then can be send to the LCU to update a rune page.
     """
+
+    # FIXME: if the is no room for additional rune pages the function won't update the runes in the client
+    # FIXME: need to add a functionality of removing a rune page if necessary
+
     runes = import_runes_for(champion_name=champion)
 
+    # empirically tested formulas for style ids
     primary_style_id = (runes[0] // 100) * 100
     sub_style_id = (runes[4] // 100) * 100
 
@@ -122,7 +127,7 @@ def send_most_optimal_runes_for(champion: str) -> None:
                                  "isEditable": True,
                                  "isValid": True,
                                  'lastModified': 1629808281841,
-                                 "name": f"Most Optimal {champion}",
+                                 "name": f"Best Win Rate {champion}",
                                  "order": 1,
                                  'primaryStyleId': primary_style_id,
                                  "selectedPerkIds": runes,

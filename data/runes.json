@@ -1,17 +1,17 @@
 {
-    "keystone": "Grasp of the Undying",
+    "keystone": "Conqueror",
     "main_tree_perks": [
-        "Shield Bash",
-        "Second Wind",
-        "Revitalize"
+        "Presence of Mind",
+        "Legend: Tenacity",
+        "Coup de Grace"
     ],
     "secondary_tree_perks": [
-        "Cheap Shot",
-        "Ultimate Hunter"
+        "Second Wind",
+        "Overgrowth"
     ],
     "shards": [
         "Adaptive",
         "Adaptive",
-        "Armor"
+        "Magic Resist"
     ]
 }
