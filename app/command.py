@@ -553,11 +553,14 @@ class EndpointSender(Command):
 
     """
 
-    def __init__(self, request: str, request_data: dict, request_type: str):
+    def __init__(self, request: str, request_type: str, request_data: dict = None):
         super().__init__()
         self.request = request
-        self.request_data = request_data
         self.request_type = request_type
+
+        self.request_data = request_data
+        if self.request_data is None:
+            self.request_data = {}
 
     async def _execute(self):
         result = await self.connection.request(self.request_type, self.request, data=self.request_data)

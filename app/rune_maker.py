@@ -5,8 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Optional, List
 from packages.utils import path_problem_solver
-from command import EndpointSender
-
+from command import EndpointSender, EndpointSaver
 
 with open(path_problem_solver("data") + "\\" + "op_gg_rune_name_mapping.json", "r") as f:
     PROBLEMATIC_NAMES = json.load(f)
@@ -103,12 +102,9 @@ def import_runes_for(champion_name: str, output_filename: str = "send_this_runes
 
 
 def send_most_optimal_runes_for(champion: str) -> None:
-    """Function fetches the best runes from u.gg for a provided champion and outputs it in a JSON file.
-    Returns list of ids for every perk(rune), which then can be send to the LCU to update a rune page.
+    """Function scrapes the best runes from u.gg for a provided champion and posts it to the LCU. In case of no
+    place for another rune page the first fetched rune page will be deleted and in its place the new one is added.
     """
-
-    # FIXME: if the is no room for additional rune pages the function won't update the runes in the client
-    # FIXME: need to add a functionality of removing a rune page if necessary
 
     runes = import_runes_for(champion_name=champion)
 
@@ -116,21 +112,35 @@ def send_most_optimal_runes_for(champion: str) -> None:
     primary_style_id = (runes[0] // 100) * 100
     sub_style_id = (runes[4] // 100) * 100
 
-    command = EndpointSender(request=f"/lol-perks/v1/pages",
-                             request_type="post",
-                             request_data={
-                                 'autoModifiedSelections': [],
-                                 "current": True,
-                                 "id": 94698869,
-                                 "isActive": False,
-                                 "isDeletable": True,
-                                 "isEditable": True,
-                                 "isValid": True,
-                                 'lastModified': 1629808281841,
-                                 "name": f"Best Win Rate {champion}",
-                                 "order": 1,
-                                 'primaryStyleId': primary_style_id,
-                                 "selectedPerkIds": runes,
-                                 "subStyleId": sub_style_id
-                             })
-    print('was the request successful?', command.execute())
+    add_new_rune_page_command = EndpointSender(request=f"/lol-perks/v1/pages",
+                                               request_type="post",
+                                               request_data={
+                                                   'autoModifiedSelections': [],
+                                                   "current": True,
+                                                   "isActive": False,
+                                                   "isDeletable": True,
+                                                   "isEditable": True,
+                                                   "isValid": True,
+                                                   "name": f"Best Win Rate {champion}",
+                                                   'primaryStyleId': primary_style_id,
+                                                   "selectedPerkIds": runes,
+                                                   "subStyleId": sub_style_id
+                                               })
+    was_the_page_added = add_new_rune_page_command.execute().result()
+
+    # in case that we cannot add another rune page(most likely there is no space for another one)
+    if not was_the_page_added:
+        rune_pages_info_command = EndpointSaver(reqs="/lol-perks/v1/pages",
+                                                filename="users_rune_pages")
+        rune_pages_info_command.execute()
+
+        with open(path_problem_solver('JSONFiles') + "\\" + "users_rune_pages.json", "r") as rune_info_file:
+            rune_pages_data = json.load(rune_info_file)
+        # the the first rune page and delete it
+        delete_rune_page_id = rune_pages_data[0]["id"]
+        delete_page_command = EndpointSender(request=f"/lol-perks/v1/pages/{delete_rune_page_id}",
+                                             request_type="delete")
+        delete_page_command.execute()
+        # now we can try again and add the rune page for the requested champion
+        add_new_rune_page_command.execute()
+
