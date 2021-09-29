@@ -1,7 +1,7 @@
 {
     "canStartActivity": false,
-    "chatRoomId": "291d9ede-aac4-4ff1-b03a-dd2ec6210d67",
-    "chatRoomKey": "291d9ede-aac4-4ff1-b03a-dd2ec6210d67",
+    "chatRoomId": "19abd9d1-a585-4c25-b5c0-7d0caa6e6826",
+    "chatRoomKey": "19abd9d1-a585-4c25-b5c0-7d0caa6e6826",
     "gameConfig": {
         "allowablePremadeSizes": [
             1,
@@ -31,6 +31,14 @@
         "showPositionSelector": true
     },
     "invitations": [
+        {
+            "invitationId": "",
+            "invitationType": "invalid",
+            "state": "Accepted",
+            "timestamp": "0",
+            "toSummonerId": 42383747,
+            "toSummonerName": "PlayerUV"
+        },
         {
             "invitationId": "",
             "invitationType": "invalid",
@@ -70,6 +78,34 @@
     },
     "members": [
         {
+            "allowedChangeActivity": false,
+            "allowedInviteOthers": true,
+            "allowedKickOthers": false,
+            "allowedStartActivity": false,
+            "allowedToggleInvite": false,
+            "autoFillEligible": false,
+            "autoFillProtectedForPromos": false,
+            "autoFillProtectedForSoloing": false,
+            "autoFillProtectedForStreaking": false,
+            "botChampionId": 0,
+            "botDifficulty": "NONE",
+            "botId": "",
+            "firstPositionPreference": "FILL",
+            "isBot": false,
+            "isLeader": false,
+            "isSpectator": false,
+            "puuid": "57c3cec8-765c-5dd7-9d7a-f4a54d0f1760",
+            "ready": false,
+            "secondPositionPreference": "UNSELECTED",
+            "showGhostedBanner": false,
+            "summonerIconId": 4068,
+            "summonerId": 42383747,
+            "summonerInternalName": "PlayerUV",
+            "summonerLevel": 210,
+            "summonerName": "PlayerUV",
+            "teamId": 0
+        },
+        {
             "allowedChangeActivity": true,
             "allowedInviteOthers": true,
             "allowedKickOthers": true,
@@ -98,7 +134,7 @@
             "teamId": 0
         }
     ],
-    "partyId": "291d9ede-aac4-4ff1-b03a-dd2ec6210d67",
+    "partyId": "19abd9d1-a585-4c25-b5c0-7d0caa6e6826",
     "partyType": "open",
     "restrictions": [],
     "warnings": []

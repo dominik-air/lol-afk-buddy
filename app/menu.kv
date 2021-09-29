@@ -240,6 +240,7 @@
     save_selection: spinner_option
     name_of_json_file: textinput_json_file
     hovered_champion: champion_name
+    intented_champion: int_champion_name
 
     endpoint_url_text_la: endpoint_url_text_id
     endpoint_json_filename_la: endpoint_json_filename_id
@@ -827,6 +828,31 @@
                             buttons_method: self.hover
                             champion: root.hovered_champion
                             text: 'Hover'
+
+                SubInfoGridLayout:
+                    cols: 2
+
+                    SettingsLabel:
+                        text: 'intent a champion'
+                    
+                    BoxLayout:
+                        size_hint_x: 1
+                        padding: 20, 0, 20, 0
+                        # spacing: 2
+
+                        TextInput:
+                            id: int_champion_name
+                            size_hint_x: None
+                            size_hint_y: .7
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            cursor_color: 0, 0, 0, .8
+                            halign: 'center'
+
+                        LauncherButton:
+                            # size_hint: .7, .2
+                            buttons_method: self.intent
+                            champion_int: root.intented_champion
+                            text: 'Intent'
 
                 SubInfoGridLayout:
                     cols: 2
