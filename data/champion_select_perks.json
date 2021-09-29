@@ -1,0 +1,7 @@
+{
+    "summoner_spells": [
+        "SummonerTeleport",
+        "SummonerFlash"
+    ],
+    "selected_runes": "Rune pages"
+}

@@ -95,7 +95,6 @@ async def lobby(connection, event):
                                                                     'DELETE',
                                                                     'CREATE'))
 async def session(connection, event):
-
         if event.type in ('Update', 'Create'):
             if d := event.data:
                 # FIRST MUST BE SYNCED myTeam THAT'S IMPORTANT!!!

@@ -8,7 +8,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/1.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 1,
         "name": "Annie",
         "ownership": {
@@ -357,7 +357,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/12.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 12,
         "name": "Alistar",
         "ownership": {
@@ -548,7 +548,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/18.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 18,
         "name": "Tristana",
         "ownership": {
@@ -644,7 +644,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/21.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 21,
         "name": "Miss Fortune",
         "ownership": {
@@ -675,7 +675,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/22.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 22,
         "name": "Ashe",
         "ownership": {
@@ -924,6 +924,37 @@
     },
     {
         "active": true,
+        "alias": "Karthus",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/30.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Karthus/Skins/Base/KarthusLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/30/30000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/30.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 30,
+        "name": "Karthus",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1632063935000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1632063935000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/30.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/30.ogg",
+        "title": "the Deathsinger"
+    },
+    {
+        "active": true,
         "alias": "Chogath",
         "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/31.ogg",
         "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Chogath/skins/base/ChogathLoadScreen.jpg",
@@ -931,7 +962,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/31.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 31,
         "name": "Cho'Gath",
         "ownership": {
@@ -1059,7 +1090,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/35.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 35,
         "name": "Shaco",
         "ownership": {
@@ -1090,7 +1121,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/36.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 36,
         "name": "Dr. Mundo",
         "ownership": {
@@ -1312,7 +1343,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/43.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 43,
         "name": "Karma",
         "ownership": {
@@ -1503,7 +1534,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/54.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 54,
         "name": "Malphite",
         "ownership": {
@@ -1525,6 +1556,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/54.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/54.ogg",
         "title": "Shard of the Monolith"
+    },
+    {
+        "active": true,
+        "alias": "Nocturne",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/56.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Nocturne/Skins/Base/NocturneLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/56/56000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/56.ogg",
+        "disabledQueues": [],
+        "freeToPlay": true,
+        "id": 56,
+        "name": "Nocturne",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": false,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 0,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 0,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/56.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/56.ogg",
+        "title": "the Eternal Nightmare"
     },
     {
         "active": true,
@@ -1567,7 +1630,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/58.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 58,
         "name": "Renekton",
         "ownership": {
@@ -1589,38 +1652,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/58.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/58.ogg",
         "title": "the Butcher of the Sands"
-    },
-    {
-        "active": true,
-        "alias": "JarvanIV",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/59.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/JarvanIV/Skins/Base/JarvanIVLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/59/59000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/59.ogg",
-        "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 59,
-        "name": "Jarvan IV",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": false,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 0,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 0,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "tank",
-            "fighter"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/59.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/59.ogg",
-        "title": "the Exemplar of Demacia"
     },
     {
         "active": true,
@@ -2014,7 +2045,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/82.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 82,
         "name": "Mordekaiser",
         "ownership": {
@@ -2076,7 +2107,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/85.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 85,
         "name": "Kennen",
         "ownership": {
@@ -2108,7 +2139,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/86.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 86,
         "name": "Garen",
         "ownership": {
@@ -2331,7 +2362,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/101.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 101,
         "name": "Xerath",
         "ownership": {
@@ -2489,7 +2520,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/106.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 106,
         "name": "Volibear",
         "ownership": {
@@ -2553,7 +2584,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/111.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 111,
         "name": "Nautilus",
         "ownership": {
@@ -2673,38 +2704,6 @@
     },
     {
         "active": true,
-        "alias": "Hecarim",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/120.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Hecarim/Skins/Base/HecarimLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/120/120000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/120.ogg",
-        "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 120,
-        "name": "Hecarim",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": false,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 0,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 0,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "fighter",
-            "tank"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/120.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/120.ogg",
-        "title": "the Shadow of War"
-    },
-    {
-        "active": true,
         "alias": "Darius",
         "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/122.ogg",
         "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Darius/Skins/Base/DariusLoadScreen.jpg",
@@ -2734,6 +2733,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/122.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/122.ogg",
         "title": "the Hand of Noxus"
+    },
+    {
+        "active": true,
+        "alias": "Jayce",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/126.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Jayce/Skins/Base/JayceLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/126/126000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/126.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 126,
+        "name": "Jayce",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1632508142000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1632508142000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/126.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/126.ogg",
+        "title": "the Defender of Tomorrow"
     },
     {
         "active": true,
@@ -2775,7 +2806,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/134.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 134,
         "name": "Syndra",
         "ownership": {
@@ -2797,37 +2828,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/134.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/134.ogg",
         "title": "the Dark Sovereign"
-    },
-    {
-        "active": true,
-        "alias": "AurelionSol",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/136.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/AurelionSol/Skins/Base/AurelionSolLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/136/136000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/136.ogg",
-        "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 136,
-        "name": "Aurelion Sol",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": false,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 0,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 0,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "mage"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/136.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/136.ogg",
-        "title": "The Star Forger"
     },
     {
         "active": true,
@@ -2870,7 +2870,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/143.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 143,
         "name": "Zyra",
         "ownership": {
@@ -2965,7 +2965,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/150.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 150,
         "name": "Gnar",
         "ownership": {
@@ -3092,7 +3092,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/164.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 164,
         "name": "Camille",
         "ownership": {
@@ -3244,38 +3244,6 @@
     },
     {
         "active": true,
-        "alias": "Viego",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/234.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Viego/Skins/Base/ViegoLoadScreen.RuinedKing.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/234/234000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/234.ogg",
-        "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 234,
-        "name": "Viego",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": false,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 0,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 0,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "assassin",
-            "fighter"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/234.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/234.ogg",
-        "title": "The Ruined King"
-    },
-    {
-        "active": true,
         "alias": "Senna",
         "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/235.ogg",
         "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Senna/Skins/Base/SennaLoadScreen.jpg",
@@ -3283,7 +3251,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/235.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 235,
         "name": "Senna",
         "ownership": {
@@ -3315,7 +3283,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/236.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 236,
         "name": "Lucian",
         "ownership": {
@@ -3783,38 +3751,6 @@
     },
     {
         "active": true,
-        "alias": "Sylas",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/517.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Sylas/Skins/Base/SylasLoadscreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/517/517000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/517.ogg",
-        "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 517,
-        "name": "Sylas",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": false,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 0,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 0,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "mage",
-            "assassin"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/517.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/517.ogg",
-        "title": "the Unshackled"
-    },
-    {
-        "active": true,
         "alias": "Neeko",
         "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/518.ogg",
         "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Neeko/Skins/Base/NeekoLoadscreen.jpg",
@@ -3822,7 +3758,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/518.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 518,
         "name": "Neeko",
         "ownership": {
@@ -3980,7 +3916,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/875.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 875,
         "name": "Sett",
         "ownership": {
@@ -4012,7 +3948,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/876.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 876,
         "name": "Lillia",
         "ownership": {

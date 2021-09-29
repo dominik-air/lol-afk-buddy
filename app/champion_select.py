@@ -20,17 +20,27 @@ from packages.utils import path_problem_solver
 
 # defines type hints and constants
 RGBA = List[float]
-saved_to_json = None  # indicates that function's return state is saved to a json file
 BAN_COLOR = [1, 0, 0, 1]
 PICK_COLOR = [0.2, 0.6, 1, 1]
 SELECT_COLOR = [1, 0.875, 0, 1]
 DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
 
+
+IMAGES_PATH = path_problem_solver("img", "champion_images")
 # loads the images' names into a list
-images_path = path_problem_solver("img", "champion_images")
 images = [
-    f for f in os.listdir(images_path) if os.path.isfile(os.path.join(images_path, f))
+    f for f in os.listdir(IMAGES_PATH) if os.path.isfile(os.path.join(IMAGES_PATH, f))
 ]
+
+CHAMPION_SELECT_SETTINGS_PATH = path_problem_solver("data") + "\\" + "champion_select_picks_and_bans.json"
+# loads saved data about in app champion select
+with open(CHAMPION_SELECT_SETTINGS_PATH, "r") as settings_file:
+    try:
+        settings = json.load(settings_file)
+    except json.JSONDecodeError:
+        settings = {"picks": None, "bans": None}
+    finally:
+        LOADED_PICKS, LOADED_BANS = settings.values()
 
 
 class ChampionStates(Enum):
@@ -124,8 +134,8 @@ class ChampionSelect(StackLayout):
                 font_size=0,
                 size_hint=(None, None),
                 size=(dp(80), dp(80)),
-                background_normal=os.path.join(images_path, image_name),
-                background_down=os.path.join(images_path, image_name),
+                background_normal=os.path.join(IMAGES_PATH, image_name),
+                background_down=os.path.join(IMAGES_PATH, image_name),
             )
 
             champ.bind(on_press=self._set_champion)
@@ -214,7 +224,7 @@ class ChampionArray(BoxLayout):
         for champion in self.champions:
             array_button = ChampionArrayButton(
                 champion_name=champion.text,
-                source=images_path + "\\" + champion.text + ".png",
+                source=IMAGES_PATH + "\\" + champion.text + ".png",
             )
             array_button.bind(on_press=self.remove_champion)
             self.add_widget(array_button)
@@ -353,6 +363,8 @@ class ChampionSelectUI(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        self.settings_already_loaded = False  # we don't need to load the settings more than once
+
         self.champion_select = ObjectProperty()
 
         ban_array_label = Label(
@@ -450,7 +462,8 @@ class ChampionSelectUI(BoxLayout):
         """
         self.clear_bans()
         champion_bans = [champion for champion in self.champion_select.available_champions if champion.text in bans]
-        for champion_ban in champion_bans:
+        for champion_ban in reversed(champion_bans):
+            # banning champions in the reversed order to preserve their priority
             self.ban_champion(champion_ban)
 
     def load_picks(self, picks: List[str]) -> None:
@@ -461,40 +474,32 @@ class ChampionSelectUI(BoxLayout):
 
         """
         self.clear_picks()
-        champion_picks = list(
-            filter(
-                lambda champion: champion.text in picks,
-                self.champion_select.available_champions,
-            )
-        )
-        for champion_pick in champion_picks:
+        champion_picks = [champion for champion in self.champion_select.available_champions if champion.text in picks]
+        for champion_pick in reversed(champion_picks):
+            # picking champions in the reversed order to preserve their priority
             self.pick_champion(champion_pick)
 
-    def export_bans(self) -> saved_to_json:
+    def export_bans(self) -> List[str]:
         """Exports bans from the champion array.
 
         Returns:
-            List of champion names as strings saved to a JSON file.
+            List of champion names as strings.
 
         """
-        # FIXME: the output file's directory is to be discussed
-        with open("app_champion_select_bans.json", "w") as bans_output:
-            json.dump(self.ban_handler.export_array_champions(), bans_output, indent=4)
 
-    def export_picks(self) -> saved_to_json:
+        return self.ban_handler.export_array_champions()
+
+    def export_picks(self) -> List[str]:
         """Exports pick from the champion array.
 
         Returns:
-            List of champion names as strings saved to a JSON file.
+            List of champion names as strings.
 
         """
-        # FIXME: the output file's directory is to be discussed
-        with open("app_champion_select_picks.json", "w") as picks_output:
-            json.dump(
-                self.pick_handler.export_array_champions(), picks_output, indent=4
-            )
 
-    def restrict_champion_pool(self) -> None:
+        return self.pick_handler.export_array_champions()
+
+    def _restrict_champion_pool(self) -> None:
         """Restricts the ChampionSelect champion pool to champions owned by the user."""
         champion_pool = champion_select_utils.get_available_champions()
 
@@ -514,6 +519,25 @@ class ChampionSelectUI(BoxLayout):
             unowned_champion.recolor()
 
         self.champion_pool = champion_pool
+
+    def _load_default_settings(self) -> None:
+        """Macro for calling all the methods responsible for loading saved champion select settings. It also restricts
+         the champion pool. Meant to be called in the main .kv file.
+        """
+
+        if not self.settings_already_loaded:
+            self._restrict_champion_pool()
+            self.load_bans(LOADED_BANS)
+            self.load_picks(LOADED_PICKS)
+
+            self.settings_already_loaded = True
+
+    def _save_current_settings(self) -> None:
+        """Macro for saving current champion select settings. Meant to be called in the main .kv file."""
+
+        current_settings = {"picks": self.export_picks(),
+                            "bans": self.export_bans()}
+        champion_select_utils.save_settings(filepath=CHAMPION_SELECT_SETTINGS_PATH, settings=current_settings)
 
 
 class ChampionSelectInterface(BoxLayout):

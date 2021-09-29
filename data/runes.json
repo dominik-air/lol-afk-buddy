@@ -1,17 +1,17 @@
 {
-    "keystone": "Guardian",
+    "keystone": "Conqueror",
     "main_tree_perks": [
-        "Shield Bash",
-        "Bone Plating",
-        "Unflinching"
+        "Presence of Mind",
+        "Legend: Tenacity",
+        "Coup de Grace"
     ],
     "secondary_tree_perks": [
-        "Zombie Ward",
-        "Ultimate Hunter"
+        "Second Wind",
+        "Overgrowth"
     ],
     "shards": [
         "Adaptive",
         "Adaptive",
-        "Armor"
+        "Magic Resist"
     ]
 }

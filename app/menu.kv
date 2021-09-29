@@ -1,5 +1,6 @@
 #:kivy 2.0.0
 #:import Factory kivy.factory.Factory
+#:import send_most_optimal_runes_for rune_maker.send_most_optimal_runes_for
 
 <ChampionButton>:
     canvas.before:
@@ -376,6 +377,8 @@
     TabbedPanelItem:
         text: "start" # set text for the button
         orientation: "vertical"
+        on_press:
+            champion_select_ui._load_default_settings()
 
         ChampionSelectInterface:
             canvas.before:
@@ -388,6 +391,7 @@
                     radius: [2]
 
             orientation: 'horizontal'
+            id: champion_select_interface
             BoxLayout:
                 padding: "0dp", "10dp", "0dp", "10dp"
                 orientation: "vertical"
@@ -423,26 +427,35 @@
                         id: ban_button
                         text: "ban"
                         font_size: 20
-                        on_press: champion_select_ui.ban_champion(champion_select.champion)
+                        on_press:
+                            champion_select_ui.ban_champion(champion_select.champion)
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: clear_bans_button
                         text: "clear bans"
                         font_size: 20
-                        on_press: champion_select_ui.clear_bans()
+                        on_press:
+                            champion_select_ui.clear_bans()
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: pick_button
                         text: "pick"
                         font_size: 20
-                        on_press: champion_select_ui.pick_champion(champion_select.champion)
+                        on_press:
+                            champion_select_ui.pick_champion(champion_select.champion)
+                            champion_select_ui._save_current_settings()
 
                     MyButton:
                         id: clear_picks_button
                         text: "clear picks"
                         font_size: 20
-                        on_press: champion_select_ui.clear_picks()
+                        on_press:
+                            champion_select_ui.clear_picks()
+                            champion_select_ui._save_current_settings()
                 SummonerPerksSlotUI:
+                    id: summoner_perks_slot_ui
 
 
     # ------------------------ TABBLED PANEL ITEM FOUR ---------------------- #
@@ -524,25 +537,6 @@
                             text: "Load"
                             on_press: app.load_new_theme_config()
 
-                SubInfoGridLayout:
-                    cols: 2
-                    SettingsLabel:
-                        text: 'Load available champions:'
-
-                    BoxLayout:
-                        size_hint_x: .5
-                        padding: 20, 0, 20, 0
-
-                        # Align to right
-                        # Widget:
-
-                        SwitchButton:
-                            -size_hint_x: 1
-                            # -width: root.width/2
-
-                            text: "Load"
-                            on_press: champion_select_ui.restrict_champion_pool()
-
 
                 
                 # BoxLayout:
@@ -606,6 +600,21 @@
                         methodSub: root.fooB
                         input_value: str(root.number_of_bans)
 
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'Import best runes'
+
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    MyButton:
+                        text: "import"
+                        font_size: 20
+                        on_press: send_most_optimal_runes_for(champion_select_ui.export_picks()[0])
 
     TabbedPanelItem:
         text: "Launcher"
