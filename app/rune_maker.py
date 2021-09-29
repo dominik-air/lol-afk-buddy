@@ -108,24 +108,29 @@ def send_most_optimal_runes_for(champion: str) -> None:
 
     runes = import_runes_for(champion_name=champion)
 
+    # FIXME: add a JSON file with mapping {rune: style_id} if needed
     # empirically tested formulas for style ids
-    primary_style_id = (runes[0] // 100) * 100
-    sub_style_id = (runes[4] // 100) * 100
+    # hails of blades' style id is 8100, but it's own id is over 9000 so the standard formula doesn't work
+    primary_style_id = (runes[0] // 100) * 100 if runes[0] < 9000 else 8100
+    # minor precision perks' style id is 8000, but their own ids are over 9000 so the standard formula doesn't work
+    sub_style_id = (runes[4] // 100) * 100 if runes[4] < 9000 else 8000
+
+    request_data = {
+        'autoModifiedSelections': [],
+        "current": True,
+        "isActive": False,
+        "isDeletable": True,
+        "isEditable": True,
+        "isValid": True,
+        "name": f"Best Win Rate {champion}",
+        'primaryStyleId': primary_style_id,
+        "selectedPerkIds": runes,
+        "subStyleId": sub_style_id
+    }
 
     add_new_rune_page_command = EndpointSender(request=f"/lol-perks/v1/pages",
                                                request_type="post",
-                                               request_data={
-                                                   'autoModifiedSelections': [],
-                                                   "current": True,
-                                                   "isActive": False,
-                                                   "isDeletable": True,
-                                                   "isEditable": True,
-                                                   "isValid": True,
-                                                   "name": f"Best Win Rate {champion}",
-                                                   'primaryStyleId': primary_style_id,
-                                                   "selectedPerkIds": runes,
-                                                   "subStyleId": sub_style_id
-                                               })
+                                               request_data=request_data)
     was_the_page_added = add_new_rune_page_command.execute().result()
 
     # in case that we cannot add another rune page(most likely there is no space for another one)
@@ -142,5 +147,7 @@ def send_most_optimal_runes_for(champion: str) -> None:
                                              request_type="delete")
         delete_page_command.execute()
         # now we can try again and add the rune page for the requested champion
+        request_data["order"] = rune_pages_data[0]["order"]
+        add_new_rune_page_command.request_data = request_data
         add_new_rune_page_command.execute()
 

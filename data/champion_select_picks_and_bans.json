@@ -1,16 +1,10 @@
 {
     "picks": [
-        "Camille",
-        "Aphelios",
-        "Blitzcrank",
-        "Annie",
-        "Anivia"
+        "Zac"
     ],
     "bans": [
         "Vayne",
         "Varus",
-        "Thresh",
-        "Shen",
         "Kindred"
     ]
 }

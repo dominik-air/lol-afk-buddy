@@ -8,7 +8,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/1.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 1,
         "name": "Annie",
         "ownership": {
@@ -198,7 +198,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/7.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 7,
         "name": "LeBlanc",
         "ownership": {
@@ -644,7 +644,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/21.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 21,
         "name": "Miss Fortune",
         "ownership": {
@@ -675,7 +675,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/22.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 22,
         "name": "Ashe",
         "ownership": {
@@ -867,7 +867,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/28.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 28,
         "name": "Evelynn",
         "ownership": {
@@ -899,7 +899,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/29.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 29,
         "name": "Twitch",
         "ownership": {
@@ -1090,7 +1090,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/35.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 35,
         "name": "Shaco",
         "ownership": {
@@ -1121,7 +1121,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/36.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 36,
         "name": "Dr. Mundo",
         "ownership": {
@@ -1343,7 +1343,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/43.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 43,
         "name": "Karma",
         "ownership": {
@@ -1407,7 +1407,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/45.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 45,
         "name": "Veigar",
         "ownership": {
@@ -1502,7 +1502,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/53.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 53,
         "name": "Blitzcrank",
         "ownership": {
@@ -1559,35 +1559,35 @@
     },
     {
         "active": true,
-        "alias": "Nocturne",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/56.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Nocturne/Skins/Base/NocturneLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/56/56000.jpg",
+        "alias": "Katarina",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/55.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Katarina/Skins/Base/KatarinaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/55/55000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/56.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/55.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
-        "id": 56,
-        "name": "Nocturne",
+        "freeToPlay": false,
+        "id": 55,
+        "name": "Katarina",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1632822739000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1632822739000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
-            "fighter"
+            "mage"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/56.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/56.ogg",
-        "title": "the Eternal Nightmare"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/55.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/55.ogg",
+        "title": "the Sinister Blade"
     },
     {
         "active": true,
@@ -1630,7 +1630,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/58.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 58,
         "name": "Renekton",
         "ownership": {
@@ -1694,7 +1694,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/62.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 62,
         "name": "Wukong",
         "ownership": {
@@ -1726,7 +1726,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/63.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 63,
         "name": "Brand",
         "ownership": {
@@ -1949,7 +1949,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/79.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 79,
         "name": "Gragas",
         "ownership": {
@@ -2013,7 +2013,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/81.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 81,
         "name": "Ezreal",
         "ownership": {
@@ -2066,6 +2066,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/82.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/82.ogg",
         "title": "the Iron Revenant"
+    },
+    {
+        "active": true,
+        "alias": "Yorick",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/83.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Yorick/Skins/Base/YorickLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/83/83000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/83.ogg",
+        "disabledQueues": [],
+        "freeToPlay": true,
+        "id": 83,
+        "name": "Yorick",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": false,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 0,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 0,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/83.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/83.ogg",
+        "title": "Shepherd of Souls"
     },
     {
         "active": true,
@@ -2299,7 +2331,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/98.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 98,
         "name": "Shen",
         "ownership": {
@@ -2457,7 +2489,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/104.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 104,
         "name": "Graves",
         "ownership": {
@@ -2520,7 +2552,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/106.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 106,
         "name": "Volibear",
         "ownership": {
@@ -2584,7 +2616,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/111.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 111,
         "name": "Nautilus",
         "ownership": {
@@ -2648,7 +2680,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/115.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 115,
         "name": "Ziggs",
         "ownership": {
@@ -2806,7 +2838,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/134.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 134,
         "name": "Syndra",
         "ownership": {
@@ -2870,7 +2902,7 @@
         "botEnabled": true,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/143.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 143,
         "name": "Zyra",
         "ownership": {
@@ -3029,7 +3061,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/157.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 157,
         "name": "Yasuo",
         "ownership": {
@@ -3092,7 +3124,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/164.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 164,
         "name": "Camille",
         "ownership": {
@@ -3314,7 +3346,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/240.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 240,
         "name": "Kled",
         "ownership": {
@@ -3569,7 +3601,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/427.ogg",
         "disabledQueues": [],
-        "freeToPlay": false,
+        "freeToPlay": true,
         "id": 427,
         "name": "Ivern",
         "ownership": {
@@ -3758,7 +3790,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/518.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 518,
         "name": "Neeko",
         "ownership": {
@@ -3916,7 +3948,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/875.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 875,
         "name": "Sett",
         "ownership": {
@@ -3948,7 +3980,7 @@
         "botEnabled": false,
         "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/876.ogg",
         "disabledQueues": [],
-        "freeToPlay": true,
+        "freeToPlay": false,
         "id": 876,
         "name": "Lillia",
         "ownership": {

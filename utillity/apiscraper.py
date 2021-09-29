@@ -2,8 +2,8 @@ import requests
 import json
 
 
-summoners_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.16.1/data/en_US/summoner.json").json()["data"]
-champions_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.16.1/data/en_US/champion.json").json()["data"]
+summoners_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.19.1/data/en_US/summoner.json").json()["data"]
+champions_data = requests.get("http://ddragon.leagueoflegends.com/cdn/11.19.1/data/en_US/champion.json").json()["data"]
 
 # get the summoner spells' names available on Summoner's Rift
 summoner_spells = [(spell, summoners_data[spell]['key']) for spell in summoners_data.keys() if "CLASSIC" in summoners_data[spell]["modes"]]
