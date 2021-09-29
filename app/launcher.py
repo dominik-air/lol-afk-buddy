@@ -189,6 +189,7 @@ class ReadyCheckState(State):
                 else:
                     print(Command.INFO_S, 'self declination detected') if self.verbose else None
                     LobbyState.initialized = False
+                    self._context.change_state(LobbyState())
             
         else:
             self._context.change_state(LobbyState())
@@ -199,102 +200,124 @@ class DeclarePositionState(State):
 
     def __init__(self) -> None:
         super().__init__()
-        self.lobby_getter_cmd: Command = None
         self.session_getter_cmd: Command = None
         self.search_getter_cmd: Command = None
 
-    async def next(self) -> None:
-        print('executing next command for DeclarePositionState class.')\
-            if self.verbose else None
-        
-        hover_command = Hover('Singed')
-        print(f"hover command: {hover_command}")
-        print("before sleep")
-        await asyncio.sleep(10)
-        print("after sleep")
-        # self._set_command(Hover('Zed'))
-
-        try:
-            # self._execute_command()
-            print("before _execute")
-            await hover_command._execute()
-            print("after _execute")
-        
-        except Exception as e:
-            print(Command.ERR_S, 'Error occured while calling next funcion',
-                  'in DeclarePositionState class object')
-            print(e)
-        
-        else:
-            print("before state change")
-            self._context.change_state(BanningState())
-
+    def next(self) -> None:
+        print(Command.INFO_S, 'Switching to the next state: BanningState.')
+        self._context.change_state(BanningState())
     
     def cancel(self) -> None:
         pass
     
     async def _scan(self) -> None:
-        print(Command.INFO_S,
-              'scanning in DeclarePositionState') if self.verbose else None
+        print(Command.INFO_S, 'Scanning in DeclarePositionState...')
 
-        # SEARCH GETTER INITIALIZATION
-        # if not self.search_getter_cmd:
-        #     self.search_getter_cmd = SearchGetter()
-        
-        # await self.search_getter_cmd._execute()
+        if not self.search_getter_cmd:
+            self.search_getter_cmd = SearchGetter()
 
-        # is_search_deleted = self.search_getter_cmd.get_type() == 'Delete'
-
-        # SESSION GETTER INITIALIZATION
         if not self.session_getter_cmd:
             self.session_getter_cmd = SessionGetter()
+
+        await self.search_getter_cmd._execute()
+        search = self.search_getter_cmd.get_data()
+        print(f"    >search: {search}")
+
+        if search:
+            print("search contains a data, backing to ReadyCheckState.")
+            self._context.change_state(ReadyCheckState())
         
-        # self.session_getter_command.execute()
         await self.session_getter_cmd._execute()
+        session = self.session_getter_cmd.get_data()
+        print(f"    >session: {session}")
 
-        session_data = self.session_getter_cmd.get_data()
-        session_type = self.session_getter_cmd.get_type()
-        print(Command.INFO_S, f"session type: {session_type}") if self.verbose else None
-
-        if session_data:
-            print(Command.INFO_S, 'session exists') if self.verbose else None
-            await self.next()
-
-
-            # if self.session_getter_cmd.get_data():
-            #     print(Command.INFO_S, 'Changing to a next state') if self.verbose else None
+        if session:
+            if session["timer"]["phase"] == "BAN_PICK":
+                self.next()
             
-            # else:
-            #     print(Command.INFO_S, 'Returning to Lobby State') if self.verbose else None
-            #     self._context.change_state(LobbyState())
-                # LOBBY GETTER INITIALIZATION
-                # if not self.lobby_getter_cmd:
-                #     self.lobby_getter_cmd = LobbyGetter()
-                
-                # await self.lobby_getter_cmd._execute()
-
 
 class BanningState(State):
     verbose: bool = True
 
     def next(self) -> None:
-        pass
+        print('right before hovering a champion.')
+        self._set_command(Hover('Singed'))
+        self._execute_command()
+
+        print('after champion hover (execute command).')
+        self._set_command(Complete())
+        print('right after setting command - Complete()')
+        try:
+            self._execute_command()
+            print('right after executing command - Complete()')
+        except Exception as e:
+            print('execption while executing Complete in BanningState.')
+            print(e)
+
+
+        # await Hover('Zed')._execute()
+        # await Complete()._execute()
+
+        print(Command.INFO_S, 'transition to PickingState.')
+        self._context.change_state(PickingState())
     
     def cancel(self) -> None:
         pass
 
-    def _scan(self) -> None:
+    async def _scan(self) -> None:
         print(Command.INFO_S,
               'Scanning in banning state...') if self.verbose else None
 
+        my_action: Action = Command.session_manager.get_my_action()
 
+        if my_action.type == 'ban':
+            print(Command.INFO_S, 'banning phase detected executing next.')\
+                if self.verbose else None
+
+            self.next()
+        
+        else:
+            print(Command.INFO_S, 'banning phase not detected.')\
+                if self.verbose else None
+            
 
 class PickingState(State):
+    verbose: bool = True
+    
     def next(self) -> None:
-        pass
+        self._set_command(Hover('TwistedFate'))
+        self._execute_command()
+        sleep(1)
+        self._set_command(Complete())
+        self._execute_command()
+        # await Hover('TwistedFate')._execute()
+        # await Complete()._execute()
+
+        self._context.change_state(PreGameState())
     
     def cancel(self) -> None:
         pass
+
+    async def _scan(self) -> None:
+        # print(Command.INFO_S, 'Scanning in picking state...')
+        print(Command.INFO_S, 'Scanning in PickingState...')
+
+        # 1. try to comment everything
+        # 2. breakpoint on my_aciton = Command.session_manager...
+
+        my_action: Action = Command.session_manager.get_my_action()
+
+
+        # print(Command.INFO_S, 'my action:', my_action.__dict__)
+
+        if my_action:
+            if my_action.type == 'pick':
+                print(Command.INFO_S, 'picking phase detected executing next.')
+
+                self.next()
+            
+            else:
+                print(Command.INFO_S, 'picking phase not detected.')
 
 
 class PreGameState(State):
@@ -303,3 +326,6 @@ class PreGameState(State):
     
     def cancel(self) -> None:
         pass
+
+    async def _scan(self) -> None:
+        print(" >>>>>>>>>>>>UR IN PRE GAME STATE<<<<<<<<<<<<<< ")

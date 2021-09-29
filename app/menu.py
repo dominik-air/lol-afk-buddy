@@ -122,6 +122,7 @@ class LauncherButton(MyButton):
     save_selection = ObjectProperty(None)
     name_of_json_file = ObjectProperty(None)
     champion = ObjectProperty(None)
+    champion_int = ObjectProperty(None)
 
     endpoint_url_text_btn = StringProperty(None)
     endpoint_json_filename_btn = StringProperty(None)
@@ -185,6 +186,9 @@ class LauncherButton(MyButton):
 
     def hover(self):
         self.set_command(Hover(self.champion.text))
+    
+    def intent(self):
+        self.set_command(PickIntent(self.champion_int.text))
 
     def get_hover(self):
         self.set_command(HoverGetter())

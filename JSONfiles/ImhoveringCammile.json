@@ -4,7 +4,7 @@
         "state": "Invalid"
     },
     "errors": [],
-    "estimatedQueueTime": 140.1850128173828,
+    "estimatedQueueTime": 127.23900604248047,
     "isCurrentlyInQueue": true,
     "lobbyId": "",
     "lowPriorityData": {
@@ -23,6 +23,6 @@
         "suppressUx": false,
         "timer": 0.0
     },
-    "searchState": "Searching",
-    "timeInQueue": 4.0
+    "searchState": "Found",
+    "timeInQueue": 119.0
 }
