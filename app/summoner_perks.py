@@ -23,8 +23,8 @@ with open(CHAMPION_PERKS_SETTINGS_PATH, "r") as settings_file:
 
 
 def import_rune_pages() -> List[str]:
-    # FIXME placeholder function
-    return [LOADED_RUNES] + [f"rune page {i}" for i in range(5)]
+    rune_pages = champion_select_utils.get_user_rune_pages()
+    return [rune_pages[0] for rune_pages in rune_pages]
 
 
 def import_summoner_spell_icons() -> List[str]:
@@ -34,7 +34,6 @@ def import_summoner_spell_icons() -> List[str]:
     ]
 
 
-RUNE_PAGES = import_rune_pages()
 ICON_NAMES = import_summoner_spell_icons()
 
 
@@ -99,21 +98,18 @@ class RunesDropDown(DropDown):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self._rune_pages = import_rune_pages()
+        self._rune_pages = ["afk", "zed", "kekw"]
+        self.runes_already_loaded = False
 
         # creates an option in the dropdown for every available rune page
-        for rune_page in self._rune_pages:
-            btn = Button(text=rune_page, size_hint_y=None, height=44)
-
-            btn.bind(on_release=lambda btn: self.select(btn.text))
-
-            self.add_widget(btn)
+        self._display_rune_pages()
 
         self.main_button = Button(
-            text="Rune pages",
+            text="Best Win Rate Runes",
             size_hint=(2, None),
         )
 
+        self.main_button.bind(on_press=self._main_button_func)
         self.main_button.bind(on_release=self.open)
         self.bind(on_select=lambda instance, x: setattr(self.main_button, "text", x))
 
@@ -131,6 +127,22 @@ class RunesDropDown(DropDown):
 
     def set_selected_rune_page(self, rune_page_name: str):
         self.main_button.text = rune_page_name
+
+    def _display_rune_pages(self):
+        self.clear_widgets()
+        for rune_page in self._rune_pages:
+            btn = Button(text=rune_page, size_hint_y=None, height=44)
+
+            btn.bind(on_release=lambda btn: self.select(btn.text))
+
+            self.add_widget(btn)
+
+    def _main_button_func(self, instance, x):
+        if not self.runes_already_loaded:
+            rune_pages = champion_select_utils.get_user_rune_pages()
+            self._rune_pages = [rune_page[0] for rune_page in rune_pages]
+            self._display_rune_pages()
+            self.runes_already_loaded = True
 
 
 class SummonerPerksSlotUI(BoxLayout):

@@ -136,7 +136,7 @@ def send_most_optimal_runes_for(champion: str) -> None:
 
         with open(path_problem_solver('JSONFiles') + "\\" + "users_rune_pages.json", "r") as rune_info_file:
             rune_pages_data = json.load(rune_info_file)
-        # the the first rune page and delete it
+        # take the first rune page and delete it
         delete_rune_page_id = rune_pages_data[0]["id"]
         delete_page_command = EndpointSender(request=f"/lol-perks/v1/pages/{delete_rune_page_id}",
                                              request_type="delete")

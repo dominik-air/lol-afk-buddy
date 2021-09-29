@@ -547,7 +547,7 @@ class EndpointSender(Command):
     """Class for sending POST, PUT and DELETE requests to the LCU through the LCU driver.
 
     Attributes:
-        request: link of the endpoint.
+        request: link to the endpoint.
         request_data: dictionary with necessary request body.
         request_type: type of the request it can be POST, PUT and DELETE(GET request doesn't make sense here).
 
