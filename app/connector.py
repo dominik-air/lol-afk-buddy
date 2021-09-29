@@ -155,7 +155,7 @@ async def queue(connection, event):
 
 @connector.ws.register('/lol-matchmaking/v1/search', event_types=('UPDATE',
                                                                   'DELETE'))
-async def queue(connection, event):
+async def search(connection, event):
     # print(type(event))
 
     # helping variables

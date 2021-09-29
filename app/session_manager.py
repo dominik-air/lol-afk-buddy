@@ -8,6 +8,9 @@ class SessionManager:
         self.actions: ActionList = ActionList(self)
         self.SUMMONER_ID: int = summoner_id
     
+    def get_me_as_teammember(self) -> TeamMember:
+        return self.my_team.get_me()
+
     def get_my_cell_id(self) -> int:
         return self.my_team.get_me().cell_id
     

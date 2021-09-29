@@ -8,7 +8,7 @@ from packages.champNameIdMapper import ChampNameIdMapper
 
 from termcolor import colored
 from pprint import pprint
-from session_manager import SessionManager, Action
+from session_manager import SessionManager, Action, TeamMember
 # from packages.launcher import LobbyState
 # from menu import MenuApp
 
@@ -246,6 +246,48 @@ class Hover(Command):
         
         else:
             print(Command.INFO_S, "Your active action does not exist.")
+    
+class PickIntent(Command):
+    def __init__(self, champion: str = None):
+        super().__init__()
+
+        try:
+            self.champion: int = int(champion)
+
+        except ValueError:
+            champs = ChampNameIdMapper.get_champion_dict(order='normal')
+
+            try:
+                self.champion: int = int(champs[champion])
+
+            except KeyError:
+                print(Command.ERR_S,
+                      'Invalid name of the champion.',
+                      'Note, that this field is case-sensitive', sep=' ')
+
+    async def _execute(self):
+        champ_id: int = self.champion
+
+        # action_id = my_active_action.id
+        reqs = f'/lol-champ-select/v1/session/my-selection'
+
+        res = await self.connection.request('patch', reqs,
+                                            data={'championPickIntent': champ_id})
+        # res = await self.connection.request('patch', reqs,
+        #                                     data={'selectedSkinId': champ_id})
+
+
+        if res.status in list(range(200, 209)):
+            print(Command.OK_S,
+                'successfully changed intent champ to:',
+                    colored(self.champion, 'red'), sep=' ')
+
+        else:
+            print(Command.INFO_S,
+                'something went wrong while intenting the champion',
+                    colored(self.champion, 'red'), sep=' ')
+            print(Command.ERR_S, f"Error code: {res.status}")
+    
 
 class HoverGetter(Command):
     async def _execute(self):
@@ -306,7 +348,7 @@ class Complete(Command):
     async def _execute(self):
         champs = ChampNameIdMapper.get_champion_dict(order='normal')
         my_active_action: Action = self.session_manager.get_my_action()
-        champ_id: int = my_active_action.id
+        champ_id: int = my_active_action.champion_id
 
         # active_action: Action = self.session_manager.get_action_in_progress()
         # champs = ChampNameIdMapper.get_champion_dict(order='reversed')
@@ -322,12 +364,17 @@ class Complete(Command):
         res = await self.connection.request('post', reqs)
 
         if res.status in list(range(200, 209)):
-            action_type: str = my_active_action.type
-            act = lambda: action_type + 'n' if action_type == 'ban'\
-                                            else action_type
-            print(Command.OK_S,
-                    f'Champion has been {act()}ed.',
-                    colored(champs[str(champ_id)], 'red'), sep=' ')
+            print(Command.OK_S, 'Champion pick compleated.')
+            # action_type: str = my_active_action.type
+            # act = lambda: action_type + 'n' if action_type == 'ban'\
+            #                                 else action_type
+            # print(Command.OK_S,
+            #         f'Champion has been {act()}ed.',
+            #         colored(champs[str(champ_id)], 'red'), sep=' ')
+        
+        else:
+            print(Command.ERR_S,
+                  f'request result: {res.status}')
 
 class EndpointSaver(Command):
     def __init__(self, reqs: str, filename: str):
