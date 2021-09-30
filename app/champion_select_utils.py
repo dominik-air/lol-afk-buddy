@@ -35,7 +35,7 @@ def get_available_champions(output_filename="users_champions") -> List[str]:
     ) as file:
         summoner_champions = json.load(file)
 
-    return [champ_data["alias"] for champ_data in summoner_champions]
+    return [champ_data["alias"].lower() for champ_data in summoner_champions]
 
 
 def get_available_summoner_spells(output_filename="users_summoner_spells") -> List[str]:

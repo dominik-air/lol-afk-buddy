@@ -427,7 +427,7 @@ class ChampionSelectUI(BoxLayout):
             # if it's not a ChampionButton we should not touch it
             return
 
-        if self.champion_pool is not None and champion.text not in self.champion_pool:
+        if self.champion_pool is not None and champion.text.lower() not in self.champion_pool:
             popup = Popup(
                 title="Champion selection error",
                 content=Label(text=f"You don't have {champion.text}"),
@@ -461,10 +461,15 @@ class ChampionSelectUI(BoxLayout):
 
         """
         self.clear_bans()
-        champion_bans = [champion for champion in self.champion_select.available_champions if champion.text in bans]
-        for champion_ban in reversed(champion_bans):
+
+        champion_bans = []
+        for ban in bans:
+            champion_pick = list(filter(lambda champion: champion.text == ban,
+                                        self.champion_select.available_champions))[0]
+            champion_bans.append(champion_pick)
+        for champion in champion_bans:
             # banning champions in the reversed order to preserve their priority
-            self.ban_champion(champion_ban)
+            self.ban_champion(champion)
 
     def load_picks(self, picks: List[str]) -> None:
         """Loads picks from a list of champion names.
@@ -474,10 +479,16 @@ class ChampionSelectUI(BoxLayout):
 
         """
         self.clear_picks()
-        champion_picks = [champion for champion in self.champion_select.available_champions if champion.text in picks]
-        for champion_pick in reversed(champion_picks):
+
+        champion_picks = []
+        for pick in picks:
+            champion_pick = list(filter(lambda champion: champion.text == pick,
+                                        self.champion_select.available_champions))[0]
+            champion_picks.append(champion_pick)
+
+        for champion in champion_picks:
             # picking champions in the reversed order to preserve their priority
-            self.pick_champion(champion_pick)
+            self.pick_champion(champion)
 
     def export_bans(self) -> List[str]:
         """Exports bans from the champion array.
@@ -510,7 +521,7 @@ class ChampionSelectUI(BoxLayout):
         unowned_champions = [
             champion
             for champion in self.champion_select.available_champions
-            if champion.text not in champion_pool
+            if champion.text.lower() not in champion_pool
             and self.pick_handler.champion_array.contains(champion)
         ]
         for unowned_champion in unowned_champions:
