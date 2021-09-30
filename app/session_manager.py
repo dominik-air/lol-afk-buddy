@@ -29,6 +29,23 @@ class SessionManager:
     def get_my_champion_pick_intent(self):
         return self.my_team.get_me().champion_pick_intent
     
+    def get_ban_type_actions(self) -> list:
+        '''Return ActionList with all actions whose 'type' attribute
+        is 'ban'.
+        '''
+
+        return self.actions.get_ban_actions()
+
+    def get_pick_type_actions(self) -> list:
+        '''Return ActionList with all actions whose 'type' attribute
+        is 'pick' and all are compleated.
+        '''
+
+        return self.actions.get_pick_actions()
+    
+    def get_actions_with_unavailable_champions(self) -> list:
+        return [*self.get_ban_type_actions(), *self.get_pick_type_actions()]
+    
     # def get_my_active_action(self) -> Action:
     #     '''Try to get your active action. If your action is
     #     not active return None'''
@@ -102,7 +119,6 @@ class ActionList(list):
 
             else:
                 return None
-            
     
     def get_my_action(self):
         '''Simirally as get_action_n_progress - it shouldn't iterate through
@@ -110,15 +126,22 @@ class ActionList(list):
 
         return self.my_action
     
+    def get_ban_actions(self) -> list:
+        return self.ban_actions
+    
+    def get_pick_actions(self) -> list:
+        return self.pick_actions
+    
     def sync_with_websocket(self, actions: list) -> None:
 
         # Helper iterator to keep the code clean
         iter_action = self._iter_actions(actions)
 
-
         # my_action is my action + active action
         self.my_action: Action = None
-        self.actions_in_progress = list()
+        self.actions_in_progress: list = list()
+        self.ban_actions: list = list()
+        self.pick_actions: list = list()
 
         # Iterate through all team members provied by argument (list from json)
         for _action in iter_action:
@@ -136,13 +159,24 @@ class ActionList(list):
             # update my_action wich represents your action object in
             # session (the action part). Note that this is always checked
             # when sync occures (this is - when websocked is CREATED, UPDATED)
-            if (new_action.actor_cell_id == self.session_manager.get_my_cell_id()
-                and new_action.is_in_progress):
-                self.my_action = new_action
-            
+
             # Gather all action instances wich are tagged as 'isInProgress'
             if new_action.is_in_progress:
                 self.actions_in_progress.append(new_action)
+
+                if new_action.actor_cell_id == \
+                    self.session_manager.get_my_cell_id():
+
+                    self.my_action = new_action
+            
+            # Append ban and pick to ban_actions and pick_action respectively
+            if new_action.completed:
+                if new_action.type == 'ban':
+                    self.ban_actions.append(new_action)
+                
+                elif new_action.type == 'pick':
+                    self.pick_actions.append(new_action)
+            
     
     def sync_with_json(self, actions: list) -> None:
         pass

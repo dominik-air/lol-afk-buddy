@@ -4,7 +4,10 @@ from sys import argv
 from typing import Match
 from time import sleep
 from command import *
-
+import json
+import os
+from packages.champNameIdMapper import ChampNameIdMapper
+from rune_maker import send_most_optimal_runes_for
 
 class Launcher:
     _state = None
@@ -239,8 +242,13 @@ class DeclarePositionState(State):
 class BanningState(State):
     verbose: bool = True
 
+    BASE: str = os.path.join(os.path.dirname(__file__), '..', 'data')
+    FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
+                                     'champion_select_picks_and_bans.json')
+
     def next(self) -> None:
-        self._set_command(Hover('Singed'))
+        champ_to_ban = self._choose_first_available_ban()
+        self._set_command(Hover(champ_to_ban))
         self._execute_command()
 
         self._set_command(Complete())
@@ -276,13 +284,26 @@ class BanningState(State):
         else:
             print(Command.INFO_S, 'banning phase not detected.')\
                 if self.verbose else None
+    
+    def _choose_first_available_ban(self) -> int:
+        with open(self.FILENAME, "r") as pick_priority_data:
+            ban_queue = json.load(pick_priority_data)["bans"]
+
+            champs = ChampNameIdMapper.get_champion_dict(order='normal')
+            ban_queue: list[int] = [int(champs[ban]) for ban in ban_queue]
             
+            return ban_queue[0]
 
 class PickingState(State):
     verbose: bool = True
     
+    BASE: str = os.path.join(os.path.dirname(__file__), '..', 'data')
+    FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
+                                     'champion_select_picks_and_bans.json')
+    
     def next(self) -> None:
-        self._set_command(Hover('TwistedFate'))
+        champ_to_pick = self._choose_first_available_pick()
+        self._set_command(Hover(champ_to_pick))
         self._execute_command()
         sleep(1)
         self._set_command(Complete())
@@ -315,14 +336,38 @@ class PickingState(State):
             
             else:
                 print(Command.INFO_S, 'picking phase not detected.')
+    
+    def _choose_first_available_pick(self) -> str:
+        with open(self.FILENAME, "r") as pick_priority_data:
+            pick_queue = json.load(pick_priority_data)["picks"]
+
+            champs = ChampNameIdMapper.get_champion_dict(order='normal')
+            pick_queue: list[int] = [int(champs[pick]) for pick in pick_queue]
+            
+        
+        actions: list[Action] = \
+        Command.session_manager.get_actions_with_unavailable_champions()
+
+        unavailable_champions: list[int] = [c.champion_id for c in actions]
+
+        for pick in pick_queue:
+            if pick not in unavailable_champions:
+                return pick
+
 
 
 class PreGameState(State):
     def next(self) -> None:
-        pass
-    
+        champion_id: int = Command.session_manager.get_me_as_teammember().champion_id
+        champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
+        champion: str = champs[str(champion_id)]
+
+        send_most_optimal_runes_for(champion)
+        # FIXME: call summoner spell sending function 
+        
     def cancel(self) -> None:
         pass
 
     async def _scan(self) -> None:
         print(" >>>>>>>>>>>>UR IN PRE GAME STATE<<<<<<<<<<<<<< ")
+        next()
