@@ -116,6 +116,7 @@ class ActionList(list):
         iter_action = self._iter_actions(actions)
 
 
+        # my_action is my action + active action
         self.my_action: Action = None
         self.actions_in_progress = list()
 

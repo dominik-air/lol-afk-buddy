@@ -240,13 +240,10 @@ class BanningState(State):
     verbose: bool = True
 
     def next(self) -> None:
-        print('right before hovering a champion.')
         self._set_command(Hover('Singed'))
         self._execute_command()
 
-        print('after champion hover (execute command).')
         self._set_command(Complete())
-        print('right after setting command - Complete()')
         try:
             self._execute_command()
             print('right after executing command - Complete()')
