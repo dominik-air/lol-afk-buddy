@@ -246,6 +246,10 @@ class BanningState(State):
     FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
                                      'champion_select_picks_and_bans.json')
 
+    def __init__(self) -> None:
+        super().__init__()
+        self.search_getter_cmd: Command = None
+
     def next(self) -> None:
         champ_to_ban = self._choose_first_available_ban()
         self._set_command(Hover(champ_to_ban))
@@ -275,7 +279,7 @@ class BanningState(State):
 
         my_action: Action = Command.session_manager.get_my_action()
 
-        if my_action.type == 'ban':
+        if my_action and my_action.type == 'ban':
             print(Command.INFO_S, 'banning phase detected executing next.')\
                 if self.verbose else None
 
@@ -284,6 +288,15 @@ class BanningState(State):
         else:
             print(Command.INFO_S, 'banning phase not detected.')\
                 if self.verbose else None
+            
+            # anti-loop break code:
+            if not self.search_getter_cmd:
+                self.search_getter_cmd = SearchGetter()
+
+            await self.search_getter_cmd._execute()
+
+            if self.search_getter_cmd.get_data():
+                self._context.change_state(LobbyState())
     
     def _choose_first_available_ban(self) -> int:
         with open(self.FILENAME, "r") as pick_priority_data:
@@ -301,6 +314,10 @@ class PickingState(State):
     FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
                                      'champion_select_picks_and_bans.json')
     
+    def __init__(self) -> None:
+        super().__init__()
+        self.search_getter_cmd: Command = None
+        
     def next(self) -> None:
         champ_to_pick = self._choose_first_available_pick()
         self._set_command(Hover(champ_to_pick))
@@ -336,6 +353,14 @@ class PickingState(State):
             
             else:
                 print(Command.INFO_S, 'picking phase not detected.')
+
+                if not self.search_getter_cmd:
+                    self.search_getter_cmd = SearchGetter()
+
+                await self.search_getter_cmd._execute()
+                
+                if self.search_getter_cmd.get_data():
+                    self._context.change_state(LobbyState())
     
     def _choose_first_available_pick(self) -> str:
 
@@ -379,6 +404,10 @@ class PickingState(State):
 
 
 class PreGameState(State):
+    def __init__(self) -> None:
+        super().__init__()
+        self.search_getter_cmd: Command = None
+        
     def next(self) -> None:
 
         # bug is here
@@ -393,10 +422,20 @@ class PreGameState(State):
         print('after sending runes')
 
         self._context.change_state(LobbyState())
+
         
     def cancel(self) -> None:
         pass
 
     async def _scan(self) -> None:
         print(" >>>>>>>>>>>>UR IN PRE GAME STATE<<<<<<<<<<<<<< ")
-        next()
+        if not self.search_getter_cmd:
+            self.search_getter_cmd = SearchGetter()
+        
+        await self.search_getter_cmd._execute()
+        
+        if self.search_getter_cmd.get_data():
+            self._context.change_state(LobbyState())
+        
+        else:
+            next()
