@@ -232,7 +232,7 @@ class DeclarePositionState(State):
         
         await self.session_getter_cmd._execute()
         session = self.session_getter_cmd.get_data()
-        print(f"    >session: {session}")
+        # print(f"    >session: {session}")
 
         if session:
             if session["timer"]["phase"] == "BAN_PICK":
