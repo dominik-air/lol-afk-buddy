@@ -16,12 +16,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410738000,
+                "purchaseDate": 1392320636000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410738000,
+        "purchased": 1392320636000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -47,12 +47,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384580000,
+                "purchaseDate": 1629147266000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384580000,
+        "purchased": 1629147266000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -61,6 +61,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/2.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/2.ogg",
         "title": "the Berserker"
+    },
+    {
+        "active": true,
+        "alias": "Galio",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/3.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Galio/Skins/Base/GalioLoadscreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/3/3000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/3.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 3,
+        "name": "Galio",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1594047466000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1594047466000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/3.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/3.ogg",
+        "title": "the Colossus"
     },
     {
         "active": true,
@@ -79,12 +111,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1493585670000,
+                "purchaseDate": 1393079880000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1493585670000,
+        "purchased": 1393079880000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -110,12 +142,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1629054905000,
+                "purchaseDate": 1408119051000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1629054905000,
+        "purchased": 1408119051000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -124,6 +156,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/5.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/5.ogg",
         "title": "the Seneschal of Demacia"
+    },
+    {
+        "active": true,
+        "alias": "Urgot",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/6.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Urgot/Skins/Base/UrgotLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/6/6000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/6.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 6,
+        "name": "Urgot",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1396787969000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1396787969000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/6.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/6.ogg",
+        "title": "the Dreadnought"
     },
     {
         "active": true,
@@ -142,12 +206,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1590950578000,
+                "purchaseDate": 1602187836000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1590950578000,
+        "purchased": 1602187836000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -156,6 +220,69 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/7.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/7.ogg",
         "title": "the Deceiver"
+    },
+    {
+        "active": true,
+        "alias": "Vladimir",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/8.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Vladimir/Skins/Base/VladimirLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/8/8000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/8.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 8,
+        "name": "Vladimir",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1596968367000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1596968367000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/8.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/8.ogg",
+        "title": "the Crimson Reaper"
+    },
+    {
+        "active": true,
+        "alias": "FiddleSticks",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/9.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Fiddlesticks/Skins/Base/FiddleSticksLoadscreen.FiddleSticksRework.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/9/9000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/9.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 9,
+        "name": "Fiddlesticks",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1584910637000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1584910637000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/9.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/9.ogg",
+        "title": "the Ancient Fear"
     },
     {
         "active": true,
@@ -174,12 +301,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410780000,
+                "purchaseDate": 1392580762000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410780000,
+        "purchased": 1392580762000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -206,12 +333,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1408818554000,
+                "purchaseDate": 1392223606000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1408818554000,
+        "purchased": 1392223606000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -238,12 +365,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410818000,
+                "purchaseDate": 1417981739000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410818000,
+        "purchased": 1417981739000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -270,12 +397,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410800000,
+                "purchaseDate": 1392924488000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410800000,
+        "purchased": 1392924488000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -284,6 +411,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/13.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/13.ogg",
         "title": "the Rune Mage"
+    },
+    {
+        "active": true,
+        "alias": "Sion",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/14.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Sion/Skins/Base/SionLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/14/14000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/14.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 14,
+        "name": "Sion",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1513723851000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1513723851000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/14.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/14.ogg",
+        "title": "The Undead Juggernaut"
     },
     {
         "active": true,
@@ -302,12 +461,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410804000,
+                "purchaseDate": 1392648701000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410804000,
+        "purchased": 1392648701000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman"
@@ -333,12 +492,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410809000,
+                "purchaseDate": 1392232208000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410809000,
+        "purchased": 1392232208000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -347,6 +506,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/16.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/16.ogg",
         "title": "the Starchild"
+    },
+    {
+        "active": true,
+        "alias": "Teemo",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/17.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Teemo/Skins/Base/teemoLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/17/17000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/17.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 17,
+        "name": "Teemo",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1397069824000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1397069824000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman",
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/17.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/17.ogg",
+        "title": "the Swift Scout"
     },
     {
         "active": true,
@@ -365,12 +556,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1396542424000,
+                "purchaseDate": 1417981743000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1396542424000,
+        "purchased": 1417981743000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -397,12 +588,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410814000,
+                "purchaseDate": 1393099785000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410814000,
+        "purchased": 1393099785000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -429,12 +620,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410787000,
+                "purchaseDate": 1392911369000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410787000,
+        "purchased": 1392911369000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -443,6 +634,37 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/20.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/20.ogg",
         "title": "the Boy and His Yeti"
+    },
+    {
+        "active": true,
+        "alias": "MissFortune",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/21.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/MissFortune/Skins/Base/MissFortuneLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/21/21000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/21.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 21,
+        "name": "Miss Fortune",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1397675878000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1397675878000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/21.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/21.ogg",
+        "title": "the Bounty Hunter"
     },
     {
         "active": true,
@@ -461,12 +683,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410749000,
+                "purchaseDate": 1391880908000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410749000,
+        "purchased": 1391880908000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -493,12 +715,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1593621400000,
+                "purchaseDate": 1512769897000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1593621400000,
+        "purchased": 1512769897000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -525,12 +747,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410890000,
+                "purchaseDate": 1395084824000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410890000,
+        "purchased": 1395084824000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -557,12 +779,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1450376962000,
+                "purchaseDate": 1398881421000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1450376962000,
+        "purchased": 1398881421000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -589,12 +811,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1512411001000,
+                "purchaseDate": 1403192858000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1512411001000,
+        "purchased": 1403192858000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -603,6 +825,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/26.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/26.ogg",
         "title": "the Chronokeeper"
+    },
+    {
+        "active": true,
+        "alias": "Singed",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/27.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Singed/Skins/Base/SingedLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/27/27000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/27.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 27,
+        "name": "Singed",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1483127566000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1483127566000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/27.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/27.ogg",
+        "title": "the Mad Chemist"
     },
     {
         "active": true,
@@ -618,15 +872,15 @@
         "name": "Evelynn",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1584910655000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1584910655000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -653,12 +907,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1607636449000,
+                "purchaseDate": 1601665013000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1607636449000,
+        "purchased": 1601665013000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -685,12 +939,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1619192881000,
+                "purchaseDate": 1632063935000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1619192881000,
+        "purchased": 1632063935000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -716,12 +970,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410886000,
+                "purchaseDate": 1431777614000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410886000,
+        "purchased": 1431777614000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -748,12 +1002,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410733000,
+                "purchaseDate": 1394883162000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410733000,
+        "purchased": 1394883162000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -780,12 +1034,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384589000,
+                "purchaseDate": 1438949178000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384589000,
+        "purchased": 1438949178000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -812,12 +1066,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1595962853000,
+                "purchaseDate": 1620038776000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1595962853000,
+        "purchased": 1620038776000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -826,6 +1080,101 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/34.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/34.ogg",
         "title": "the Cryophoenix"
+    },
+    {
+        "active": true,
+        "alias": "Shaco",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/35.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Shaco/Skins/Base/ShacoLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/35/35000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/35.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 35,
+        "name": "Shaco",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1601665188000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1601665188000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/35.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/35.ogg",
+        "title": "the Demon Jester"
+    },
+    {
+        "active": true,
+        "alias": "DrMundo",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/36.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/DrMundo/Skins/Base/DrMundoLoadscreen_0.Dr_Mundo_VGU.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/36/36000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/36.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 36,
+        "name": "Dr. Mundo",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1393620603000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1393620603000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/36.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/36.ogg",
+        "title": "the Madman of Zaun"
+    },
+    {
+        "active": true,
+        "alias": "Sona",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/37.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Sona/Skins/Base/SonaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/37/37000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/37.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 37,
+        "name": "Sona",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1395867927000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1395867927000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/37.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/37.ogg",
+        "title": "Maven of the Strings"
     },
     {
         "active": true,
@@ -844,12 +1193,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384739000,
+                "purchaseDate": 1581291044000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384739000,
+        "purchased": 1581291044000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -858,6 +1207,70 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/38.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/38.ogg",
         "title": "the Void Walker"
+    },
+    {
+        "active": true,
+        "alias": "Irelia",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/39.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Irelia/Skins/Base/IreliaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/39/39000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/39.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 39,
+        "name": "Irelia",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1611351772000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1611351772000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/39.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/39.ogg",
+        "title": "the Blade Dancer"
+    },
+    {
+        "active": true,
+        "alias": "Janna",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/40.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Janna/Skins/Base/JannaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/40/40000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/40.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 40,
+        "name": "Janna",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1408463201000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1408463201000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/40.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/40.ogg",
+        "title": "the Storm's Fury"
     },
     {
         "active": true,
@@ -876,12 +1289,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1472993103000,
+                "purchaseDate": 1624630682000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1472993103000,
+        "purchased": 1624630682000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter"
@@ -889,6 +1302,37 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/41.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/41.ogg",
         "title": "the Saltwater Scourge"
+    },
+    {
+        "active": true,
+        "alias": "Corki",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/42.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Corki/Skins/Base/CorkiLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/42/42000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/42.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 42,
+        "name": "Corki",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1461423580000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1461423580000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/42.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/42.ogg",
+        "title": "the Daring Bombardier"
     },
     {
         "active": true,
@@ -907,12 +1351,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1586697004000,
+                "purchaseDate": 1414785648000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1586697004000,
+        "purchased": 1414785648000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -921,6 +1365,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/43.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/43.ogg",
         "title": "the Enlightened One"
+    },
+    {
+        "active": true,
+        "alias": "Taric",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/44.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Taric/Skins/Base/TaricLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/44/44000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/44.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 44,
+        "name": "Taric",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1396201361000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1396201361000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/44.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/44.ogg",
+        "title": "the Shield of Valoran"
     },
     {
         "active": true,
@@ -936,15 +1412,15 @@
         "name": "Veigar",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1513723863000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1513723863000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -970,12 +1446,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596385635000,
+                "purchaseDate": 1497716804000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596385635000,
+        "purchased": 1497716804000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1002,12 +1478,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1583355053000,
+                "purchaseDate": 1617816981000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1583355053000,
+        "purchased": 1617816981000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -1016,37 +1492,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/50.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/50.ogg",
         "title": "the Noxian Grand General"
-    },
-    {
-        "active": true,
-        "alias": "Caitlyn",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/51.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Caitlyn/Skins/Base/CaitlynLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/51/51000.jpg",
-        "botEnabled": true,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/51.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 51,
-        "name": "Caitlyn",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1595962681000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1595962681000,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "marksman"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/51.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/51.ogg",
-        "title": "the Sheriff of Piltover"
     },
     {
         "active": true,
@@ -1062,15 +1507,15 @@
         "name": "Blitzcrank",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1427485709000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1427485709000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -1079,6 +1524,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/53.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/53.ogg",
         "title": "the Great Steam Golem"
+    },
+    {
+        "active": true,
+        "alias": "Malphite",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/54.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Malphite/Skins/Base/MalphiteLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/54/54000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/54.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 54,
+        "name": "Malphite",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1406570203000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1406570203000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/54.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/54.ogg",
+        "title": "Shard of the Monolith"
     },
     {
         "active": true,
@@ -1097,12 +1574,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1510957423000,
+                "purchaseDate": 1632822739000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1510957423000,
+        "purchased": 1632822739000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -1114,35 +1591,67 @@
     },
     {
         "active": true,
-        "alias": "JarvanIV",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/59.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/JarvanIV/Skins/Base/JarvanIVLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/59/59000.jpg",
+        "alias": "Maokai",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/57.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Maokai/Skins/Base/MaokaiLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/57/57000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/59.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/57.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 59,
-        "name": "Jarvan IV",
+        "id": 57,
+        "name": "Maokai",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1519658006000,
+                "purchaseDate": 1582206147000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1519658006000,
+        "purchased": 1582206147000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
-            "fighter"
+            "mage"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/59.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/59.ogg",
-        "title": "the Exemplar of Demacia"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/57.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/57.ogg",
+        "title": "the Twisted Treant"
+    },
+    {
+        "active": true,
+        "alias": "Renekton",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/58.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Renekton/Skins/Base/RenektonLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/58/58000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/58.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 58,
+        "name": "Renekton",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1606256111000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1606256111000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/58.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/58.ogg",
+        "title": "the Butcher of the Sands"
     },
     {
         "active": true,
@@ -1161,12 +1670,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596385646000,
+                "purchaseDate": 1630244213000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596385646000,
+        "purchased": 1630244213000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -1175,38 +1684,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/60.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/60.ogg",
         "title": "the Spider Queen"
-    },
-    {
-        "active": true,
-        "alias": "Orianna",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/61.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Orianna/Skins/Base/OriannaLoadscreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/61/61000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/61.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 61,
-        "name": "Orianna",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1596384714000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1596384714000,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "mage",
-            "support"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/61.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/61.ogg",
-        "title": "the Lady of Clockwork"
     },
     {
         "active": true,
@@ -1222,15 +1699,15 @@
         "name": "Wukong",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1410007646000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1410007646000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1254,15 +1731,15 @@
         "name": "Brand",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1522352508000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1522352508000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -1288,12 +1765,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1513865784000,
+                "purchaseDate": 1601665174000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1513865784000,
+        "purchased": 1601665174000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1305,98 +1782,131 @@
     },
     {
         "active": true,
-        "alias": "Vayne",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/67.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Vayne/Skins/Base/VayneLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/67/67000.jpg",
+        "alias": "Rumble",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/68.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Rumble/Skins/Base/RumbleLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/68/68000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/67.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/68.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 67,
-        "name": "Vayne",
+        "id": 68,
+        "name": "Rumble",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1508783528000,
+                "purchaseDate": 1630244220000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1508783528000,
+        "purchased": 1630244220000,
         "rankedPlayEnabled": true,
         "roles": [
-            "marksman",
-            "assassin"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/67.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/67.ogg",
-        "title": "the Night Hunter"
-    },
-    {
-        "active": true,
-        "alias": "Cassiopeia",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/69.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Cassiopeia/Skins/Base/CassiopeiaLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/69/69000.jpg",
-        "botEnabled": true,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/69.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 69,
-        "name": "Cassiopeia",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1596384757000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1596384757000,
-        "rankedPlayEnabled": true,
-        "roles": [
+            "fighter",
             "mage"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/69.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/69.ogg",
-        "title": "the Serpent's Embrace"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/68.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/68.ogg",
+        "title": "the Mechanized Menace"
     },
     {
         "active": true,
-        "alias": "Heimerdinger",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/74.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Heimerdinger/Skins/Base/HeimerdingerLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/74/74000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/74.ogg",
+        "alias": "Nasus",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/75.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Nasus/Skins/Base/NasusLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/75/75000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/75.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 74,
-        "name": "Heimerdinger",
+        "id": 75,
+        "name": "Nasus",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1435608114000,
+                "purchaseDate": 1458831068000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1435608114000,
+        "purchased": 1458831068000,
         "rankedPlayEnabled": true,
         "roles": [
-            "mage",
-            "support"
+            "fighter",
+            "tank"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/74.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/74.ogg",
-        "title": "the Revered Inventor"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/75.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/75.ogg",
+        "title": "the Curator of the Sands"
+    },
+    {
+        "active": true,
+        "alias": "Nidalee",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/76.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Nidalee/Skins/Base/nidaleeLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/76/76000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/76.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 76,
+        "name": "Nidalee",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1399299969000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1399299969000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/76.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/76.ogg",
+        "title": "the Bestial Huntress"
+    },
+    {
+        "active": true,
+        "alias": "Udyr",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/77.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Udyr/Skins/Base/UdyrLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/77/77000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/77.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 77,
+        "name": "Udyr",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1581291021000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1581291021000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/77.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/77.ogg",
+        "title": "the Spirit Walker"
     },
     {
         "active": true,
@@ -1415,12 +1925,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410796000,
+                "purchaseDate": 1393250855000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410796000,
+        "purchased": 1393250855000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank",
@@ -1444,15 +1954,15 @@
         "name": "Gragas",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1395063309000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1395063309000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1479,12 +1989,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384608000,
+                "purchaseDate": 1586018784000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384608000,
+        "purchased": 1586018784000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1511,12 +2021,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1582933562000,
+                "purchaseDate": 1580856232000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1582933562000,
+        "purchased": 1580856232000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -1525,6 +2035,37 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/81.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/81.ogg",
         "title": "the Prodigal Explorer"
+    },
+    {
+        "active": true,
+        "alias": "Mordekaiser",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/82.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Mordekaiser/Skins/Base/MordekaiserLoadscreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/82/82000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/82.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 82,
+        "name": "Mordekaiser",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1579947054000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1579947054000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/82.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/82.ogg",
+        "title": "the Iron Revenant"
     },
     {
         "active": true,
@@ -1540,15 +2081,15 @@
         "name": "Yorick",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": true,
+            "owned": false,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1498331567000,
+                "purchaseDate": 0,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1498331567000,
+        "purchased": 0,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1557,6 +2098,69 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/83.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/83.ogg",
         "title": "Shepherd of Souls"
+    },
+    {
+        "active": true,
+        "alias": "Akali",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/84.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Akali/Skins/Base/AkaliLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/84/84000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/84.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 84,
+        "name": "Akali",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1420908016000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1420908016000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/84.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/84.ogg",
+        "title": "the Rogue Assassin"
+    },
+    {
+        "active": true,
+        "alias": "Kennen",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/85.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Kennen/Skins/Base/KennenLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/85/85000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/85.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 85,
+        "name": "Kennen",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1426603819000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1426603819000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/85.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/85.ogg",
+        "title": "the Heart of the Tempest"
     },
     {
         "active": true,
@@ -1575,12 +2179,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1433410756000,
+                "purchaseDate": 1392911364000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1433410756000,
+        "purchased": 1392911364000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1592,34 +2196,99 @@
     },
     {
         "active": true,
-        "alias": "Talon",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/91.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Talon/Skins/Base/TalonLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/91/91000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/91.ogg",
+        "alias": "Leona",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/89.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Leona/Skins/Base/LeonaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/89/89000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/89.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 91,
-        "name": "Talon",
+        "id": 89,
+        "name": "Leona",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1482356553000,
+                "purchaseDate": 1398514218000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1482356553000,
+        "purchased": 1398514218000,
         "rankedPlayEnabled": true,
         "roles": [
+            "tank",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/89.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/89.ogg",
+        "title": "the Radiant Dawn"
+    },
+    {
+        "active": true,
+        "alias": "Malzahar",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/90.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Malzahar/Skins/Base/MalzaharLoadscreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/90/90000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/90.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 90,
+        "name": "Malzahar",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1616239360000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1616239360000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
             "assassin"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/91.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/91.ogg",
-        "title": "the Blade's Shadow"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/90.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/90.ogg",
+        "title": "the Prophet of the Void"
+    },
+    {
+        "active": true,
+        "alias": "Riven",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/92.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Riven/Skins/Base/RivenLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/92/92000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/92.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 92,
+        "name": "Riven",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1391723277000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1391723277000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/92.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/92.ogg",
+        "title": "the Exile"
     },
     {
         "active": true,
@@ -1638,12 +2307,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1614468602000,
+                "purchaseDate": 1497712451000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1614468602000,
+        "purchased": 1497712451000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -1670,12 +2339,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1614003190000,
+                "purchaseDate": 1409059741000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1614003190000,
+        "purchased": 1409059741000,
         "rankedPlayEnabled": true,
         "roles": [
             "tank"
@@ -1683,6 +2352,133 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/98.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/98.ogg",
         "title": "the Eye of Twilight"
+    },
+    {
+        "active": true,
+        "alias": "Lux",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/99.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Lux/Skins/Base/LuxLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/99/99000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/99.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 99,
+        "name": "Lux",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1580054170000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1580054170000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/99.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/99.ogg",
+        "title": "the Lady of Luminosity"
+    },
+    {
+        "active": true,
+        "alias": "Xerath",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/101.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Xerath/Skins/Base/XerathLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/101/101000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/101.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 101,
+        "name": "Xerath",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1440793166000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1440793166000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/101.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/101.ogg",
+        "title": "the Magus Ascendant"
+    },
+    {
+        "active": true,
+        "alias": "Shyvana",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/102.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Shyvana/Skins/Base/ShyvanaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/102/102000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/102.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 102,
+        "name": "Shyvana",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1466102191000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1466102191000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/102.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/102.ogg",
+        "title": "the Half-Dragon"
+    },
+    {
+        "active": true,
+        "alias": "Ahri",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/103.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Ahri/Skins/Base/AhriLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/103/103000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/103.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 103,
+        "name": "Ahri",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1630244206000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1630244206000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/103.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/103.ogg",
+        "title": "the Nine-Tailed Fox"
     },
     {
         "active": true,
@@ -1701,12 +2497,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1510584829000,
+                "purchaseDate": 1510588911000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1510584829000,
+        "purchased": 1510588911000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman"
@@ -1714,6 +2510,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/104.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/104.ogg",
         "title": "the Outlaw"
+    },
+    {
+        "active": true,
+        "alias": "Fizz",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/105.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Fizz/Skins/Base/FizzLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/105/105000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/105.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 105,
+        "name": "Fizz",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1598184585000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1598184585000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/105.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/105.ogg",
+        "title": "the Tidal Trickster"
     },
     {
         "active": true,
@@ -1732,12 +2560,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1590792455000,
+                "purchaseDate": 1605647429000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1590792455000,
+        "purchased": 1605647429000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1746,6 +2574,70 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/106.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/106.ogg",
         "title": "the Relentless Storm"
+    },
+    {
+        "active": true,
+        "alias": "Varus",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/110.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Varus/Skins/Base/VarusLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/110/110000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/110.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 110,
+        "name": "Varus",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1620038803000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1620038803000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/110.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/110.ogg",
+        "title": "the Arrow of Retribution"
+    },
+    {
+        "active": true,
+        "alias": "Nautilus",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/111.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Nautilus/Skins/Base/NautilusLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/111/111000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/111.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 111,
+        "name": "Nautilus",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1451408653000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1451408653000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/111.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/111.ogg",
+        "title": "the Titan of the Depths"
     },
     {
         "active": true,
@@ -1764,12 +2656,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596645100000,
+                "purchaseDate": 1583953138000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596645100000,
+        "purchased": 1583953138000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1793,15 +2685,15 @@
         "name": "Ziggs",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1616182078000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1616182078000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -1812,34 +2704,35 @@
     },
     {
         "active": true,
-        "alias": "Khazix",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/121.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/KhaZix/Skins/Base/KhazixLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/121/121000.jpg",
+        "alias": "Lulu",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/117.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Lulu/Skins/Base/LuluLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/117/117000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/121.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/117.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 121,
-        "name": "Kha'Zix",
+        "id": 117,
+        "name": "Lulu",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1468061251000,
+                "purchaseDate": 1451421412000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1468061251000,
+        "purchased": 1451421412000,
         "rankedPlayEnabled": true,
         "roles": [
-            "assassin"
+            "support",
+            "mage"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/121.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/121.ogg",
-        "title": "the Voidreaver"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/117.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/117.ogg",
+        "title": "the Fae Sorceress"
     },
     {
         "active": true,
@@ -1858,12 +2751,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1408737245000,
+                "purchaseDate": 1583953135000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1408737245000,
+        "purchased": 1583953135000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -1872,6 +2765,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/122.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/122.ogg",
         "title": "the Hand of Noxus"
+    },
+    {
+        "active": true,
+        "alias": "Jayce",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/126.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Jayce/Skins/Base/JayceLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/126/126000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/126.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 126,
+        "name": "Jayce",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1632508142000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1632508142000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/126.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/126.ogg",
+        "title": "the Defender of Tomorrow"
     },
     {
         "active": true,
@@ -1890,12 +2815,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1449247478000,
+                "purchaseDate": 1522352567000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1449247478000,
+        "purchased": 1522352567000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -1906,66 +2831,67 @@
     },
     {
         "active": true,
-        "alias": "Quinn",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/133.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Quinn/Skins/Base/QuinnLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/133/133000.jpg",
+        "alias": "Syndra",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/134.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Syndra/Skins/Base/SyndraLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/134/134000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/133.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/134.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 133,
-        "name": "Quinn",
+        "id": 134,
+        "name": "Syndra",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1458757483000,
+                "purchaseDate": 1601665181000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1458757483000,
+        "purchased": 1601665181000,
         "rankedPlayEnabled": true,
         "roles": [
-            "marksman",
-            "assassin"
+            "mage",
+            "support"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/133.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/133.ogg",
-        "title": "Demacia's Wings"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/134.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/134.ogg",
+        "title": "the Dark Sovereign"
     },
     {
         "active": true,
-        "alias": "AurelionSol",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/136.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/AurelionSol/Skins/Base/AurelionSolLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/136/136000.jpg",
+        "alias": "Zoe",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/142.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Zoe/Skins/Base/ZoeLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/142/142000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/136.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/142.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 136,
-        "name": "Aurelion Sol",
+        "id": 142,
+        "name": "Zoe",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1595962859000,
+                "purchaseDate": 1522352534000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1595962859000,
+        "purchased": 1522352534000,
         "rankedPlayEnabled": true,
         "roles": [
-            "mage"
+            "mage",
+            "support"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/136.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/136.ogg",
-        "title": "The Star Forger"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/142.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/142.ogg",
+        "title": "the Aspect of Twilight"
     },
     {
         "active": true,
@@ -1984,12 +2910,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1482699890000,
+                "purchaseDate": 1468616535000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1482699890000,
+        "purchased": 1468616535000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
@@ -1998,6 +2924,133 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/143.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/143.ogg",
         "title": "Rise of the Thorns"
+    },
+    {
+        "active": true,
+        "alias": "Kaisa",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/145.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Kaisa/Skins/Base/KaisaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/145/145000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/145.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 145,
+        "name": "Kai'Sa",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1625484105000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1625484105000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/145.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/145.ogg",
+        "title": "Daughter of the Void"
+    },
+    {
+        "active": true,
+        "alias": "Seraphine",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/147.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Seraphine/Skins/Base/SeraphineLoadscreen.EllipsisMage.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/147/147000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/147.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 147,
+        "name": "Seraphine",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1604154781000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1604154781000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "mage",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/147.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/147.ogg",
+        "title": "the Starry-Eyed Songstress"
+    },
+    {
+        "active": true,
+        "alias": "Gnar",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/150.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Gnar/Skins/Base/GnarLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/150/150000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/150.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 150,
+        "name": "Gnar",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1602431510000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1602431510000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/150.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/150.ogg",
+        "title": "the Missing Link"
+    },
+    {
+        "active": true,
+        "alias": "Zac",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/154.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Zac/Skins/Base/ZacLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/154/154000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/154.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 154,
+        "name": "Zac",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1590867175000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1590867175000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/154.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/154.ogg",
+        "title": "the Secret Weapon"
     },
     {
         "active": true,
@@ -2016,12 +3069,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1473427545000,
+                "purchaseDate": 1598184625000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1473427545000,
+        "purchased": 1598184625000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -2048,12 +3101,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384703000,
+                "purchaseDate": 1436017649000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384703000,
+        "purchased": 1436017649000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage"
@@ -2061,38 +3114,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/161.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/161.ogg",
         "title": "the Eye of the Void"
-    },
-    {
-        "active": true,
-        "alias": "Taliyah",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/163.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Taliyah/Skins/Base/TaliyahLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/163/163000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/163.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 163,
-        "name": "Taliyah",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1590690068000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1590690068000,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "mage",
-            "support"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/163.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/163.ogg",
-        "title": "the Stoneweaver"
     },
     {
         "active": true,
@@ -2111,12 +3132,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596384691000,
+                "purchaseDate": 1609971719000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596384691000,
+        "purchased": 1609971719000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -2125,6 +3146,38 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/164.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/164.ogg",
         "title": "the Steel Shadow"
+    },
+    {
+        "active": true,
+        "alias": "Braum",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/201.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Braum/Skins/Base/BraumLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/201/201000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/201.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 201,
+        "name": "Braum",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1402673897000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1402673897000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/201.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/201.ogg",
+        "title": "the Heart of the Freljord"
     },
     {
         "active": true,
@@ -2143,12 +3196,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1581869990000,
+                "purchaseDate": 1624533953000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1581869990000,
+        "purchased": 1624533953000,
         "rankedPlayEnabled": true,
         "roles": [
             "marksman",
@@ -2160,34 +3213,129 @@
     },
     {
         "active": true,
-        "alias": "Zed",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/238.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Zed/Skins/Base/ZedLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/238/238000.jpg",
+        "alias": "Jinx",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/222.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Jinx/Skins/Base/JinxLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/222/222000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/238.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/222.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 238,
-        "name": "Zed",
+        "id": 222,
+        "name": "Jinx",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1583354625000,
+                "purchaseDate": 1506810912000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1583354625000,
+        "purchased": 1506810912000,
         "rankedPlayEnabled": true,
         "roles": [
-            "assassin"
+            "marksman"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/238.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/238.ogg",
-        "title": "the Master of Shadows"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/222.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/222.ogg",
+        "title": "the Loose Cannon"
+    },
+    {
+        "active": true,
+        "alias": "TahmKench",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/223.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/TahmKench/Skins/Base/TahmKenchLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/223/223000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/223.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 223,
+        "name": "Tahm Kench",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1445009242000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1445009242000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/223.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/223.ogg",
+        "title": "The River King"
+    },
+    {
+        "active": true,
+        "alias": "Senna",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/235.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Senna/Skins/Base/SennaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/235/235000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/235.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 235,
+        "name": "Senna",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1581180860000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1581180860000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/235.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/235.ogg",
+        "title": "the Redeemer"
+    },
+    {
+        "active": true,
+        "alias": "Lucian",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/236.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Lucian/Skins/Base/LucianLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/236/236000.jpg",
+        "botEnabled": true,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/236.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 236,
+        "name": "Lucian",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1413317681000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1413317681000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/236.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/236.ogg",
+        "title": "the Purifier"
     },
     {
         "active": true,
@@ -2203,15 +3351,15 @@
         "name": "Kled",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1628444558000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1628444558000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -2220,38 +3368,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/240.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/240.ogg",
         "title": "the Cantankerous Cavalier"
-    },
-    {
-        "active": true,
-        "alias": "Ekko",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/245.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Ekko/Skins/Base/EkkoLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/245/245000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/245.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 245,
-        "name": "Ekko",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1491735714000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1491735714000,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "assassin",
-            "fighter"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/245.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/245.ogg",
-        "title": "the Boy Who Shattered Time"
     },
     {
         "active": true,
@@ -2270,12 +3386,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1593789697000,
+                "purchaseDate": 1594293431000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1593789697000,
+        "purchased": 1594293431000,
         "rankedPlayEnabled": true,
         "roles": [
             "assassin",
@@ -2284,38 +3400,6 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/246.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/246.ogg",
         "title": "Empress of the Elements"
-    },
-    {
-        "active": true,
-        "alias": "Vi",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/254.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Vi/Skins/Base/ViLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/254/254000.jpg",
-        "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/254.ogg",
-        "disabledQueues": [],
-        "freeToPlay": false,
-        "id": 254,
-        "name": "Vi",
-        "ownership": {
-            "freeToPlayReward": false,
-            "owned": true,
-            "rental": {
-                "endDate": 0,
-                "purchaseDate": 1479045896000,
-                "rented": false,
-                "winCountRemaining": 0
-            }
-        },
-        "purchased": 1479045896000,
-        "rankedPlayEnabled": true,
-        "roles": [
-            "fighter",
-            "assassin"
-        ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/254.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/254.ogg",
-        "title": "the Piltover Enforcer"
     },
     {
         "active": true,
@@ -2334,12 +3418,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1504884356000,
+                "purchaseDate": 1574588267000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1504884356000,
+        "purchased": 1574588267000,
         "rankedPlayEnabled": true,
         "roles": [
             "fighter",
@@ -2366,12 +3450,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1508585976000,
+                "purchaseDate": 1424636401000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1508585976000,
+        "purchased": 1424636401000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -2383,35 +3467,66 @@
     },
     {
         "active": true,
-        "alias": "Azir",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/268.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Azir/Skins/Base/AzirLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/268/268000.jpg",
+        "alias": "Yuumi",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/350.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Yuumi/Skins/Base/YuumiLoadscreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/350/350000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/268.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/350.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 268,
-        "name": "Azir",
+        "id": 350,
+        "name": "Yuumi",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1506190254000,
+                "purchaseDate": 1581955916000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1506190254000,
+        "purchased": 1581955916000,
         "rankedPlayEnabled": true,
         "roles": [
-            "mage",
+            "support",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/350.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/350.ogg",
+        "title": "the Magical Cat"
+    },
+    {
+        "active": true,
+        "alias": "Samira",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/360.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Samira/Skins/Base/SamiraLoadScreen.Samira.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/360/360000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/360.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 360,
+        "name": "Samira",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1608998516000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1608998516000,
+        "rankedPlayEnabled": true,
+        "roles": [
             "marksman"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/268.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/268.ogg",
-        "title": "the Emperor of the Sands"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/360.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/360.ogg",
+        "title": "the Desert Rose"
     },
     {
         "active": true,
@@ -2430,12 +3545,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1596752736000,
+                "purchaseDate": 1400945168000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1596752736000,
+        "purchased": 1400945168000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -2447,34 +3562,35 @@
     },
     {
         "active": true,
-        "alias": "RekSai",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/421.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/RekSai/Skins/Base/RekSaiLoadScreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/421/421000.jpg",
+        "alias": "Illaoi",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/420.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Illaoi/Skins/Base/IllaoiLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/420/420000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/421.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/420.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 421,
-        "name": "Rek'Sai",
+        "id": 420,
+        "name": "Illaoi",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1593789708000,
+                "purchaseDate": 1596981893000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1593789708000,
+        "purchased": 1596981893000,
         "rankedPlayEnabled": true,
         "roles": [
-            "fighter"
+            "fighter",
+            "tank"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/421.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/421.ogg",
-        "title": "the Void Burrower"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/420.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/420.ogg",
+        "title": "the Kraken Priestess"
     },
     {
         "active": true,
@@ -2490,15 +3606,15 @@
         "name": "Ivern",
         "ownership": {
             "freeToPlayReward": false,
-            "owned": false,
+            "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 0,
+                "purchaseDate": 1482959641000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 0,
+        "purchased": 1482959641000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -2507,6 +3623,37 @@
         "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/427.png",
         "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/427.ogg",
         "title": "the Green Father"
+    },
+    {
+        "active": true,
+        "alias": "Kalista",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/429.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Kalista/Skins/Base/KalistaLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/429/429000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/429.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 429,
+        "name": "Kalista",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1622316271000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1622316271000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/429.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/429.ogg",
+        "title": "the Spear of Vengeance"
     },
     {
         "active": true,
@@ -2525,12 +3672,12 @@
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1508011422000,
+                "purchaseDate": 1467016311000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1508011422000,
+        "purchased": 1467016311000,
         "rankedPlayEnabled": true,
         "roles": [
             "support",
@@ -2542,34 +3689,350 @@
     },
     {
         "active": true,
-        "alias": "Sylas",
-        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/517.ogg",
-        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Sylas/Skins/Base/SylasLoadscreen.jpg",
-        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/517/517000.jpg",
+        "alias": "Rakan",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/497.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Rakan/Skins/Base/RakanLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/497/497000.jpg",
         "botEnabled": false,
-        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/517.ogg",
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/497.ogg",
         "disabledQueues": [],
         "freeToPlay": false,
-        "id": 517,
-        "name": "Sylas",
+        "id": 497,
+        "name": "Rakan",
         "ownership": {
             "freeToPlayReward": false,
             "owned": true,
             "rental": {
                 "endDate": 0,
-                "purchaseDate": 1594993971000,
+                "purchaseDate": 1500808968000,
                 "rented": false,
                 "winCountRemaining": 0
             }
         },
-        "purchased": 1594993971000,
+        "purchased": 1500808968000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/497.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/497.ogg",
+        "title": "The Charmer"
+    },
+    {
+        "active": true,
+        "alias": "Xayah",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/498.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Xayah/Skins/Base/XayahLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/498/498000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/498.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 498,
+        "name": "Xayah",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1512769909000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1512769909000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/498.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/498.ogg",
+        "title": "the Rebel"
+    },
+    {
+        "active": true,
+        "alias": "Ornn",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/516.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Ornn/Skins/Base/OrnnLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/516/516000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/516.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 516,
+        "name": "Ornn",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1607476347000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1607476347000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/516.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/516.ogg",
+        "title": "The Fire below the Mountain"
+    },
+    {
+        "active": true,
+        "alias": "Neeko",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/518.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Neeko/Skins/Base/NeekoLoadscreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/518/518000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/518.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 518,
+        "name": "Neeko",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1585699080000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1585699080000,
         "rankedPlayEnabled": true,
         "roles": [
             "mage",
+            "support"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/518.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/518.ogg",
+        "title": "the Curious Chameleon"
+    },
+    {
+        "active": true,
+        "alias": "Aphelios",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/523.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Aphelios/Skins/Base/ApheliosLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/523/523000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/523.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 523,
+        "name": "Aphelios",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1595877271000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1595877271000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "marksman"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/523.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/523.ogg",
+        "title": "the Weapon of the Faithful"
+    },
+    {
+        "active": true,
+        "alias": "Rell",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/526.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Rell/Skins/Base/RellLoadscreen.DarkSupport.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/526/526000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/526.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 526,
+        "name": "Rell",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1614362006000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1614362006000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/526.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/526.ogg",
+        "title": "the Iron Maiden"
+    },
+    {
+        "active": true,
+        "alias": "Pyke",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/555.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Pyke/Skins/Base/PykeLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/555/555000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/555.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 555,
+        "name": "Pyke",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1579720378000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1579720378000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "support",
             "assassin"
         ],
-        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/517.png",
-        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/517.ogg",
-        "title": "the Unshackled"
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/555.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/555.ogg",
+        "title": "the Bloodharbor Ripper"
+    },
+    {
+        "active": true,
+        "alias": "Yone",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/777.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Yone/Skins/Base/YoneLoadScreen.Yone.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/777/777000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/777.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 777,
+        "name": "Yone",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1626555346000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1626555346000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "assassin",
+            "fighter"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/777.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/777.ogg",
+        "title": "the Unforgotten"
+    },
+    {
+        "active": true,
+        "alias": "Sett",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/875.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Sett/Skins/Base/SettLoadScreen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/875/875000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/875.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 875,
+        "name": "Sett",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1580688921000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1580688921000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "tank"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/875.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/875.ogg",
+        "title": "the Boss"
+    },
+    {
+        "active": true,
+        "alias": "Lillia",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/876.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Lillia/Skins/Base/LilliaLoadscreen.Lillia.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/876/876000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/876.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 876,
+        "name": "Lillia",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1598184594000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1598184594000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "mage"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/876.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/876.ogg",
+        "title": "the Bashful Bloom"
+    },
+    {
+        "active": true,
+        "alias": "Gwen",
+        "banVoPath": "/lol-game-data/assets/v1/champion-ban-vo/887.ogg",
+        "baseLoadScreenPath": "/lol-game-data/assets/ASSETS/Characters/Gwen/Skins/Base/GwenLoadscreen_0.Gwen.jpg",
+        "baseSplashPath": "/lol-game-data/assets/v1/champion-splashes/887/887000.jpg",
+        "botEnabled": false,
+        "chooseVoPath": "/lol-game-data/assets/v1/champion-choose-vo/887.ogg",
+        "disabledQueues": [],
+        "freeToPlay": false,
+        "id": 887,
+        "name": "Gwen",
+        "ownership": {
+            "freeToPlayReward": false,
+            "owned": true,
+            "rental": {
+                "endDate": 0,
+                "purchaseDate": 1627038491000,
+                "rented": false,
+                "winCountRemaining": 0
+            }
+        },
+        "purchased": 1627038491000,
+        "rankedPlayEnabled": true,
+        "roles": [
+            "fighter",
+            "assassin"
+        ],
+        "squarePortraitPath": "/lol-game-data/assets/v1/champion-icons/887.png",
+        "stingerSfxPath": "/lol-game-data/assets/v1/champion-sfx-audios/887.ogg",
+        "title": "The Hallowed Seamstress"
     }
 ]

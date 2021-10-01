@@ -95,8 +95,15 @@ class Decliner(Command):
 class WS_JSONSaver(Command):
     def __init__(self, spinner, textinput):
         super().__init__()
-        self.text, self.values = spinner.text, spinner.values
-        self.filename = textinput.text
+        # FIXME: this class needs refactoring
+        if isinstance(spinner, str):
+            self.text = spinner
+        else:
+            self.text, self.values = spinner.text, spinner.values
+        if isinstance(textinput, str):
+            self.filename = textinput
+        else:
+            self.filename = textinput.text
         self.saver = JSONSaver()
 
 
