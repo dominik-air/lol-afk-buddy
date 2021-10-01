@@ -1,8 +1,10 @@
 {
     "picks": [
-        "Azir"
+        "Azir",
+        "TwistedFate"
     ],
     "bans": [
-        "Irelia"
+        "Irelia",
+        "Annie"
     ]
 }

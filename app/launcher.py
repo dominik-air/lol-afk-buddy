@@ -338,32 +338,61 @@ class PickingState(State):
                 print(Command.INFO_S, 'picking phase not detected.')
     
     def _choose_first_available_pick(self) -> str:
+
         with open(self.FILENAME, "r") as pick_priority_data:
             pick_queue = json.load(pick_priority_data)["picks"]
 
             champs = ChampNameIdMapper.get_champion_dict(order='normal')
-            pick_queue: list[int] = [int(champs[pick]) for pick in pick_queue]
-            
-        
+            pick_queue_id: list[int] = []
+            # [int(champs[pick]) for pick in pick_queue]
+
+            for pick in pick_queue:
+                # TODO: Allow a programmer read this line of code without
+                # need of buying second screen
+                formatted_key = list(filter(lambda name: name.lower() == pick.lower(), champs.keys()))[0]
+                pick_queue_id.append(int(champs[formatted_key]))
+
         actions: list[Action] = \
         Command.session_manager.get_actions_with_unavailable_champions()
 
         unavailable_champions: list[int] = [c.champion_id for c in actions]
 
-        for pick in pick_queue:
+        for pick in pick_queue_id:
             if pick not in unavailable_champions:
                 return pick
+        # with open(self.FILENAME, "r") as pick_priority_data:
+        #     pick_queue = json.load(pick_priority_data)["picks"]
+
+        #     champs = ChampNameIdMapper.get_champion_dict(order='normal')
+        #     pick_queue: list[int] = [int(champs[pick]) for pick in pick_queue]
+            
+        
+        # actions: list[Action] = \
+        # Command.session_manager.get_actions_with_unavailable_champions()
+
+        # unavailable_champions: list[int] = [c.champion_id for c in actions]
+
+        # for pick in pick_queue:
+        #     if pick not in unavailable_champions:
+        #         return pick
 
 
 
 class PreGameState(State):
     def next(self) -> None:
+
+        # bug is here
         champion_id: int = Command.session_manager.get_me_as_teammember().champion_id
         champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
         champion: str = champs[str(champion_id)]
+        # bug is here
 
+        print('before sending runes')
         send_most_optimal_runes_for(champion)
         # FIXME: call summoner spell sending function 
+        print('after sending runes')
+
+        self._context.change_state(LobbyState())
         
     def cancel(self) -> None:
         pass
