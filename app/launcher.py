@@ -8,6 +8,7 @@ import json
 import os
 from packages.champNameIdMapper import ChampNameIdMapper
 from rune_maker import send_most_optimal_runes_for
+from summoner_perks import send_user_defined_summoner_spells
 
 class Launcher:
     _state = None
@@ -377,7 +378,6 @@ class PickingState(State):
         #         return pick
 
 
-
 class PreGameState(State):
     def next(self) -> None:
 
@@ -389,8 +389,8 @@ class PreGameState(State):
 
         print('before sending runes')
         send_most_optimal_runes_for(champion)
-        # FIXME: call summoner spell sending function 
         print('after sending runes')
+        send_user_defined_summoner_spells()
 
         self._context.change_state(LobbyState())
         
@@ -399,4 +399,4 @@ class PreGameState(State):
 
     async def _scan(self) -> None:
         print(" >>>>>>>>>>>>UR IN PRE GAME STATE<<<<<<<<<<<<<< ")
-        next()
+        self.next()

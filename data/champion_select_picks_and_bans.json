@@ -1,10 +1,12 @@
 {
     "picks": [
-        "Azir",
-        "TwistedFate"
+        "Shen",
+        "Gragas",
+        "Fiora"
     ],
     "bans": [
         "Irelia",
-        "Annie"
+        "Akshan",
+        "Evelynn"
     ]
 }

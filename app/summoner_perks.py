@@ -6,6 +6,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from packages.utils import path_problem_solver
+from command import EndpointSender, WS_JSONSaver
+
 
 import champion_select_utils
 
@@ -224,3 +226,33 @@ class SummonerPerksSlotUI(BoxLayout):
         current_settings = {"summoner_spells": self.get_selected_summoner_spells(),
                             "selected_runes": self.get_selected_rune_page()}
         champion_select_utils.save_settings(filepath=CHAMPION_PERKS_SETTINGS_PATH, settings=current_settings)
+
+
+def send_user_defined_summoner_spells():
+    with open(path_problem_solver("data") + "\\" + "champion_select_perks.json") as perks_file:
+        summoner_spell_data = json.load(perks_file)["summoner_spells"]
+
+    with open(path_problem_solver("data") + "\\" + "summoner_spells.json") as id_mapping_file:
+        id_name_data = json.load(id_mapping_file)
+        id_name_mapper = {name: id_ for (name, id_) in id_name_data}
+
+    d_spell_name, f_spell_name = summoner_spell_data
+    d_spell_id = id_name_mapper[d_spell_name]
+    f_spell_id = id_name_mapper[f_spell_name]
+
+    request_data = {
+        "spell1Id": int(d_spell_id),
+        "spell2Id": int(f_spell_id)
+    }
+
+    update_summoner_spells_command = EndpointSender(request="/lol-champ-select/v1/session/my-selection",
+                                                    request_type="patch",
+                                                    request_data=request_data)
+    was_updated = update_summoner_spells_command.execute().result()
+
+    # in case of an error a log fle is created and saved
+    if not was_updated:
+        # TODO: it would be nice to also have the time at which the function didn't work
+        log_saver = WS_JSONSaver(spinner="session",
+                                 textinput="SummonerSpellSenderCrashReport")
+        log_saver.execute()
