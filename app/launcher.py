@@ -380,8 +380,12 @@ class PickingState(State):
 
 class PreGameState(State):
     def next(self) -> None:
+        champion_id: int = 0
 
         # bug is here
+
+        # If this won't work try to get picked champion from action
+        # Command.session_manager.my_team.sync_with_websocket()
         champion_id: int = Command.session_manager.get_me_as_teammember().champion_id
         champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
         champion: str = champs[str(champion_id)]
@@ -399,4 +403,5 @@ class PreGameState(State):
 
     async def _scan(self) -> None:
         print(" >>>>>>>>>>>>UR IN PRE GAME STATE<<<<<<<<<<<<<< ")
+        await asyncio.sleep(3)
         self.next()

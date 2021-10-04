@@ -134,6 +134,7 @@ class ActionList(list):
     
     def sync_with_websocket(self, actions: list) -> None:
 
+
         # Helper iterator to keep the code clean
         iter_action = self._iter_actions(actions)
 
@@ -143,8 +144,10 @@ class ActionList(list):
         self.ban_actions: list = list()
         self.pick_actions: list = list()
 
+        self.clear()
         # Iterate through all team members provied by argument (list from json)
         for _action in iter_action:
+
             # Creagte new instance of action for each element from the lists
             new_action = Action()
 
@@ -253,6 +256,7 @@ class MyTeam(list, Team):
     
     def sync_with_websocket(self, team_members: list) -> None:
 
+        self.clear()
         # Iterate through all team members provied by argument (list from json)
         for _team_member in team_members:
             # Creagte new instance of member for each element from the list
