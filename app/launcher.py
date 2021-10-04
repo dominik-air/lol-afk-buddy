@@ -390,11 +390,12 @@ class PreGameState(State):
         champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
         champion: str = champs[str(champion_id)]
         # bug is here
-
+        print('before sending summoner spells')
+        send_user_defined_summoner_spells()
+        print('after sending summoner spells')
         print('before sending runes')
         send_most_optimal_runes_for(champion)
         print('after sending runes')
-        send_user_defined_summoner_spells()
 
         self._context.change_state(LobbyState())
         

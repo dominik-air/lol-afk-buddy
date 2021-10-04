@@ -12,6 +12,7 @@ from session_manager import SessionManager, Action, TeamMember
 # from packages.launcher import LobbyState
 # from menu import MenuApp
 
+
 class Command(ABC):
     OK_S = f"[{colored(' OK  ', 'green')}]"
     ERR_S = f"[{colored('ERROR', 'red')}]"
@@ -599,6 +600,9 @@ class QueueGetter(Command):
         return self.type
 
 
+REQUEST_SUCCESSFUL_STATUSES = list(range(200, 209))
+
+
 class EndpointSender(Command):
     """Class for sending POST, PUT and DELETE requests to the LCU through the LCU driver.
 
@@ -621,4 +625,5 @@ class EndpointSender(Command):
     async def _execute(self):
         result = await self.connection.request(self.request_type, self.request, data=self.request_data)
         # check if the request was successful
-        return result.status in list(range(200, 209))
+        print(f'Status dla {self.request}: {result.status};')
+        return result.status in REQUEST_SUCCESSFUL_STATUSES

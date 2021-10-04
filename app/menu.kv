@@ -1,6 +1,7 @@
 #:kivy 2.0.0
 #:import Factory kivy.factory.Factory
 #:import send_most_optimal_runes_for rune_maker.send_most_optimal_runes_for
+#:import send_user_defined_summoner_spells summoner_perks.send_user_defined_summoner_spells
 
 <ChampionButton>:
     canvas.before:
@@ -615,6 +616,21 @@
                         text: "import"
                         font_size: 20
                         on_press: send_most_optimal_runes_for(champion_select_ui.export_picks()[0])
+            SubInfoGridLayout:
+                cols: 2
+
+                SettingsLabel:
+                    text: 'Send summoner spells'
+
+                BoxLayout:
+                    size_hint_x: 1
+                    padding: 20, 0, 20, 0
+                    # spacing: 2
+
+                    MyButton:
+                        text: "send"
+                        font_size: 20
+                        on_press: send_user_defined_summoner_spells()
 
     TabbedPanelItem:
         text: "Launcher"

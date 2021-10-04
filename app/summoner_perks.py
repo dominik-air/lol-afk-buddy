@@ -248,7 +248,17 @@ def send_user_defined_summoner_spells():
     update_summoner_spells_command = EndpointSender(request="/lol-champ-select/v1/session/my-selection",
                                                     request_type="patch",
                                                     request_data=request_data)
-    was_updated = update_summoner_spells_command.execute().result()
+    try:
+        after_execute = update_summoner_spells_command.execute()
+    except Exception as e:
+        print('wyjebało przy execute')
+        print(e)
+    try:
+        was_updated = after_execute.result()
+        print(was_updated)
+    except Exception as e:
+        print('wyjebało przy resulcie')
+        print(e)
 
     # in case of an error a log fle is created and saved
     if not was_updated:
