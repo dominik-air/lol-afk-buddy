@@ -1,7 +1,7 @@
 {
     "summoner_spells": [
         "SummonerDot",
-        "SummonerHaste"
+        "SummonerHeal"
     ],
     "selected_runes": "Best Win Rate Runes"
 }
