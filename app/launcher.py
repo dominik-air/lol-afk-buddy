@@ -380,21 +380,12 @@ class PickingState(State):
 
 class PreGameState(State):
     def next(self) -> None:
-        champion_id: int = 0
-
-        # bug is here
-
-        # If this won't work try to get picked champion from action
         champion_id: int = Command.session_manager.get_me_as_teammember().champion_id
         champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
         champion: str = champs[str(champion_id)]
-        # bug is here
-        print('before sending summoner spells')
+
         send_user_defined_summoner_spells()
-        print('after sending summoner spells')
-        print('before sending runes')
         send_most_optimal_runes_for(champion)
-        print('after sending runes')
 
         self._context.change_state(LobbyState())
         

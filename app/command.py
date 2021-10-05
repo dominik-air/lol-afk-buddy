@@ -13,6 +13,9 @@ from session_manager import SessionManager, Action, TeamMember
 # from menu import MenuApp
 
 
+REQUEST_SUCCESSFUL_STATUSES = list(range(200, 209))
+
+
 class Command(ABC):
     OK_S = f"[{colored(' OK  ', 'green')}]"
     ERR_S = f"[{colored('ERROR', 'red')}]"
@@ -241,7 +244,7 @@ class Hover(Command):
             res = await self.connection.request('patch', reqs,
                                                 data={'championId': champ_id})
 
-            if res.status in list(range(200, 209)):
+            if res.status in REQUEST_SUCCESSFUL_STATUSES:
                 print(Command.OK_S,
                     'successfully changed hovered champ to:',
                         colored(self.champion, 'red'), sep=' ')
@@ -285,7 +288,7 @@ class PickIntent(Command):
         #                                     data={'selectedSkinId': champ_id})
 
 
-        if res.status in list(range(200, 209)):
+        if res.status in REQUEST_SUCCESSFUL_STATUSES:
             print(Command.OK_S,
                 'successfully changed intent champ to:',
                     colored(self.champion, 'red'), sep=' ')
@@ -371,7 +374,7 @@ class Complete(Command):
         reqs = f'/lol-champ-select/v1/session/actions/{action_id}/complete'
         res = await self.connection.request('post', reqs)
 
-        if res.status in list(range(200, 209)):
+        if res.status in REQUEST_SUCCESSFUL_STATUSES:
             print(Command.OK_S, 'Champion pick compleated.')
             # action_type: str = my_active_action.type
             # act = lambda: action_type + 'n' if action_type == 'ban'\
@@ -395,7 +398,7 @@ class EndpointSaver(Command):
     async def _execute(self):
         res = await self.connection.request('get', self.reqs)
 
-        if res.status in list(range(200, 209)):
+        if res.status in REQUEST_SUCCESSFUL_STATUSES:
             print(Command.OK_S,
                     f'endpoint requested successfully', sep=' ')
 
@@ -598,9 +601,6 @@ class QueueGetter(Command):
     
     def get_type(self):
         return self.type
-
-
-REQUEST_SUCCESSFUL_STATUSES = list(range(200, 209))
 
 
 class EndpointSender(Command):

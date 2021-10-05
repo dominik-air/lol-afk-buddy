@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+"""This module contains useful functions that allow to easily download champions, summoner spell and rune page
+data from the LCU.
+"""
+
 import json
 from typing import List, Tuple
 from packages.utils import path_problem_solver

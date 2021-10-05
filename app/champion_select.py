@@ -1,7 +1,24 @@
+# -*- coding: utf-8 -*-
+"""This module is responsible for managing user input regarding champion bans and picks. Some of the coupling between
+different parts of the GUI is written in the kivy file(menu.kv).
+
+Attributes:
+    RGBA: Red, Green, Blue, Alpha color model used to define colors in kivy.
+    BAN_COLOR (RGBA): red color to represent champion ban intent.
+    PICK_COLOR (RGBA): blue color to represent champion pick intent.
+    SELECT_COLOR (RGBA): yellow color to represent the current selection of a champion button.
+    DEFAULT_COLOR (RGBA): grey color to represent a champion button in an inert state.
+    IMAGES_PATH (str): absolute path to the directory with champion icons.
+    CHAMPION_SELECT_SETTINGS_PATH (str): absolute path to the champion select config file.
+    LOADED_PICKS (Optional[List[str]]): champions from the last saved pick priority queue.
+    LOADED_BANS (Optional[List[str]]): champions from the last saved ban priority queue.
+
+"""
+
 import os
 import json
 from enum import Enum, auto
-from typing import List, Union
+from typing import List, Union, Tuple
 
 from kivy.metrics import dp
 from kivy.properties import ObjectProperty, ListProperty
@@ -19,11 +36,11 @@ from packages.utils import path_problem_solver
 
 
 # defines type hints and constants
-RGBA = List[float]
-BAN_COLOR = [1, 0, 0, 1]
-PICK_COLOR = [0.2, 0.6, 1, 1]
-SELECT_COLOR = [1, 0.875, 0, 1]
-DEFAULT_COLOR = [0.5, 0.5, 0.5, 1]
+RGBA = Tuple[float, float, float, float]
+BAN_COLOR = (1, 0, 0, 1)
+PICK_COLOR = (0.2, 0.6, 1, 1)
+SELECT_COLOR = (1, 0.875, 0, 1)
+DEFAULT_COLOR = (0.5, 0.5, 0.5, 1)
 
 
 IMAGES_PATH = path_problem_solver("img", "champion_images")
@@ -468,7 +485,6 @@ class ChampionSelectUI(BoxLayout):
                                         self.champion_select.available_champions))[0]
             champion_bans.append(champion_pick)
         for champion in champion_bans:
-            # banning champions in the reversed order to preserve their priority
             self.ban_champion(champion)
 
     def load_picks(self, picks: List[str]) -> None:
@@ -487,7 +503,6 @@ class ChampionSelectUI(BoxLayout):
             champion_picks.append(champion_pick)
 
         for champion in champion_picks:
-            # picking champions in the reversed order to preserve their priority
             self.pick_champion(champion)
 
     def export_bans(self) -> List[str]:

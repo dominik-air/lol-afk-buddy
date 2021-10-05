@@ -1,5 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+"""This module is responsible for web scraping most optimal runes from op.gg and sending them to the LCU.
+
+Attributes:
+    PROBLEMATIC_NAMES (Dict[str, str]): mapping between op.gg and RIOT's API rune name nomenclature.
+
+"""
+
 import json
 from time import sleep
 import requests
@@ -116,6 +123,23 @@ def send_most_optimal_runes_for(champion: str) -> None:
     # minor precision perks' style id is 8000, but their own ids are over 9000 so the standard formula doesn't work
     sub_style_id = (runes[4] // 100) * 100 if runes[4] < 9000 else 8000
 
+    # gets the user's current rune pages
+    rune_pages_info_command = EndpointSaver(reqs="/lol-perks/v1/pages",
+                                            filename="users_rune_pages")
+    rune_pages_info_command.execute()
+
+    with open(path_problem_solver('JSONFiles') + "\\" + "users_rune_pages.json", "r") as rune_info_file:
+            rune_pages_data = json.load(rune_info_file)
+
+    # take the first rune page and delete it
+    delete_rune_page_id = rune_pages_data[0]["id"]
+    delete_page_command = EndpointSender(request=f"/lol-perks/v1/pages/{delete_rune_page_id}",
+                                            request_type="delete")
+    delete_page_command.execute()
+
+    sleep(2)  # wait 2s for the LCU to update
+
+    # now we can try again and add the rune page for the requested champion
     request_data = {
         'autoModifiedSelections': [],
         "current": True,
@@ -126,41 +150,14 @@ def send_most_optimal_runes_for(champion: str) -> None:
         "name": f"Best Win Rate {champion}",
         'primaryStyleId': primary_style_id,
         "selectedPerkIds": runes,
-        "subStyleId": sub_style_id
+        "subStyleId": sub_style_id,
+        "order": rune_pages_data[0]["order"]  # the new page receives the deleted page's order
     }
 
     add_new_rune_page_command = EndpointSender(request=f"/lol-perks/v1/pages",
                                                request_type="post",
                                                request_data=request_data)
 
-    # try:
-    # add_new_rune_page_command.execute()
-    # except Exception as e:
-    #     print('wyjebało przy execute')
-    #     print(e)
-    # try:
-    #     was_the_page_added = after_execute.result()
-    #     print(was_the_page_added)
-    # except Exception as e:
-    #     print('wyjebało przy resulcie')
-    #     print(e)
-
-    # # in case that we cannot add another rune page(most likely there is no space for another one)
-    # if not was_the_page_added:
-    rune_pages_info_command = EndpointSaver(reqs="/lol-perks/v1/pages",
-                                            filename="users_rune_pages")
-    rune_pages_info_command.execute()
-
-    with open(path_problem_solver('JSONFiles') + "\\" + "users_rune_pages.json", "r") as rune_info_file:
-            rune_pages_data = json.load(rune_info_file)
-    # take the first rune page and delete it
-    delete_rune_page_id = rune_pages_data[0]["id"]
-    delete_page_command = EndpointSender(request=f"/lol-perks/v1/pages/{delete_rune_page_id}",
-                                            request_type="delete")
-    delete_page_command.execute()
-    sleep(2)
-    # now we can try again and add the rune page for the requested champion
-    request_data["order"] = rune_pages_data[0]["order"]
     add_new_rune_page_command.request_data = request_data
     add_new_rune_page_command.execute()
 

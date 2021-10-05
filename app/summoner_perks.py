@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+"""This module is responsible for managing user input regarding summoner spells and rune pages.
+It also allows to send it directly to the LCU.
+
+Attributes:
+    ICONS_PATH (str): absolute path to summoner spell icons(images).
+    CHAMPION_PERKS_SETTINGS_PATH (str): absolute path to summoner spells and rune pages config file.
+    LOADED_SUMMONER_SPELLS (Optional[List[str]]): names of summoner spells chosen by the user.
+    LOADED_RUNES (Optional[List[str]]): name of the rune page chosen by the user.
+    ICON_NAMES (List[str]): icon names derived from filenames by removing the last 4 chars('.png').
+
+"""
+
 import os
 import json
 from typing import List, Tuple
@@ -6,7 +19,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.dropdown import DropDown
 from kivy.uix.button import Button
 from packages.utils import path_problem_solver
-from command import EndpointSender, WS_JSONSaver
+from command import EndpointSender
 
 
 import champion_select_utils
@@ -127,10 +140,10 @@ class RunesDropDown(DropDown):
         """Returns the selected rune page's name."""
         return self.main_button.text
 
-    def set_selected_rune_page(self, rune_page_name: str):
+    def set_selected_rune_page(self, rune_page_name: str) -> None:
         self.main_button.text = rune_page_name
 
-    def _display_rune_pages(self):
+    def _display_rune_pages(self) -> None:
         self.clear_widgets()
         for rune_page in self._rune_pages:
             btn = Button(text=rune_page, size_hint_y=None, height=44)
@@ -139,7 +152,7 @@ class RunesDropDown(DropDown):
 
             self.add_widget(btn)
 
-    def _main_button_func(self, instance, x):
+    def _main_button_func(self, instance, x) -> None:
         if not self.runes_already_loaded:
             rune_pages = champion_select_utils.get_user_rune_pages()
             self._rune_pages = [rune_page[0] for rune_page in rune_pages]
@@ -172,7 +185,7 @@ class SummonerPerksSlotUI(BoxLayout):
 
     def reassign_summoner_spells_icons(
             self, key: SummonerSpellDropDown, selected_button: Button
-    ):
+    ) -> None:
         """
         Changes the current summoner spell for the selected one. In case when the selected summoner spell is
         already the other key's current summoner spell it swaps them.
@@ -221,14 +234,16 @@ class SummonerPerksSlotUI(BoxLayout):
         """Returns the selected rune page."""
         return self.runes.get_selected_rune_page()
 
-    def _save_current_settings(self):
+    def _save_current_settings(self) -> None:
         """Macro for saving the current settings regarding summoner spells and runes to a JSON file."""
         current_settings = {"summoner_spells": self.get_selected_summoner_spells(),
                             "selected_runes": self.get_selected_rune_page()}
         champion_select_utils.save_settings(filepath=CHAMPION_PERKS_SETTINGS_PATH, settings=current_settings)
 
 
-def send_user_defined_summoner_spells():
+def send_user_defined_summoner_spells() -> None:
+    """Sends summoner spells selected by the user to the LCU."""
+
     with open(path_problem_solver("data") + "\\" + "champion_select_perks.json") as perks_file:
         summoner_spell_data = json.load(perks_file)["summoner_spells"]
 
@@ -248,21 +263,4 @@ def send_user_defined_summoner_spells():
     update_summoner_spells_command = EndpointSender(request="/lol-champ-select/v1/session/my-selection",
                                                     request_type="patch",
                                                     request_data=request_data)
-    # try:
     update_summoner_spells_command.execute()
-    # except Exception as e:
-    #     print('wyjebało przy execute')
-    #     print(e)
-    # try:
-    #     was_updated = after_execute.result()
-    #     print(was_updated)
-    # except Exception as e:
-    #     print('wyjebało przy resulcie')
-    #     print(e)
-
-    # # in case of an error a log fle is created and saved
-    # if not was_updated:
-    #     # TODO: it would be nice to also have the time at which the function didn't work
-    #     log_saver = WS_JSONSaver(spinner="session",
-    #                              textinput="SummonerSpellSenderCrashReport")
-    #     log_saver.execute()
