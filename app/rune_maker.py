@@ -129,12 +129,12 @@ def send_most_optimal_runes_for(champion: str) -> None:
     rune_pages_info_command.execute()
 
     with open(path_problem_solver('JSONFiles') + "\\" + "users_rune_pages.json", "r") as rune_info_file:
-            rune_pages_data = json.load(rune_info_file)
+        rune_pages_data = json.load(rune_info_file)
 
     # take the first rune page and delete it
     delete_rune_page_id = rune_pages_data[0]["id"]
     delete_page_command = EndpointSender(request=f"/lol-perks/v1/pages/{delete_rune_page_id}",
-                                            request_type="delete")
+                                         request_type="delete")
     delete_page_command.execute()
 
     sleep(2)  # wait 2s for the LCU to update
@@ -154,10 +154,9 @@ def send_most_optimal_runes_for(champion: str) -> None:
         "order": rune_pages_data[0]["order"]  # the new page receives the deleted page's order
     }
 
-    add_new_rune_page_command = EndpointSender(request=f"/lol-perks/v1/pages",
+    add_new_rune_page_command = EndpointSender(request="/lol-perks/v1/pages",
                                                request_type="post",
                                                request_data=request_data)
 
     add_new_rune_page_command.request_data = request_data
     add_new_rune_page_command.execute()
-
