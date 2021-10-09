@@ -1,12 +1,16 @@
 {
     "picks": [
-        "TwistedFate",
-        "Azir",
-        "LeBlanc"
+        "Shen",
+        "Sion",
+        "Camille",
+        "Braum",
+        "MasterYi"
     ],
     "bans": [
+        "Darius",
         "Irelia",
-        "Akshan",
-        "Evelynn"
+        "Akali",
+        "Blitzcrank",
+        "Lux"
     ]
 }
