@@ -1,7 +1,7 @@
 # LoL AFK Buddy
-> LoL AFK Buddy is a GUI app dedicated for busy League of Legends players. 
-> The app automates the stages before entering the game for the user based on a previously set configuration.
-> You can watch the video showcasing how the app works [_here_](https://www.youtube.com/watch?v=WbHshdGfsWc).
+LoL AFK Buddy is a GUI app dedicated for busy League of Legends players. 
+The app automates the stages before entering the game for the user based on a previously set configuration.
+You can watch the video showcasing how the app works [_here_](https://www.youtube.com/watch?v=WbHshdGfsWc).
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -80,6 +80,7 @@ Project is ready to use, but still under development.
 - Add priority queue configuration for every lane
 - Add autofill managing mechanism
 - UI refurbishment and clean-up
+- Make the resources update themselves after a new LoL patch
 - Stability improvements
 
 ## Contact
