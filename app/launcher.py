@@ -6,19 +6,27 @@ from time import sleep
 from command import *
 import json
 import os
+import events
 from packages.champNameIdMapper import ChampNameIdMapper
 from rune_maker import send_most_optimal_runes_for
 from summoner_perks import send_user_defined_summoner_spells
+
 
 class Launcher:
     _state = None
 
     def __init__(self, arg_state: State) -> None:
         self.change_state(arg_state)
-    
+
+        # setup event handlers
+        events.setup_email_event_handlers()
+        events.setup_telegram_event_handlers()
+        # adding an additional event is as easy as writing a new event handler setup and calling it here
+
     def change_state(self, arg_state: State) -> None:
         self._state = arg_state
         self._state.set_context(self)
+        events.post_event(self._state.event_type, data="test_email@gmail.com")
 
     def next(self) -> None:
         self._state.next()
@@ -40,6 +48,7 @@ class State(ABC):
         self._context: Launcher = None
         self._run_loop: bool = True
         self.allowed_to_change_state: bool = False
+        self.event_type = "None"
 
     def get_context(self) -> Launcher:
         return self._context
@@ -206,6 +215,7 @@ class DeclarePositionState(State):
         super().__init__()
         self.session_getter_cmd: Command = None
         self.search_getter_cmd: Command = None
+        self.event_type = "game_found"
 
     def next(self) -> None:
         print(Command.INFO_S, 'Switching to the next state: BanningState.')
