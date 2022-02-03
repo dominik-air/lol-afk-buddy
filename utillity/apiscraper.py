@@ -3,7 +3,7 @@ import json
 
 
 # FIXME: LCU driver is capable of updating this data, maybe rework?
-version = "11.19.1"
+version = "12.3.1"
 
 summoners_data = requests.get(f"http://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/summoner.json").json()["data"]
 champions_data = requests.get(f"http://ddragon.leagueoflegends.com/cdn/{version}/data/en_US/champion.json").json()["data"]
