@@ -119,3 +119,4 @@ dmypy.json
 .vscode
 /testground
 app/giga-trash-note.txt
+/app/external_messaging/secrets.txt

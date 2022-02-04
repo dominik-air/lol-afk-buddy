@@ -26,7 +26,8 @@ class Launcher:
     def change_state(self, arg_state: State) -> None:
         self._state = arg_state
         self._state.set_context(self)
-        events.post_event(self._state.event_type, data="test_email@gmail.com")
+        # TODO: there needs to be a field in the GUI for the user to input their email address
+        events.post_event(self._state.event_type, data="your@email.com")
 
     def next(self) -> None:
         self._state.next()
@@ -257,6 +258,8 @@ class BanningState(State):
     FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
                                      'champion_select_picks_and_bans.json')
 
+    event_type = "champion_ban"
+
     def next(self) -> None:
         champ_to_ban = self._choose_first_available_ban()
         self._set_command(Hover(champ_to_ban))
@@ -311,7 +314,9 @@ class PickingState(State):
     BASE: str = os.path.join(os.path.dirname(__file__), '..', 'data')
     FILENAME: str = os.path.join(os.path.normpath(os.path.join(BASE)),
                                      'champion_select_picks_and_bans.json')
-    
+
+    event_type = "champion_pick"
+
     def next(self) -> None:
         champ_to_pick = self._choose_first_available_pick()
         self._set_command(Hover(champ_to_pick))
@@ -389,6 +394,9 @@ class PickingState(State):
 
 
 class PreGameState(State):
+
+    event_type = "game_start"
+
     def next(self) -> None:
         champion_id: int = Command.session_manager.get_me_as_teammember().champion_id
         champs: dict = ChampNameIdMapper.get_champion_dict(order='reversed')
