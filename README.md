@@ -46,6 +46,7 @@ maintain high code cohesion.
 - Picks champion from priority queue.
 - Sets predefined summoner spells.
 - Applies the best possible runes from op.gg for the picked champion.
+- Sends messages to the user's phone via email.
 
 ## Screenshots
 ![Start Tab View](./img/readme/start_tab_view.png)
@@ -76,12 +77,13 @@ Project is ready to use, but still under development.
 
 
 ## TODO
-- Add message sending to the user's phone about the current stage
 - Add priority queue configuration for every lane
 - Add autofill managing mechanism
 - UI refurbishment and clean-up
 - Make the resources update themselves after a new LoL patch
 - Stability improvements
+- Telegram support
+- Discord support
 
 ## Contact
 Created by:
