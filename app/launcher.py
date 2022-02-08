@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from sys import argv
-from typing import Match
+from typing import Match, Dict
 from time import sleep
 from command import *
 import json
@@ -14,20 +14,15 @@ from summoner_perks import send_user_defined_summoner_spells
 
 class Launcher:
     _state = None
+    _user_accounts: Dict[str, str] = {}
 
     def __init__(self, arg_state: State) -> None:
         self.change_state(arg_state)
 
-        # setup event handlers
-        events.setup_email_event_handlers()
-        events.setup_telegram_event_handlers()
-        # adding an additional event is as easy as writing a new event handler setup and calling it here
-
     def change_state(self, arg_state: State) -> None:
         self._state = arg_state
         self._state.set_context(self)
-        # TODO: there needs to be a field in the GUI for the user to input their email address
-        events.post_event(self._state.event_type, data="your@email.com")
+        events.post_event(self._state.event_type, data=self._user_accounts)
 
     def next(self) -> None:
         self._state.next()
@@ -41,6 +36,9 @@ class Launcher:
             await self._state._scan()
             # if conn.locals['seesion'].data['specyfic_value'] == 'mid':
             #     pass
+
+    def update_user_accounts(self, new_account: Dict[str, str]):
+        self._user_accounts.update(new_account)
 
 
 class State(ABC):

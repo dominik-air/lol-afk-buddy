@@ -186,6 +186,12 @@
     font_size: app._font_size
     color: app.info_font_col
 
+<InfoTextInput@TextInput>
+    font_size: app._font_size
+    background_color: app.bckg_col
+    foreground_color: app.info_font_col  # text color
+    halign: "center"
+
 <SettingsSpinnerOption>:
     btn_color: 0, 0, 0, 1
     color: app.info_font_col
@@ -319,6 +325,20 @@
                                 text: "Required settings/informations"
                             InfoLabel:
                                 text: "set/unset"
+                        InformationUnit:
+                            InfoLabel:
+                                text: "User's email address:"
+                            InfoTextInput:
+                                text: "email@email.com"
+                                multiline: False
+                                on_text_validate: app.update_user_accounts({"email": self.text})
+                        InformationUnit:
+                            InfoLabel:
+                                text: "User's telegram account:"
+                            InfoTextInput:
+                                text: "account name"
+                                multiline: False
+                                on_text_validate: app.update_user_accounts({"Telegram": self.text})
 
 
 

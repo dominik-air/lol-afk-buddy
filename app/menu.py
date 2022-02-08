@@ -29,6 +29,7 @@ from lcu_driver import Connector
 from termcolor import colored
 from pprint import pprint
 import asyncio
+import events
 
 from command import *
 
@@ -38,6 +39,11 @@ from launcher import Launcher, LobbyState
 
 # import connector instance and websockets
 from connector import connector
+
+# setup event handlers
+events.setup_email_event_handlers()
+events.setup_telegram_event_handlers()
+# adding an additional event is as easy as writing a new event handler setup and calling it here
 
 
 class AppLayout(TabbedPanel):
@@ -301,6 +307,10 @@ class MenuApp(App, KivyTheme):
         # self.state_thread = threading.Thread(target=self.state._scan_for_state_change)
         # self.state_thread.daemon = True
         # self.state_thread.start()
+
+    def update_user_accounts(self, data):
+        self.state.update_user_accounts(data)
+        self.console.update_user_accounts(data)
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
