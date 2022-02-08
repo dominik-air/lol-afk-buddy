@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod, abstractclassmethod
 import asyncio
-from typing import Optional, final
+import events
+from typing import Optional, final, Dict
 
 from lcu_driver import connector
 from packages.JSONsaver import JSONSaver
@@ -627,3 +628,13 @@ class EndpointSender(Command):
         # check if the request was successful
         print(f'Status dla {self.request}: {result.status};')
         return result.status in REQUEST_SUCCESSFUL_STATUSES
+
+
+class MessagesSender(Command):
+    def __init__(self, user_accounts: Dict[str, str], event_type: str):
+        super().__init__()
+        self.event_type = event_type
+        self.user_accounts = user_accounts
+
+    async def _execute(self):
+        events.post_event(self.event_type, data=self.user_accounts)

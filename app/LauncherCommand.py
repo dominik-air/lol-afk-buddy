@@ -21,6 +21,7 @@ class CMDCode(Enum):
     COMPLETE = auto()
     INIT_STATE = auto()
     DEINIT_STATE = auto()
+    SEND_MESSAGES = auto()
 
 
 class LauncherCommand:
@@ -42,7 +43,9 @@ class LauncherCommand:
         CMDCode.COMPLETE: ['complete', 'ok'],
         CMDCode.INIT_STATE: ['start', 'st', 'init'],
         CMDCode.DEINIT_STATE: ['stop', 'terminate', 'term', 'deinit'],
+        CMDCode.SEND_MESSAGES: ['send', 'M', 'message']
     }
+    user_accounts: Dict[str, str] = {}
 
     def __init__(self):
         self.command: Command = None
@@ -51,6 +54,10 @@ class LauncherCommand:
     def set_command(cls, command: Command):
         if isinstance(command, Command):
             cls.command = command
+
+    @classmethod
+    def update_user_accounts(cls, new_account: Dict[str, str]):
+        cls.user_accounts.update(new_account)
 
     @classmethod
     def execute_command(cls):
@@ -147,6 +154,11 @@ class LauncherCommand:
               'For this button an action has not been set yet.',
                sep=' ')
 
+    @classmethod
+    def send_messages(cls, event_type: str):
+        # just for testing purposes
+        cls.set_command(MessagesSender(user_accounts=cls.user_accounts, event_type=event_type))
+        cls.execute_command()
 
     def start(self):
         regex = r'\w+'
@@ -203,6 +215,11 @@ class LauncherCommand:
 
             elif _cmd in self.CMD[CMDCode.DEINIT_STATE]:
                 LauncherCommand.deinit()
+            elif _cmd in self.CMD[CMDCode.SEND_MESSAGES]:
+                try:
+                    LauncherCommand.send_messages(matches[1])
+                except IndexError:
+                    print(Command.ERR_S, 'provide an argument')
 
             else:
                 LauncherCommand.default_action()
