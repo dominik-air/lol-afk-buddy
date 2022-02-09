@@ -1,4 +1,5 @@
 # kivy packages:
+import json
 from os import sep
 from sys import argv
 import kivy
@@ -20,7 +21,7 @@ from kivy.uix.gridlayout import GridLayout
 
 # my packages:
 from packages.theme import KivyTheme
-from packages.utils import LOLClientStatusInformer
+from packages.utils import LOLClientStatusInformer, path_problem_solver
 
 from champion_select import ChampionSelectUI, ChampionSelect, ChampionSelectInterface
 from summoner_perks import SummonerPerksSlotUI
@@ -309,8 +310,26 @@ class MenuApp(App, KivyTheme):
         # self.state_thread.start()
 
     def update_user_accounts(self, data):
+        # update fields that use accounts info
         self.state.update_user_accounts(data)
         self.console.update_user_accounts(data)
+
+        # update the user accounts' save file
+        save_file_path = path_problem_solver("config") + "\\" + "user_info.json"
+        with open(save_file_path, "r") as read_file:
+            accounts = json.load(read_file)
+        accounts.update(data)
+        with open(save_file_path, "w") as write_file:
+            json.dump(accounts, write_file)
+
+    def _load_user_accounts(self) -> Dict[str, str]:
+        save_file_path = path_problem_solver("config") + "\\" + "user_info.json"
+        with open(save_file_path, "r") as read_file:
+            accounts = json.load(read_file)
+        # update values in python code
+        self.update_user_accounts(data=accounts)
+        # return for user_accounts field assigment in the menu.kv file
+        return accounts
 
     def update_lol_client_status_property(self, dt):
         self.lol_client.is_running()
