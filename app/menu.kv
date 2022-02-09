@@ -283,7 +283,10 @@
             # ----------------------- PRE-GAME ACCORDION --------------------- #
             AccordionItem:
                 # InfoGridLayouts are inherited from GridLayout
+                id: pregame_accordion
                 title: "pre-game info"
+                user_accounts: {"email": "email", "Telegram": "Telegram Account"}
+                on_touch_down: setattr(self, "user_accounts", app._load_user_accounts())
 
                 MyScroll:
 
@@ -329,14 +332,14 @@
                             InfoLabel:
                                 text: "User's email address:"
                             InfoTextInput:
-                                text: "email@email.com"
+                                text: pregame_accordion.user_accounts["email"]
                                 multiline: False
                                 on_text_validate: app.update_user_accounts({"email": self.text})
                         InformationUnit:
                             InfoLabel:
                                 text: "User's telegram account:"
                             InfoTextInput:
-                                text: "account name"
+                                text: pregame_accordion.user_accounts["Telegram"]
                                 multiline: False
                                 on_text_validate: app.update_user_accounts({"Telegram": self.text})
 
